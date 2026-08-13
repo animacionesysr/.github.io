@@ -175,12 +175,55 @@
             <!-- Cambia font-family y color aquí -->
             <h2 style="font-family: 'Montserrat', sans-serif; color: #e74c3c; margin: 0;">Título Ventana Red</h2>
             <button class="btn-cerrar" onclick="cerrarVentana('v1')">&times;</button>
-        </div  hola como vas esta es para saber si se puedo
+        </div 
         <div class="modal-body">
             <h4 style="font-family: 'Montserrat', sans-serif; color: #ff8d80; margin: 0 0 10px 0;">Subtítulo en Montserrat</h4>
             <p>Este texto se lee perfectamente mientras el fondo mantiene su 70% de transparencia.</p>
-        </div>hola como vas espara para saber si se puedoi
+        </div>
     </div>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // 1. Declarar las funciones de abrir y cerrar globalmente
+    window.abrirVentana = function(idVentana) {
+        const ventana = document.getElementById(idVentana);
+        if (ventana) {
+            ventana.style.setProperty('display', 'block', 'important');
+        }
+    };
+
+    window.cerrarVentana = function(idVentana) {
+        const ventana = document.getElementById(idVentana);
+        if (ventana) {
+            ventana.style.setProperty('display', 'none', 'important');
+        }
+    };
+
+    // 2. Detectar clics fuera de la ventana
+    document.addEventListener('click', function(event) {
+        const ventanas = document.querySelectorAll('.ventana-modal');
+        
+        ventanas.forEach(ventana => {
+            // Verificamos si la ventana está visible en la pantalla
+            const esVisible = window.getComputedStyle(ventana).display !== 'none';
+            
+            if (esVisible) {
+                // Comprobamos si el clic fue dentro de la ventana o en el botón de abrir
+                const clicDentro = ventana.contains(event.target);
+                const clicBotonAbrir = event.target.closest('[onclick*="abrirVentana"]');
+
+                // Si se hizo clic fuera, se oculta inmediatamente
+                if (!clicDentro && !clicBotonAbrir) {
+                    ventana.style.setProperty('display', 'none', 'important');
+                }
+            }
+        });
+    });
+
+});
+</script>
+
+    
 
     <!-- Ventana 2 -->
     <div id="v2" class="ventana-modal">
