@@ -30,23 +30,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Personalizable con Ventanas Trasparentes</title>
-    <!-- Fuentes de Google para la personalización -->
+    <title>Ventanas Transparentes Independientes</title>
+    
+    <!-- Importamos varias fuentes de Google para que elijas las que quieras en el código -->
     <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
-        :root {
-            --color-textos: #ffffff;
-            --color-botones: #3498db;
-            --fuente-actual: 'Poppins', sans-serif;
-        }
-
-        /* 1. Fondo de pantalla completo */
+        /* Fondo de pantalla completo e inmóvil */
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
-            font-family: var(--fuente-actual);
             background: url('render 5.png') no-repeat center center fixed;
             background-size: cover;
             display: flex;
@@ -54,258 +48,221 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            font-family: 'Poppins', sans-serif;
         }
 
-        h1, h2, h3, p, label {
-            color: var(--color-textos);
-            font-family: var(--fuente-actual);
-            transition: color 0.3s ease;
-        }
-
-        h1 {
+        /* Título principal de la web */
+        .titulo-principal {
+            color: white;
             font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
         }
 
-        /* Contenedor de botones principales */
-        .menu-botones {
+        /* Contenedor de los 7 botones */
+        .contenedor-botones {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
-            max-width: 800px;
-            padding: 20px;
+            max-width: 900px;
             z-index: 10;
         }
 
-        /* Estilo de los 7 botones */
-        .btn-menu {
-            background-color: var(--color-botones);
+        /* Estilo base de los botones (el color se cambia individualmente abajo) */
+        .btn-personalizado {
             color: white;
             border: none;
-            padding: 15px 25px;
+            padding: 15px 30px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: transform 0.2s, filter 0.2s, background-color 0.3s;
+            border-radius: 50px; /* Bordes redondeados estilo moderno */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s, filter 0.2s;
         }
 
-        .btn-menu:hover {
-            transform: scale(1.05);
+        .btn-personalizado:hover {
+            transform: scale(1.08);
             filter: brightness(1.2);
         }
 
-        .btn-menu:active {
+        .btn-personalizado:active {
             transform: scale(0.95);
         }
 
-        /* 2. Ventanas modales con 70% de transparencia (opacidad 0.3 en el fondo negro) */
+        /* Ventanas Modales con 70% de Transparencia */
         .ventana-modal {
             display: none; 
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
-            width: 450px;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 500px;
             max-width: 90%;
-            background: rgba(0, 0, 0, 0.3); /* 30% de color sólido = 70% transparente */
-            backdrop-filter: blur(10px); /* Efecto difuminado moderno para resaltar texto */
-            -webkit-backdrop-filter: blur(10px);
+            
+            /* Fondo 70% transparente (30% opaco) */
+            background: rgba(0, 0, 0, 0.3); 
+            
+            /* Efecto cristal opcional (si no lo quieres, borra las 2 líneas de abajo) */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             z-index: 100;
             opacity: 0;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Animación de apertura con buena interacción */
+        /* Animación suave de apertura */
         .ventana-modal.activa {
             display: block;
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
 
+        /* Cabecera interna de las ventanas */
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .btn-cerrar {
             background: none;
             border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .btn-cerrar:hover {
             color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            line-height: 1;
         }
 
-        /* 3. Panel de personalización en tiempo real */
-        .panel-control {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .control-group select, .control-group input {
-            cursor: pointer;
-            padding: 3px;
+        .modal-body {
+            color: #eeeeee;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
-    <h1>Mi Portal Interactivo</h1>
+    <h1 class="titulo-principal">Panel de Control General</h1>
     
-    <!-- Los 7 botones requeridos -->
-    <div class="menu-botones">
-        <button class="btn-menu" onclick="abrirVentana('ventana1')">Ventana 1</button>
-        <button class="btn-menu" onclick="abrirVentana('ventana2')">Ventana 2</button>
-        <button class="btn-menu" onclick="abrirVentana('ventana3')">Ventana 3</button>
-        <button class="btn-menu" onclick="abrirVentana('ventana4')">Ventana 4</button>
-        <button class="btn-menu" onclick="abrirVentana('ventana5')">Ventana 5</button>
-        <button class="btn-menu" onclick="abrirVentana('ventana6')">Ventana 6</button>
-        <button class="btn-menu" onclick="abrirVentana('ventana7')">Ventana 7</button>
+    <!-- 1. LOS 7 BOTONES SE PERSONALIZAN AQUÍ (background-color y font-family) -->
+    <div class="contenedor-botones">
+        <button class="btn-personalizado" style="background-color: #e74c3c; font-family: 'Montserrat', sans-serif;" onclick="abrirVentana('v1')">Abrir Ventana 1</button>
+        <button class="btn-personalizado" style="background-color: #2ecc71; font-family: 'Roboto', sans-serif;" onclick="abrirVentana('v2')">Abrir Ventana 2</button>
+        <button class="btn-personalizado" style="background-color: #f1c40f; font-family: 'Courier Prime', monospace;" onclick="abrirVentana('v3')">Abrir Ventana 3</button>
+        <button class="btn-personalizado" style="background-color: #9b59b6; font-family: 'Pacifico', cursive;" onclick="abrirVentana('v4')">Abrir Ventana 4</button>
+        <button class="btn-personalizado" style="background-color: #e67e22; font-family: 'Poppins', sans-serif;" onclick="abrirVentana('v5')">Abrir Ventana 5</button>
+        <button class="btn-personalizado" style="background-color: #1abc9c; font-family: 'Montserrat', sans-serif;" onclick="abrirVentana('v6')">Abrir Ventana 6</button>
+        <button class="btn-personalizado" style="background-color: #34495e; font-family: 'Roboto', sans-serif;" onclick="abrirVentana('v7')">Abrir Ventana 7</button>
     </div>
 
-    <!-- Las 7 ventanas con 70% de transparencia -->
-    <!-- Puedes clonar la estructura interna para cambiar el contenido de cada una -->
-    <div id="ventana1" class="ventana-modal">
+    <!-- 2. LAS 7 VENTANAS SE PERSONALIZAN AQUÍ INDIVIDUALMENTE -->
+    
+    <!-- Ventana 1 -->
+    <div id="v1" class="ventana-modal">
         <div class="modal-header">
-            <h2>Título Ventana 1</h2>
-            <button class="btn-cerrar" onclick="cerrarVentana('ventana1')">&times;</button>
+            <!-- Cambia font-family y color aquí -->
+            <h2 style="font-family: 'Montserrat', sans-serif; color: #e74c3c; margin: 0;">Título Ventana Red</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('v1')">&times;</button>
         </div>
-        <h3>Subtítulo de la sección</h3>
-        <p>Contenido personalizado de la primera ventana. El fondo se aprecia perfectamente.</p>
+        <div class="modal-body">
+            <h4 style="font-family: 'Montserrat', sans-serif; color: #ff8d80; margin: 0 0 10px 0;">Subtítulo en Montserrat</h4>
+            <p>Este texto se lee perfectamente mientras el fondo mantiene su 70% de transparencia.</p>
+        </div>
     </div>
 
-    <div id="ventana2" class="ventana-modal">
+    <!-- Ventana 2 -->
+    <div id="v2" class="ventana-modal">
         <div class="modal-header">
-            <h2>Título Ventana 2</h2>
-            <button class="btn-cerrar" onclick="cerrarVentana('ventana2')">&times;</button>
+            <h2 style="font-family: 'Roboto', sans-serif; color: #2ecc71; margin: 0;">Título Ventana Green</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('v2')">&times;</button>
         </div>
-        <h3>Subtítulo de la sección</h3>
-        <p>Contenido de la segunda ventana.</p>
+        <div class="modal-body">
+            <h4 style="font-family: 'Roboto', sans-serif; color: #a2f2c2; margin: 0 0 10px 0;">Subtítulo en Roboto</h4>
+            <p>Contenido limpio y estilizado de forma completamente independiente.</p>
+        </div>
     </div>
 
-    <div id="ventana3" class="ventana-modal">
+    <!-- Ventana 3 -->
+    <div id="v3" class="ventana-modal">
         <div class="modal-header">
-            <h2>Título Ventana 3</h2>
-            <button class="btn-cerrar" onclick="cerrarVentana('ventana3')">&times;</button>
+            <h2 style="font-family: 'Courier Prime', monospace; color: #f1c40f; margin: 0;">&lt;Título Ventana 3&gt;</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('v3')">&times;</button>
         </div>
-        <h3>Subtítulo de la sección</h3>
-        <p>Contenido de la tercera ventana.</p>
+        <div class="modal-body">
+            <h4 style="font-family: 'Courier Prime', monospace; color: #fef5b1; margin: 0 0 10px 0;">Subtítulo Tipo Código</h4>
+            <p>Estilo retro de máquina de escribir usando fuentes monoespaciadas.</p>
+        </div>
     </div>
 
-    <div id="ventana4" class="ventana-modal">
+    <!-- Ventana 4 -->
+    <div id="v4" class="ventana-modal">
         <div class="modal-header">
-            <h2>Título Ventana 4</h2>
-            <button class="btn-cerrar" onclick="cerrarVentana('ventana4')">&times;</button>
+            <h2 style="font-family: 'Pacifico', cursive; color: #9b59b6; margin: 0;">Título Ventana 4</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('v4')">&times;</button>
         </div>
-        <h3>Subtítulo de la sección</h3>
-        <p>Contenido de la cuarta ventana.</p>
+        <div class="modal-body">
+            <h4 style="font-family: 'Pacifico', cursive; color: #e8c4f7; margin: 0 0 10px 0;">Subtítulo cursivo elegante</h4>
+            <p>Ideal para diseños artísticos o más relajados.</p>
+        </div>
     </div>
 
-    <div id="ventana5" class="ventana-modal">
+    <!-- Ventana 5 -->
+    <div id="v5" class="ventana-modal">
         <div class="modal-header">
-            <h2>Título Ventana 5</h2>
-            <button class="btn-cerrar" onclick="cerrarVentana('ventana5')">&times;</button>
+            <h2 style="font-family: 'Poppins', sans-serif; color: #e67e22; margin: 0;">Título Ventana 5</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('v5')">&times;</button>
         </div>
-        <h3>Subtítulo de la sección</h3>
-        <p>Contenido de la quinta ventana.</p>
+        <div class="modal-body">
+            <h4 style="font-family: 'Poppins', sans-serif; color: #ffcf9e; margin: 0 0 10px 0;">Subtítulo Minimalista</h4>
+            <p>Configuración rápida directamente usando atributos "style" en el HTML.</p>
+        </div>
     </div>
 
-    <div id="ventana6" class="ventana-modal">
+    <!-- Ventana 6 -->
+    <div id="v6" class="ventana-modal">
         <div class="modal-header">
-            <h2>Título Ventana 6</h2>
-            <button class="btn-cerrar" onclick="cerrarVentana('ventana6')">&times;</button>
+            <h2 style="font-family: 'Montserrat', sans-serif; color: #1abc9c; margin: 0;">Título Ventana 6</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('v6')">&times;</button>
         </div>
-        <h3>Subtítulo de la sección</h3>
-        <p>Contenido de la sexta ventana.</p>
+        <div class="modal-body">
+            <h4 style="font-family: 'Montserrat', sans-serif; color: #a3f3e4; margin: 0 0 10px 0;">Subtítulo Turquesa</h4>
+            <p>Personaliza colores hexadecimales de manera sencilla.</p>
+        </div>
     </div>
 
-    <div id="ventana7" class="ventana-modal">
+    <!-- Ventana 7 -->
+    <div id="v7" class="ventana-modal">
         <div class="modal-header">
-            <h2>Título Ventana 7</h2>
-            <button class="btn-cerrar" onclick="cerrarVentana('ventana7')">&times;</button>
+            <h2 style="font-family: 'Roboto', sans-serif; color: #bdc3c7; margin: 0;">Título Ventana 7</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('v7')">&times;</button>
         </div>
-        <h3>Subtítulo de la sección</h3>
-        <p>Contenido de la séptima ventana.</p>
-    </div>
-
-
-    <!-- PANEL DE PERSONALIZACIÓN (Controles visuales) -->
-    <div class="panel-control">
-        <h3 style="margin:0 0 10px 0; font-size: 0.9rem; text-align: center;">Personalizador</h3>
-        
-        <div class="control-group">
-            <label>Tipografía:</label>
-            <select id="selectorFuente" onchange="cambiarFuente(this.value)">
-                <option value="'Poppins', sans-serif">Poppins</option>
-                <option value="'Roboto', sans-serif">Roboto</option>
-                <option value="'Montserrat', sans-serif">Montserrat</option>
-                <option value="'Open Sans', sans-serif">Open Sans</option>
-            </select>
-        </div>
-
-        <div class="control-group">
-            <label>Color Letras:</label>
-            <input type="color" id="colorTextos" value="#ffffff" oninput="cambiarColorTexto(this.value)">
-        </div>
-
-        <div class="control-group">
-            <label>Color Botón:</label>
-            <input type="color" id="colorBotones" value="#3498db" oninput="cambiarColorBotones(this.value)">
+        <div class="modal-body">
+            <h4 style="font-family: 'Roboto', sans-serif; color: #ffffff; margin: 0 0 10px 0;">Subtítulo Final</h4>
+            <p>Séptima ventana configurada. Listo para producción.</p>
         </div>
     </div>
 
     <script>
-        // Lógica de apertura con retraso corto para suavizar la animación CSS
+        // Lógica de interacción fluida para abrir y cerrar ventanas
         function abrirVentana(id) {
-            // Cerrar cualquier ventana abierta primero
+            // Cierra cualquier ventana que se encuentre abierta actualmente
             document.querySelectorAll('.ventana-modal').forEach(v => {
                 v.classList.remove('activa');
                 setTimeout(() => { if(!v.classList.contains('activa')) v.style.display = 'none'; }, 300);
             });
 
             const ventana = document.getElementById(id);
-            ventana.style.display = 'block';
-            setTimeout(() => {
-                ventana.classList.add('activa');
-            }, 10);
-        }
-
-        function cerrarVentana(id) {
-            const ventana = document.getElementById(id);
-            ventana.classList.remove('activa');
-            // Espera a que termine la animación para ocultar el elemento
-            setTimeout(() => {
-                if(!ventana.classList.contains('activa')) {
-                    ventana.style.display = 'none';
-                }
 
 
 
