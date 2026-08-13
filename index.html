@@ -30,29 +30,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página con Logo de Título</title>
+    <title>Página con Título Render</title>
     <style>
-        /* Contenedor del encabezado */
         .header {
             text-align: center;
             padding: 20px;
             background-color: #f8f9fa;
         }
 
-        /* Estilo del título principal */
+        /* OPCIÓN MEJORADA: Usar la imagen directamente en el contenedor */
         .titulo-imagen {
-            /* 1. Ajusta el tamaño donde se mostrará la imagen */
-            width: 300px;
-            height: 100px;
+            /* 1. Definimos el ancho máximo que quieres que alcance (ej. 1000px o 100%) */
+            width: 100%;
+            max-width: 1000px; 
+            
+            /* 2. Subimos la altura para darle más espacio visual a tu render */
+            height: 450px; 
             margin: 0 auto;
 
-            /* 2. Carga tu imagen de título (reemplaza la URL por la tuya) */
+            /* 3. Cambiamos 'contain' por 'cover' si quieres que llene todo el espacio, */
+            /* o dejamos 'contain' pero con un 'height' más alto como pusimos arriba. */
             background-image: url('render 5.png');
-            background-size: contain;
+            background-size: contain; /* Cambia a 'cover' si quieres que se estire hasta los bordes */
             background-repeat: no-repeat;
             background-position: center;
 
-            /* 3. Oculta el texto de forma accesible */
             text-indent: -9999px;
             overflow: hidden;
         }
@@ -61,10 +63,10 @@
 <body>
 
     <header class="header">
-        <!-- El texto está escrito aquí por accesibilidad y SEO, pero el CSS lo reemplaza por la imagen -->
-        <h1 class="titulo-imagen">Nombre de Mi Empresa o Sitio Web</h1>
+        <h1 class="titulo-imagen">Título de mi Render 5</h1>
     </header>
 
 </body>
 </html>
+
 
