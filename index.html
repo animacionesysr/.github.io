@@ -35,48 +35,31 @@
     <style>
         body {
             /* Configuración del fondo */
-            background-image: url('render 5.png'); /* Cambia esto por la ruta de tu imagen */
+            background-image: url('render 5.png'); /* Reemplaza con la ruta de tu imagen */
             background-repeat: no-repeat;
             background-position: center center;
-            
-            /* Hace que la imagen se quede intacta al deslizar */
             background-attachment: fixed;
-            
-            /* Hace que la imagen ocupe toda la pantalla siempre */
             background-size: cover;
 
-            /* Estilos adicionales para limpiar márgenes */
+            /* Limpieza de márgenes */
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
         }
 
-        /* Estilo de ejemplo para el contenido (para poder hacer scroll) */
-        .contenido {
-            background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco con transparencia */
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 40px;
-            border-radius: 10px;
-            line-height: 1.6;
-        }
-        
-        .espaciador {
-            height: 1500px; /* Genera espacio para poder deslizar la página */
+        /* Contenedor invisible para forzar el scroll en la página */
+        .zona-scroll {
+            height: 2000px; 
         }
     </style>
 </head>
 <body>
 
-    <div class="contenido">
-        <h1>Tu Contenido Aquí</h1>
-        <p>Al deslizar hacia abajo, verás que este cuadro de texto se mueve, pero la imagen de fondo se queda completamente quieta y adaptada a la pantalla.</p>
-        <div class="espaciador"></div>
-        <p>Fin del contenido largo.</p>
-    </div>
+    <!-- Este elemento solo sirve para que puedas deslizar la pantalla y probar el efecto -->
+    <div class="zona-scroll"></div>
 
 </body>
 </html>
+
 
 
 
