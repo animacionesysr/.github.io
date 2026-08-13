@@ -30,244 +30,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz Moderna con Botones</title>
-    <!-- Fuentes e Iconos -->
+    <title>Página Personalizable con Ventanas Trasparentes</title>
+    <!-- Fuentes de Google para la personalización -->
     <link href="https://googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="https://cloudflare.com">
-
+    
     <style>
+        :root {
+            --color-textos: #ffffff;
+            --color-botones: #3498db;
+            --fuente-actual: 'Poppins', sans-serif;
+        }
+
+        /* 1. Fondo de pantalla completo */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0f172a; 
-            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            font-family: var(--fuente-actual);
+            background: url('render 5.png') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 150vh; /* Se añade altura extra para poder deslizar y probar el efecto */
-        }
-
-        .header {
-            text-align: center;
-            width: 100%;
-            padding: 0;
-        }
-
-        /* CONFIGURACIÓN PARA QUE LA IMAGEN NO SE REPITA NI SE MUEVA AL DESLIZAR */
-        .titulo-imagen {
-            width: 100%;
-            height: 450px; /* Altura del contenedor de tu título */
-            margin: 0 auto;
-            
-            /* Carga de la imagen */
-            background-image: url('render 5.png');
-            
-            /* SOLUCIÓN: cover expande la imagen, no-repeat evita duplicados y fixed la congela al deslizar */
-            background-size: cover; 
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed; /* <- Esto congela la imagen al hacer scroll */
-
-            text-indent: -9999px;
+            justify-content: center;
             overflow: hidden;
         }
 
-        /* Contenedor de botones flotantes sobre la interfaz */
-        .contenedor-botones {
+        h1, h2, h3, p, label {
+            color: var(--color-textos);
+            font-family: var(--fuente-actual);
+            transition: color 0.3s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        /* Contenedor de botones principales */
+        .menu-botones {
             display: flex;
+            gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px; 
-            max-width: 1200px;
-            padding: 40px 20px;
-            margin-top: -30px; /* Eleva un poco los botones sobre la imagen para un look moderno */
+            max-width: 800px;
+            padding: 20px;
             z-index: 10;
         }
 
-        /* Estilo base de los botones */
-        .btn-moderno {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px; 
-            padding: 14px 28px;
+        /* Estilo de los 7 botones */
+        .btn-menu {
+            background-color: var(--color-botones);
+            color: white;
             border: none;
-            border-radius: 50px; 
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s, filter 0.2s, background-color 0.3s;
         }
 
-        .btn-moderno:hover {
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
-            filter: brightness(1.2); 
+        .btn-menu:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
         }
 
-        /* Personalización de colores y tipografías */
-        .btn-inicio { background-color: #00bcd4; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; }
-        .btn-proyectos { background-color: #6200ea; color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; }
-        .btn-galeria { background-color: #00b0ff; color: #ffffff; font-family: 'Roboto', sans-serif; font-size: 17px; }
-        .btn-renderizar { background-color: #ff3d00; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; letter-spacing: 1px; }
-        .btn-ajustes { background-color: #37474f; color: #eceff1; font-family: 'Roboto', sans-serif; font-size: 14px; }
-        .btn-descargar { background-color: #00e676; color: #0f172a; font-family: 'Montserrat', sans-serif; font-size: 16px; }
-        .btn-contacto { background-color: #ff007f; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 18px; }
-    </style>
-</head>
-<body>
-
-    <header class="header">
-        <h1 class="titulo-imagen">Título de mi Render 5</h1>
-    </header>
-
-    <main class="contenedor-botones">
-        <button class="btn-moderno btn-inicio"><i class="fa-solid fa-house"></i> Inicio</button>
-        <button class="btn-moderno btn-proyectos"><i class="fa-solid fa-folder-open"></i> Proyectos</button>
-        <button class="btn-moderno btn-galeria"><i class="fa-solid fa-images"></i> Galería</button>
-        <button class="btn-moderno btn-renderizar"><i class="fa-solid fa-cube"></i> Renderizar</button>
-        <button class="btn-moderno btn-ajustes"><i class="fa-solid fa-gear"></i> Ajustes</button>
-        <button class="btn-moderno btn-descargar"><i class="fa-solid fa-download"></i> Descargar</button>
-        <button class="btn-moderno btn-contacto"><i class="fa-solid fa-envelope"></i> Contacto</button>
-    </main>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz Moderna sin Repeticiones</title>
-    <!-- Fuentes e Iconos Corregidos -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="https://cloudflare.com">
-
-    <style>
-        /* Bloqueamos cualquier repetición heredada en las etiquetas principales */
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100vh; /* Altura exacta de la pantalla, sin scroll artificial */
-            background-color: #0f172a !important; 
-            background-image: none !important; /* Destruye cualquier fondo duplicado */
-            background-repeat: no-repeat !important;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden; /* Congela la pantalla para evitar que se deslice infinitamente */
+        .btn-menu:active {
+            transform: scale(0.95);
         }
 
-        /* ESTRUCTURA CONTENEDORA ÚNICA: Controla que nada se duplique */
-        .pantalla-principal {
-            width: 100%;
-            height: 100%;
+        /* 2. Ventanas modales con 70% de transparencia (opacidad 0.3 en el fondo negro) */
+        .ventana-modal {
+            display: none; 
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            width: 450px;
+            max-width: 90%;
+            background: rgba(0, 0, 0, 0.3); /* 30% de color sólido = 70% transparente */
+            backdrop-filter: blur(10px); /* Efecto difuminado moderno para resaltar texto */
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Animación de apertura con buena interacción */
+        .ventana-modal.activa {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-cerrar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* 3. Panel de personalización en tiempo real */
+        .panel-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 1000;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
+            gap: 10px;
         }
 
-        .header {
-            text-align: center;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-        }
-
-        /* Tu imagen de título con candados anti-duplicación */
-        .titulo-imagen {
-            width: 100%;
-            height: 400px; 
-            margin: 0;
-            background-image: url('render%205.png') !important;
-            background-size: contain !important; /* Cambia a 'cover' si prefieres que estire */
-            background-repeat: no-repeat !important; /* Prohibido repetirse */
-            background-position: center top !important;
-            text-indent: -9999px;
-            overflow: hidden;
-        }
-
-        /* BARRA DE MENÚ ESTÁTICA (Aparece una sola vez y no se mueve) */
-        .barra-navegacion {
-            width: 100%;
-            background-color: #1e293b; 
+        .control-group {
             display: flex;
-            justify-content: center;
-            padding: 20px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            margin: 0;
-        }
-
-        /* Contenedor interno de los 7 botones */
-        .contenedor-botones {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: center;
-            gap: 15px; 
-            max-width: 1200px;
-            width: 90%;
-        }
-
-        /* Estilo base de los botones modernos */
-        .btn-moderno {
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px; 
-            padding: 14px 24px;
-            border: none;
-            border-radius: 50px; 
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .control-group select, .control-group input {
             cursor: pointer;
-            font-weight: 500;
-            text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; 
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 3px;
         }
-
-        .btn-moderno:hover {
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
-            filter: brightness(1.2); 
-        }
-
-        /* Estilos individuales de color y letra para cada botón */
-        .btn-inicio { background-color: #00bcd4; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; }
-        .btn-proyectos { background-color: #6200ea; color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; }
-        .btn-galeria { background-color: #00b0ff; color: #ffffff; font-family: 'Roboto', sans-serif; font-size: 17px; }
-        .btn-renderizar { background-color: #ff3d00; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; letter-spacing: 1px; }
-        .btn-ajustes { background-color: #37474f; color: #eceff1; font-family: 'Roboto', sans-serif; font-size: 14px; }
-        .btn-descargar { background-color: #00e676; color: #0f172a; font-family: 'Montserrat', sans-serif; font-size: 16px; }
-        .btn-contacto { background-color: #ff007f; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 18px; }
     </style>
 </head>
 <body>
 
-    <!-- El contenedor 'pantalla-principal' aísla todo para evitar duplicados en el navegador -->
-    <div class="pantalla-principal">
-
-        <!-- Sección 1: Tu Imagen de Título -->
-        <header class="header">
-            <h1 class="titulo-imagen">Título de mi Render 5</h1>
-        </header>
-
-        <!-- Sección 2: Barra Única de Botones -->
-        <nav class="barra-navegacion">
-            <div class="contenedor-botones">
-                <button class="btn-moderno btn-inicio"><i class="fa-solid fa-house"></i> Inicio</button>
-                <button class="btn-moderno btn-proyectos"><i class="fa-solid fa-folder-open"></i> Proyectos</button>
-                <button class="btn-moderno btn-galeria"><i class="fa-solid fa-images"></i> Galería</button>
-                <button class="btn-moderno btn-renderizar"><i class="fa-solid fa-cube"></i> Renderizar</button>
-                <button class="btn-moderno btn-ajustes"><i class="fa-solid fa-gear"></i> Ajustes</button>
-                <button class="btn-moderno btn-descargar"><i class="fa-solid fa-download"></i> Descargar</button>
-                <button class="btn-moderno btn-contacto"><i class="fa-solid fa-envelope"></i> Contacto</button>
-            </div>
-        </nav>
-
+    <h1>Mi Portal Interactivo</h1>
+    
+    <!-- Los 7 botones requeridos -->
+    <div class="menu-botones">
+        <button class="btn-menu" onclick="abrirVentana('ventana1')">Ventana 1</button>
+        <button class="btn-menu" onclick="abrirVentana('ventana2')">Ventana 2</button>
+        <button class="btn-menu" onclick="abrirVentana('ventana3')">Ventana 3</button>
+        <button class="btn-menu" onclick="abrirVentana('ventana4')">Ventana 4</button>
+        <button class="btn-menu" onclick="abrirVentana('ventana5')">Ventana 5</button>
+        <button class="btn-menu" onclick="abrirVentana('ventana6')">Ventana 6</button>
+        <button class="btn-menu" onclick="abrirVentana('ventana7')">Ventana 7</button>
     </div>
 
-</body>
-</html>
+    <!-- Las 7 ventanas con 70% de transparencia -->
+    <!-- Puedes clonar la estructura interna para cambiar el contenido de cada una -->
+    <div id="ventana1" class="ventana-modal">
+        <div class="modal-header">
+            <h2>Título Ventana 1</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('ventana1')">&times;</button>
+        </div>
+        <h3>Subtítulo de la sección</h3>
+        <p>Contenido personalizado de la primera ventana. El fondo se aprecia perfectamente.</p>
+    </div>
+
+    <div id="ventana2" class="ventana-modal">
+        <div class="modal-header">
+            <h2>Título Ventana 2</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('ventana2')">&times;</button>
+        </div>
+        <h3>Subtítulo de la sección</h3>
+        <p>Contenido de la segunda ventana.</p>
+    </div>
+
+    <div id="ventana3" class="ventana-modal">
+        <div class="modal-header">
+            <h2>Título Ventana 3</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('ventana3')">&times;</button>
+        </div>
+        <h3>Subtítulo de la sección</h3>
+        <p>Contenido de la tercera ventana.</p>
+    </div>
+
+    <div id="ventana4" class="ventana-modal">
+        <div class="modal-header">
+            <h2>Título Ventana 4</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('ventana4')">&times;</button>
+        </div>
+        <h3>Subtítulo de la sección</h3>
+        <p>Contenido de la cuarta ventana.</p>
+    </div>
+
+    <div id="ventana5" class="ventana-modal">
+        <div class="modal-header">
+            <h2>Título Ventana 5</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('ventana5')">&times;</button>
+        </div>
+        <h3>Subtítulo de la sección</h3>
+        <p>Contenido de la quinta ventana.</p>
+    </div>
+
+    <div id="ventana6" class="ventana-modal">
+        <div class="modal-header">
+            <h2>Título Ventana 6</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('ventana6')">&times;</button>
+        </div>
+        <h3>Subtítulo de la sección</h3>
+        <p>Contenido de la sexta ventana.</p>
+    </div>
+
+    <div id="ventana7" class="ventana-modal">
+        <div class="modal-header">
+            <h2>Título Ventana 7</h2>
+            <button class="btn-cerrar" onclick="cerrarVentana('ventana7')">&times;</button>
+        </div>
+        <h3>Subtítulo de la sección</h3>
+        <p>Contenido de la séptima ventana.</p>
+    </div>
+
+
+    <!-- PANEL DE PERSONALIZACIÓN (Controles visuales) -->
+    <div class="panel-control">
+        <h3 style="margin:0 0 10px 0; font-size: 0.9rem; text-align: center;">Personalizador</h3>
+        
+        <div class="control-group">
+            <label>Tipografía:</label>
+            <select id="selectorFuente" onchange="cambiarFuente(this.value)">
+                <option value="'Poppins', sans-serif">Poppins</option>
+                <option value="'Roboto', sans-serif">Roboto</option>
+                <option value="'Montserrat', sans-serif">Montserrat</option>
+                <option value="'Open Sans', sans-serif">Open Sans</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Color Letras:</label>
+            <input type="color" id="colorTextos" value="#ffffff" oninput="cambiarColorTexto(this.value)">
+        </div>
+
+        <div class="control-group">
+            <label>Color Botón:</label>
+            <input type="color" id="colorBotones" value="#3498db" oninput="cambiarColorBotones(this.value)">
+        </div>
+    </div>
+
+    <script>
+        // Lógica de apertura con retraso corto para suavizar la animación CSS
+        function abrirVentana(id) {
+            // Cerrar cualquier ventana abierta primero
+            document.querySelectorAll('.ventana-modal').forEach(v => {
+                v.classList.remove('activa');
+                setTimeout(() => { if(!v.classList.contains('activa')) v.style.display = 'none'; }, 300);
+            });
+
+            const ventana = document.getElementById(id);
+            ventana.style.display = 'block';
+            setTimeout(() => {
+                ventana.classList.add('activa');
+            }, 10);
+        }
+
+        function cerrarVentana(id) {
+            const ventana = document.getElementById(id);
+            ventana.classList.remove('activa');
+            // Espera a que termine la animación para ocultar el elemento
+            setTimeout(() => {
+                if(!ventana.classList.contains('activa')) {
+                    ventana.style.display = 'none';
+                }
+
+
 
 
 
