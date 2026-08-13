@@ -140,191 +140,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz Moderna con Botones</title>
-    <!-- Cargamos una tipografía moderna desde Google Fonts y una librería de iconos -->
+    <title>Interfaz Moderna sin Repeticiones</title>
+    <!-- Fuentes e Iconos Corregidos -->
     <link href="https://googleapis.com" rel="stylesheet">
     <link rel="stylesheet" href="https://cloudflare.com">
 
     <style>
-        /* Configuración base de la página */
+        /* Configuración global del documento */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0f172a; /* Fondo oscuro moderno para que resalten los colores */
+            background-color: #0f172a; 
             font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden; /* Evita desplazamientos horizontales */
         }
 
         .header {
             text-align: center;
-            padding: 40px 20px;
             width: 100%;
+            padding: 0;
         }
 
-        /* Tu imagen de título (Ajustada) */
+        /* Tu imagen de título optimizada (Ya no causa el efecto de duplicado infinito) */
         .titulo-imagen {
             width: 100%;
-            max-width: 1000px; 
-            height: 350px; 
+            height: 450px; 
             margin: 0 auto;
             background-image: url('render%205.png');
-            background-size: contain;
-            background-repeat: no-repeat;
+            background-size: cover; 
+            background-repeat: no-repeat; 
             background-position: center;
+            /* Se removió background-attachment: fixed para evitar problemas de capas */
+
             text-indent: -9999px;
             overflow: hidden;
         }
 
-        /* CONTENEDOR DE BOTONES (Interfáz Moderna Flex/Grid) */
-        .contenedor-botones {
+        /* BARRA DE MENÚ (Contenedor único para los botones) */
+        .barra-navegacion {
+            width: 100%;
+            background-color: #1e293b; 
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 15px; /* Espacio entre botones */
-            max-width: 1200px;
-            padding: 20px;
-            margin-bottom: 50px;
+            padding: 25px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            z-index: 20;
         }
 
-        /* ESTILO BASE PARA TODOS LOS BOTONES (Efecto Moderno) */
+        /* Contenedor interno que alinea los botones */
+        .contenedor-botones {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 15px; 
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        /* Estilo base de los botones modernos */
         .btn-moderno {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px; /* Espacio entre icono y texto */
-            padding: 14px 28px;
+            gap: 10px; 
+            padding: 14px 24px;
             border: none;
-            border-radius: 50px; /* Bordes completamente redondeados */
+            border-radius: 50px; 
             cursor: pointer;
             font-weight: 500;
             text-decoration: none;
-            transition: all 0.3s ease; /* Animación suave al pasar el mouse */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Animación general al pasar el cursor sobre cualquier botón */
+        /* Efecto hover al pasar el cursor */
         .btn-moderno:hover {
-            transform: translateY(-3px); /* Flota un poco hacia arriba */
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
-            filter: brightness(1.2); /* Brilla un poco más */
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+            filter: brightness(1.2); 
         }
 
-        /* --------------------------------------------------
-           PERSONALIZACIÓN INDIVIDUAL DE CADA BOTÓN 
-           Aquí cambias color, letra (font-family) y tamaño (font-size)
-        -------------------------------------------------- */
-
-        /* Botón 1: Inicio (Estilo Neón Azul) */
-        .btn-inicio {
-            background-color: #00bcd4;
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-        }
-
-        /* Botón 2: Proyectos (Morado Eléctrico) */
-        .btn-proyectos {
-            background-color: #6200ea;
-            color: #ffffff;
-            font-family: 'Montserrat', sans-serif; /* Otra letra */
-            font-size: 15px;
-            font-weight: 700; /* Letra más gruesa */
-        }
-
-        /* Botón 3: Galería (Verde Esmeralda) */
-        .btn-galeria {
-            background-color: #00b0ff;
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-            font-size: 17px;
-        }
-
-        /* Botón 4: Renderizar (Naranja Fuego) */
-        .btn-renderizar {
-            background-color: #ff3d00;
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            letter-spacing: 1px; /* Letras más separadas */
-        }
-
-        /* Botón 5: Ajustes (Gris Minimalista) */
-        .btn-ajustes {
-            background-color: #37474f;
-            color: #eceff1;
-            font-family: 'Roboto', sans-serif;
-            font-size: 14px;
-        }
-
-        /* Botón 6: Descargar (Verde Éxito) */
-        .btn-descargar {
-            background-color: #00e676;
-            color: #0f172a; /* Texto oscuro para contrastar */
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-        }
-
-        /* Botón 7: Contacto (Rosa Cyberpunk) */
-        .btn-contacto {
-            background-color: #ff007f;
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px; /* Letra más grande */
-        }
+        /* Estilos individuales de color y letra para cada botón */
+        .btn-inicio { background-color: #00bcd4; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; }
+        .btn-proyectos { background-color: #6200ea; color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; }
+        .btn-galeria { background-color: #00b0ff; color: #ffffff; font-family: 'Roboto', sans-serif; font-size: 17px; }
+        .btn-renderizar { background-color: #ff3d00; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; letter-spacing: 1px; }
+        .btn-ajustes { background-color: #37474f; color: #eceff1; font-family: 'Roboto', sans-serif; font-size: 14px; }
+        .btn-descargar { background-color: #00e676; color: #0f172a; font-family: 'Montserrat', sans-serif; font-size: 16px; }
+        .btn-contacto { background-color: #ff007f; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 18px; }
     </style>
 </head>
 <body>
 
-    <!-- Encabezado con tu imagen de título -->
+    <!-- Sección 1: Tu Imagen de Título -->
     <header class="header">
         <h1 class="titulo-imagen">Título de mi Render 5</h1>
     </header>
 
-    <!-- Barra de 7 Botones Modernos -->
-    <main class="contenedor-botones">
-        
-        <!-- Botón 1 -->
-        <button class="btn-moderno btn-inicio">
-            <i class="fa-solid fa-house"></i> Inicio
-        </button>
-
-        <!-- Botón 2 -->
-        <button class="btn-moderno btn-proyectos">
-            <i class="fa-solid fa-folder-open"></i> Proyectos
-        </button>
-
-        <!-- Botón 3 -->
-        <button class="btn-moderno btn-galeria">
-            <i class="fa-solid fa-images"></i> Galería
-        </button>
-
-        <!-- Botón 4 -->
-        <button class="btn-moderno btn-renderizar">
-            <i class="fa-solid fa-cube"></i> Renderizar
-        </button>
-
-        <!-- Botón 5 -->
-        <button class="btn-moderno btn-ajustes">
-            <i class="fa-solid fa-gear"></i> Ajustes
-        </button>
-
-        <!-- Botón 6 -->
-        <button class="btn-moderno btn-descargar">
-            <i class="fa-solid fa-download"></i> Descargar
-        </button>
-
-        <!-- Botón 7 -->
-        <button class="btn-moderno btn-contacto">
-            <i class="fa-solid fa-envelope"></i> Contacto
-        </button>
-
-    </main>
+    <!-- Sección 2: Barra Única de Botones -->
+    <nav class="barra-navegacion">
+        <div class="contenedor-botones">
+            <button class="btn-moderno btn-inicio"><i class="fa-solid fa-house"></i> Inicio</button>
+            <button class="btn-moderno btn-proyectos"><i class="fa-solid fa-folder-open"></i> Proyectos</button>
+            <button class="btn-moderno btn-galeria"><i class="fa-solid fa-images"></i> Galería</button>
+            <button class="btn-moderno btn-renderizar"><i class="fa-solid fa-cube"></i> Renderizar</button>
+            <button class="btn-moderno btn-ajustes"><i class="fa-solid fa-gear"></i> Ajustes</button>
+            <button class="btn-moderno btn-descargar"><i class="fa-solid fa-download"></i> Descargar</button>
+            <button class="btn-moderno btn-contacto"><i class="fa-solid fa-envelope"></i> Contacto</button>
+        </div>
+    </nav>
 
 </body>
 </html>
+
 
 
 
