@@ -30,34 +30,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página con Título Render</title>
+    <title>Interfaz Moderna con Botones</title>
+    <!-- Fuentes e Iconos -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+
     <style>
-        .header {
-            text-align: center;
-            padding: 20px;
-            background-color: #f8f9fa;
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a; 
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 150vh; /* Se añade altura extra para poder deslizar y probar el efecto */
         }
 
-        /* OPCIÓN MEJORADA: Usar la imagen directamente en el contenedor */
-        .titulo-imagen {
-            /* 1. Definimos el ancho máximo que quieres que alcance (ej. 1000px o 100%) */
+        .header {
+            text-align: center;
             width: 100%;
-            max-width: 1000px; 
-            
-            /* 2. Subimos la altura para darle más espacio visual a tu render */
-            height: 450px; 
-            margin: 0 auto;
+            padding: 0;
+        }
 
-            /* 3. Cambiamos 'contain' por 'cover' si quieres que llene todo el espacio, */
-            /* o dejamos 'contain' pero con un 'height' más alto como pusimos arriba. */
+        /* CONFIGURACIÓN PARA QUE LA IMAGEN NO SE REPITA NI SE MUEVA AL DESLIZAR */
+        .titulo-imagen {
+            width: 100%;
+            height: 450px; /* Altura del contenedor de tu título */
+            margin: 0 auto;
+            
+            /* Carga de la imagen */
             background-image: url('render 5.png');
-            background-size: contain; /* Cambia a 'cover' si quieres que se estire hasta los bordes */
+            
+            /* SOLUCIÓN: cover expande la imagen, no-repeat evita duplicados y fixed la congela al deslizar */
+            background-size: cover; 
             background-repeat: no-repeat;
             background-position: center;
+            background-attachment: fixed; /* <- Esto congela la imagen al hacer scroll */
 
             text-indent: -9999px;
             overflow: hidden;
         }
+
+        /* Contenedor de botones flotantes sobre la interfaz */
+        .contenedor-botones {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px; 
+            max-width: 1200px;
+            padding: 40px 20px;
+            margin-top: -30px; /* Eleva un poco los botones sobre la imagen para un look moderno */
+            z-index: 10;
+        }
+
+        /* Estilo base de los botones */
+        .btn-moderno {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; 
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px; 
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-moderno:hover {
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+            filter: brightness(1.2); 
+        }
+
+        /* Personalización de colores y tipografías */
+        .btn-inicio { background-color: #00bcd4; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; }
+        .btn-proyectos { background-color: #6200ea; color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; }
+        .btn-galeria { background-color: #00b0ff; color: #ffffff; font-family: 'Roboto', sans-serif; font-size: 17px; }
+        .btn-renderizar { background-color: #ff3d00; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 16px; letter-spacing: 1px; }
+        .btn-ajustes { background-color: #37474f; color: #eceff1; font-family: 'Roboto', sans-serif; font-size: 14px; }
+        .btn-descargar { background-color: #00e676; color: #0f172a; font-family: 'Montserrat', sans-serif; font-size: 16px; }
+        .btn-contacto { background-color: #ff007f; color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -66,8 +122,19 @@
         <h1 class="titulo-imagen">Título de mi Render 5</h1>
     </header>
 
+    <main class="contenedor-botones">
+        <button class="btn-moderno btn-inicio"><i class="fa-solid fa-house"></i> Inicio</button>
+        <button class="btn-moderno btn-proyectos"><i class="fa-solid fa-folder-open"></i> Proyectos</button>
+        <button class="btn-moderno btn-galeria"><i class="fa-solid fa-images"></i> Galería</button>
+        <button class="btn-moderno btn-renderizar"><i class="fa-solid fa-cube"></i> Renderizar</button>
+        <button class="btn-moderno btn-ajustes"><i class="fa-solid fa-gear"></i> Ajustes</button>
+        <button class="btn-moderno btn-descargar"><i class="fa-solid fa-download"></i> Descargar</button>
+        <button class="btn-moderno btn-contacto"><i class="fa-solid fa-envelope"></i> Contacto</button>
+    </main>
+
 </body>
 </html>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
