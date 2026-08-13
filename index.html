@@ -134,7 +134,6 @@
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -146,52 +145,61 @@
     <link rel="stylesheet" href="https://cloudflare.com">
 
     <style>
-        /* Configuración global del documento */
-        body {
+        /* Bloqueamos cualquier repetición heredada en las etiquetas principales */
+        html, body {
             margin: 0;
             padding: 0;
-            background-color: #0f172a; 
+            width: 100%;
+            height: 100vh; /* Altura exacta de la pantalla, sin scroll artificial */
+            background-color: #0f172a !important; 
+            background-image: none !important; /* Destruye cualquier fondo duplicado */
+            background-repeat: no-repeat !important;
             font-family: 'Poppins', sans-serif;
+            overflow: hidden; /* Congela la pantalla para evitar que se deslice infinitamente */
+        }
+
+        /* ESTRUCTURA CONTENEDORA ÚNICA: Controla que nada se duplique */
+        .pantalla-principal {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            overflow-x: hidden; /* Evita desplazamientos horizontales */
+            justify-content: flex-start;
         }
 
         .header {
             text-align: center;
             width: 100%;
             padding: 0;
+            margin: 0;
         }
 
-        /* Tu imagen de título optimizada (Ya no causa el efecto de duplicado infinito) */
+        /* Tu imagen de título con candados anti-duplicación */
         .titulo-imagen {
             width: 100%;
-            height: 450px; 
-            margin: 0 auto;
-            background-image: url('render%205.png');
-            background-size: cover; 
-            background-repeat: no-repeat; 
-            background-position: center;
-            /* Se removió background-attachment: fixed para evitar problemas de capas */
-
+            height: 400px; 
+            margin: 0;
+            background-image: url('render%205.png') !important;
+            background-size: contain !important; /* Cambia a 'cover' si prefieres que estire */
+            background-repeat: no-repeat !important; /* Prohibido repetirse */
+            background-position: center top !important;
             text-indent: -9999px;
             overflow: hidden;
         }
 
-        /* BARRA DE MENÚ (Contenedor único para los botones) */
+        /* BARRA DE MENÚ ESTÁTICA (Aparece una sola vez y no se mueve) */
         .barra-navegacion {
             width: 100%;
             background-color: #1e293b; 
             display: flex;
             justify-content: center;
-            padding: 25px 0;
+            padding: 20px 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            z-index: 20;
+            margin: 0;
         }
 
-        /* Contenedor interno que alinea los botones */
+        /* Contenedor interno de los 7 botones */
         .contenedor-botones {
             display: flex;
             flex-wrap: wrap; 
@@ -217,7 +225,6 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Efecto hover al pasar el cursor */
         .btn-moderno:hover {
             transform: translateY(-3px); 
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
@@ -236,26 +243,32 @@
 </head>
 <body>
 
-    <!-- Sección 1: Tu Imagen de Título -->
-    <header class="header">
-        <h1 class="titulo-imagen">Título de mi Render 5</h1>
-    </header>
+    <!-- El contenedor 'pantalla-principal' aísla todo para evitar duplicados en el navegador -->
+    <div class="pantalla-principal">
 
-    <!-- Sección 2: Barra Única de Botones -->
-    <nav class="barra-navegacion">
-        <div class="contenedor-botones">
-            <button class="btn-moderno btn-inicio"><i class="fa-solid fa-house"></i> Inicio</button>
-            <button class="btn-moderno btn-proyectos"><i class="fa-solid fa-folder-open"></i> Proyectos</button>
-            <button class="btn-moderno btn-galeria"><i class="fa-solid fa-images"></i> Galería</button>
-            <button class="btn-moderno btn-renderizar"><i class="fa-solid fa-cube"></i> Renderizar</button>
-            <button class="btn-moderno btn-ajustes"><i class="fa-solid fa-gear"></i> Ajustes</button>
-            <button class="btn-moderno btn-descargar"><i class="fa-solid fa-download"></i> Descargar</button>
-            <button class="btn-moderno btn-contacto"><i class="fa-solid fa-envelope"></i> Contacto</button>
-        </div>
-    </nav>
+        <!-- Sección 1: Tu Imagen de Título -->
+        <header class="header">
+            <h1 class="titulo-imagen">Título de mi Render 5</h1>
+        </header>
+
+        <!-- Sección 2: Barra Única de Botones -->
+        <nav class="barra-navegacion">
+            <div class="contenedor-botones">
+                <button class="btn-moderno btn-inicio"><i class="fa-solid fa-house"></i> Inicio</button>
+                <button class="btn-moderno btn-proyectos"><i class="fa-solid fa-folder-open"></i> Proyectos</button>
+                <button class="btn-moderno btn-galeria"><i class="fa-solid fa-images"></i> Galería</button>
+                <button class="btn-moderno btn-renderizar"><i class="fa-solid fa-cube"></i> Renderizar</button>
+                <button class="btn-moderno btn-ajustes"><i class="fa-solid fa-gear"></i> Ajustes</button>
+                <button class="btn-moderno btn-descargar"><i class="fa-solid fa-download"></i> Descargar</button>
+                <button class="btn-moderno btn-contacto"><i class="fa-solid fa-envelope"></i> Contacto</button>
+            </div>
+        </nav>
+
+    </div>
 
 </body>
 </html>
+
 
 
 
