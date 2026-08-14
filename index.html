@@ -664,51 +664,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imagen con Brillo</title>
+    <title>Imagen con Brillo Ajustable</title>
     <style>
-        /* EVITA QUE LA PÁGINA AGREGUE MÁRGENES CASUALES QUE CORRAN LA IMAGEN */
+        /* --- PANEL DE CONTROL EDITABLE --- */
+        /* Cambia solo los valores de esta sección para ajustar todo a tu gusto */
+        :root {
+            /* 1. Dimensiones del recuadro */
+            --ancho-recuadro: 120px;       /* Ancho de la imagen (ej: 80px, 150px, 200px) */
+            --alto-recuadro: 120px;        /* Alto de la imagen (ej: 80px, 150px, 200px) */
+
+            /* 2. Márgenes de posición (Separación desde la esquina superior derecha) */
+            --margen-superior: 20px;      /* Distancia desde el techo de la página */
+            --margen-derecho: 20px;       /* Distancia desde el borde derecho */
+
+            /* 3. Configuración del Brillo */
+            --color-brillo: #00d2ff;      /* Color del resplandor (puedes usar gold, red, #ff0055, etc.) */
+            --grosor-brillo: 15px;        /* Qué tanto se expande el brillo hacia afuera */
+            --velocidad-brillo: 1.5s;     /* Tiempo que tarda en parpadear (menor tiempo = más rápido) */
+            
+            /* 4. Forma del recuadro */
+            --bordes-redondeados: 8px;    /* Bordes suavizados (usa 0px para esquinas rectas, 50% para círculo) */
+        }
+
+        /* --- CÓDIGO INTERNO (NO ES NECESARIO MODIFICARLO) --- */
         body {
             margin: 0;
             padding: 0;
         }
 
-        /* --- CONFIGURACIÓN EDITABLE --- */
-        :root {
-            --tamano-imagen: 100px;       /* Cambia el ancho y alto aquí */
-            --color-brillo: #00d2ff;      /* Cambia el color del brillo aquí */
-            --intensidad-brillo: 15px;    
-            --velocidad-brillo: 1.5s;     
-        }
-
-        /* --- POSICIONAMIENTO INQUEBRANTABLE --- */
         .contenedor-imagen {
-            position: fixed;               /* fixed evita que se corra con el contenido o el scroll */
-            top: 15px;                     /* Distancia exacta desde el borde superior */
-            right: 15px;                   /* Distancia exacta desde el borde derecho */
-            z-index: 99999;                /* Fuerza a la imagen a estar por encima de TODO */
-            line-height: 0;                /* Elimina espacios fantasma debajo de la imagen */
+            position: fixed;               
+            top: var(--margen-superior);                     
+            right: var(--margen-derecho);                   
+            z-index: 99999;                
+            line-height: 0;                
         }
 
         .imagen-brillante {
-            width: var(--tamano-imagen);
-            height: var(--tamano-imagen);
-            object-fit: cover;             
-            border-radius: 8px;            
-            box-sizing: border-box;        /* Evita que el tamaño se desfase */
+            width: var(--ancho-recuadro);
+            height: var(--alto-recuadro);
             
-            /* Animación del brillo */
+            /* 'fill' obliga a la imagen a estirarse exactamente al ancho y alto que le diste, sin hacer zoom */
+            object-fit: fill;             
+            
+            border-radius: var(--bordes-redondeados);            
+            box-sizing: border-box;        
+            
+            /* Animación automática del brillo */
             animation: parpadeoBrillo var(--velocidad-brillo) infinite alternate ease-in-out;
         }
 
-        /* --- EFECTO DE BRILLO --- */
         @keyframes parpadeoBrillo {
             from {
                 box-shadow: 0 0 5px var(--color-brillo), 
                             0 0 10px var(--color-brillo);
             }
             to {
-                box-shadow: 0 0 var(--intensidad-brillo) var(--color-brillo), 
-                            0 0 calc(var(--intensidad-brillo) * 1.5) var(--color-brillo);
+                box-shadow: 0 0 var(--grosor-brillo) var(--color-brillo), 
+                            0 0 calc(var(--grosor-brillo) * 1.5) var(--color-brillo);
             }
         }
     </style>
@@ -717,7 +730,8 @@
 
     <!-- CONTENEDOR DE LA IMAGEN -->
     <div class="contenedor-imagen">
-        <img src="comics ysr.png" alt="Imagen con brillo" class="imagen-brillante">
+        <!-- Reemplaza esta URL de prueba por la ruta de tu foto real -->
+        <img src="comics ysr.png" alt="Imagen ajustable" class="imagen-brillante">
     </div>
 
 </body>
