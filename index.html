@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,36 +9,52 @@
             font-family: Arial, sans-serif;
             color: #333;
             text-align: center;
-            padding: 50px;
+            margin: 0;
+            box-sizing: border-box;
             
-            /* Configuración del Fondo de Pantalla */
+            /* Configuración del Fondo Completo sin Recortes */
             background-image: url('render 5.png');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center bottom;
-            background-size: cover;
-            
-            /* Asegura que el cuerpo ocupe toda la altura de la pantalla */
-            margin: 0;
-            min-height: 100vh;
+            background-size: contain; /* Muestra la imagen completa */
+            background-color: #f4f4f9; /* Color de relleno si la imagen no cubre todo */
+
+            /* Alineación de Textos Abajo y al Centro */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Empuja el contenido al fondo */
+            align-items: center;       /* Centra el contenido horizontalmente */
+            min-height: 100vh;         /* Ocupa toda la altura de la pantalla */
+            padding: 40px;             /* Margen de seguridad inferior */
         }
+        
+        /* Contenedor opcional para agrupar y estilizar los textos */
+        .contenedor-texto {
+            background-color: rgba(255, 255, 255, 0.85); /* Fondo semitransparente */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+        }
+
         h1 {
             color: #24292e;
-            /* Sombra opcional para leer mejor el texto sobre el fondo */
-            text-shadow: 1px 1px 5px rgba(255,255,255,0.8); 
+            margin: 0 0 10px 0;
         }
         p {
             font-size: 18px;
-            /* Sombra opcional para leer mejor el texto sobre el fondo */
-            text-shadow: 1px 1px 5px rgba(255,255,255,0.8);
+            margin: 0;
         }
     </style>
 </head>
 <body>
-    <h1>¡Hola, Bienvenidos!</h1>
-    <p>En esta pagina encontraran todo lo relacionado al tridente de las almas.</p>
+    <div class="contenedor-texto">
+        <h1>¡Hola, Mundo!</h1>
+        <p>Bienvenidos a mi primera página web programada y alojada en GitHub Pages.</p>
+    </div>
 </body>
 </html>
+
 
 <!DOCTYPE html>
 <html lang="es">
