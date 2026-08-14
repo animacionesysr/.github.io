@@ -133,7 +133,6 @@
 </body>
 </html>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -141,101 +140,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventanas Transparentes Personalizables</title>
     <style>
-        /* Se mantiene libre el body para no alterar tu fondo original ni tus títulos */
+        /* ==========================================================================
+           1. CONFIGURACIÓN GENERAL Y VARIABLES (Personaliza los textos y fuentes aquí)
+           ========================================================================== */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambia la fuente aquí */
+            color: #ffffff; /* Color general del texto dentro de las ventanas */
+        }
 
-        /* BARRA INFERIOR FIJA: Se elevó a 190px (aprox. 5 cm) desde el borde inferior */
+        /* ==========================================================================
+           2. BARRA DE BOTONES DISPARADORES (Ubicación y espaciado)
+           ========================================================================== */
         .contenedor-botones {
             position: fixed;
-            bottom: 190px; /* Aquí se aplicó la elevación solicitada */
+            bottom: 190px; /* Elevación desde el borde inferior (aprox. 5 cm) */
             left: 50%;
             transform: translateX(-50%); /* Centrado horizontal perfecto */
             display: flex;
             gap: 15px; /* Separación entre los botones */
-            z-index: 1001; /* Asegura que queden por encima de todo */
+            z-index: 1001; /* Por encima de todo */
         }
 
-        /* Estilo de los botones disparadores */
+        /* Estilo base de los botones disparadores */
         .btn-abrir {
             padding: 12px 24px;
             font-size: 16px;
             font-weight: bold;
-            color: white;
+            color: white; /* Color del texto del botón */
             border: none;
-            border-radius: 8px;
+            border-radius: 8px; /* Bordes redondeados de los botones */
             cursor: pointer;
             transition: transform 0.2s, background 0.3s;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Personalización individual de botones */
+        /* --- PERSONALIZACIÓN INDIVIDUAL DE BOTONES --- */
+        /* Botón 1 */
         #btn1 { background-color: #e74c3c; }
         #btn1:hover { background-color: #c0392b; transform: scale(1.05); }
         
+        /* Botón 2 */
         #btn2 { background-color: #2ecc71; }
         #btn2:hover { background-color: #27ae60; transform: scale(1.05); }
 
-        /* --- VENTANAS (70% Transparentes) --- */
+
+        /* ==========================================================================
+           3. ESTILO DE LAS VENTANAS FLOTANTES (Estructura base)
+           ========================================================================== */
         .ventana {
             display: none; /* Ocultas por defecto */
             position: fixed;
-            top: 40%; /* Se subió ligeramente al 40% para mantener equilibrio visual */
+            top: 40%; /* Altura en la pantalla (40% desde arriba) */
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 350px;
+            width: 350px; /* Ancho de la ventana */
             padding: 25px;
-            border-radius: 15px;
+            border-radius: 15px; /* Redondeado de las esquinas de la ventana */
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
+            backdrop-filter: blur(10px); /* Intensidad del desenfoque de fondo */
             -webkit-backdrop-filter: blur(10px);
             z-index: 1000;
+            box-sizing: border-box;
         }
 
-        /* Ventana 1: Personalización (Fondo Rojo 70% transparente: alfa 0.3) */
+        /* --- PERSONALIZACIÓN INDIVIDUAL DE VENTANAS (Transparencias y Colores) --- 
+           Para cambiar la transparencia, edita el último número de 'rgba' (0.3 significa 70% transparente) */
+        
+        /* Ventana 1 (Fondo Rojo Transparente) */
         #ventana1 {
             background: rgba(231, 76, 60, 0.3); 
-            border: 1px solid rgba(231, 76, 60, 0.4);
+            border: 1px solid rgba(231, 76, 60, 0.4); /* Color del borde */
         }
 
-        /* Ventana 2: Personalización (Fondo Verde 70% transparente: alfa 0.3) */
+        /* Ventana 2 (Fondo Verde Transparente) */
         #ventana2 {
             background: rgba(46, 204, 113, 0.3);
-            border: 1px solid rgba(46, 204, 113, 0.4);
+            border: 1px solid rgba(46, 204, 113, 0.4); /* Color del borde */
         }
 
-        /* Contenido interno de las ventanas */
+        /* --- CONTENIDO INTERNO DE LAS VENTANAS --- */
         .ventana h2 {
             margin-top: 0;
             font-size: 24px;
+            text-align: center; /* Alineación del título */
         }
 
         .ventana p {
             font-size: 15px;
             line-height: 1.5;
             opacity: 0.9;
+            text-align: justify; /* Alineación del párrafo */
         }
 
-        /* Botón de cierre dentro de las ventanas */
+        /* --- NUEVO: ESTILO PARA LAS IMÁGENES --- */
+        .ventana-img {
+            width: 100%; /* Ocupa el 100% del ancho de la ventana */
+            height: 180px; /* Altura fija para la imagen */
+            object-fit: cover; /* Hace que la imagen se adapte sin deformarse */
+            border-radius: 8px; /* Bordes redondeados para la imagen */
+            margin-bottom: 15px; /* Separación con el título o texto */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Sombra suave para la imagen */
+        }
+
+        /* --- BOTÓN DE CIERRE INTERNO --- */
         .btn-cerrar {
             margin-top: 15px;
-            padding: 8px 16px;
+            padding: 10px 16px;
             background: rgba(255, 255, 255, 0.2);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
-            transition: background 0.2s;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.1s;
         }
 
         .btn-cerrar:hover {
             background: rgba(255, 255, 255, 0.4);
         }
+        
+        .btn-cerrar:active {
+            transform: scale(0.98); /* Pequeño efecto de hundido al clickear */
+        }
     </style>
 </head>
 <body>
 
-    <!-- Botones acoplados fijamente elevados en la parte inferior central -->
+    <!-- Botones disparadores -->
     <div class="contenedor-botones">
         <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
         <button class="btn-abrir" id="btn2" onclick="alternarVentana('ventana2')">Abrir Ventana Verde</button>
@@ -243,38 +276,39 @@
 
     <!-- Ventana Número 1 -->
     <div class="ventana" id="ventana1">
+        <!-- Puedes cambiar el link de 'src' por tu propia imagen local o de internet -->
+        <img src="https://picsum.photos" alt="Imagen Ventana 1" class="ventana-img">
         <h2>Ventana Roja</h2>
-        <p>Esta es la primera ventana. Tiene un diseño independiente, bordes suavizados y un 70% de transparencia real.</p>
+        <p>Esta es la primera ventana. Tiene un diseño independiente, bordes suavizados, una imagen superior adaptable y un 70% de transparencia real.</p>
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
     <!-- Ventana Número 2 -->
     <div class="ventana" id="ventana2">
+        <!-- Ejemplo de imagen en la segunda ventana -->
+        <img src="https://picsum.photos" alt="Imagen Ventana 2" class="ventana-img">
         <h2>Ventana Verde</h2>
-        <p>Esta es la segunda ventana. Al abrirla, la ventana roja se cerrará automáticamente si estaba activa.</p>
+        <p>Esta es la segunda ventana. Al abrirla, la ventana roja se cerrará automáticamente si estaba activa. También incluye su propia imagen personalizada.</p>
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
     <script>
-        // Función principal para controlar la lógica
+        // Función principal para controlar la apertura y cierre exclusivo
         function alternarVentana(idVentana) {
-            // 1. Selecciona todas las ventanas de la página
             const ventanas = document.querySelectorAll('.ventana');
-            
-            // 2. Guarda el estado actual de la ventana que queremos abrir (si ya está visible o no)
             const ventanaObjetivo = document.getElementById(idVentana);
             const estaAbierta = ventanaObjetivo.style.display === 'block';
 
-            // 3. Cierra absolutamente todas las ventanas abiertas primero
+            // Cierra todas las ventanas antes de actuar
             ventanas.forEach(v => v.style.display = 'none');
 
-            // 4. Si la ventana clickeada estaba cerrada, ahora la abre
+            // Si estaba cerrada, la abre
             if (!estaAbierta) {
                 ventanaObjetivo.style.display = 'block';
             }
         }
 
-        // Función simple para el botón de cierre manual interno
+        // Función para el botón de cierre manual
         function cerrarVentanas() {
             const ventanas = document.querySelectorAll('.ventana');
             ventanas.forEach(v => v.style.display = 'none');
@@ -283,7 +317,6 @@
 
 </body>
 </html>
-
 
 
 
