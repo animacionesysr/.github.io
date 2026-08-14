@@ -299,7 +299,7 @@
 
 </body>
 </html>
-<!-- CÓDIGO HTML Y CSS PARA INTEGRAR (No interfiere con tu web) -->
+<!-- CÓDIGO HTML Y CSS OPTIMIZADO Y CORREGIDO -->
 <style>
     /* Botón flotante a la izquierda (Aislado) */
     .galeria-70-btn-abrir {
@@ -315,7 +315,7 @@
         border: none !important;
         border-radius: 0 8px 8px 0 !important;
         cursor: pointer !important;
-        z-index: 999999 !important; /* Por encima de todo */
+        z-index: 999999 !important; /* Por encima de tu interfaz */
         transition: background 0.3s !important;
     }
     .galeria-70-btn-abrir:hover {
@@ -334,13 +334,13 @@
         z-index: 1000000 !important; /* Máxima prioridad visual */
         justify-content: center !important;
         align-items: center !important;
-        backdrop-filter: blur(4px); /* Suave desenfoque para aislar tu interfaz */
+        backdrop-filter: blur(4px); /* Suave desenfoque de fondo */
     }
 
     /* Contenedor del recuadro de las 12 imágenes */
     .galeria-70-contenedor-principal {
         background-color: rgba(40, 40, 40, 0.7) !important; /* 70% Opacidad */
-        padding: 30px 20px 20px 20px !important;
+        padding: 35px 20px 20px 20px !important;
         border-radius: 12px !important;
         max-width: 800px !important;
         width: 90% !important;
@@ -348,22 +348,23 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
     }
 
-    /* Botón de cerrar con ubicación exacta */
+    /* BOTÓN DE CERRAR EXACTO Y CORREGIDO (Z-Index prioritario) */
     .galeria-70-btn-cerrar-exacto {
         position: absolute !important;
         top: 10px !important;
         right: 10px !important;
-        width: 30px !important;
-        height: 30px !important;
+        width: 32px !important;
+        height: 32px !important;
         background-color: rgba(255, 68, 68, 0.7) !important; /* Rojo 70% */
         color: white !important;
         border: none !important;
         border-radius: 6px !important;
-        font-size: 20px !important;
-        line-height: 26px !important;
+        font-size: 22px !important;
+        line-height: 28px !important;
         cursor: pointer !important;
         text-align: center !important;
         padding: 0 !important;
+        z-index: 1000005 !important; /* Forzado al frente de la imagen */
         transition: background 0.2s !important;
     }
     .galeria-70-btn-cerrar-exacto:hover {
@@ -384,19 +385,25 @@
         object-fit: cover !important;
         cursor: pointer !important;
         border-radius: 6px !important;
-        opacity: 0.7 !important; /* 70% Opacidad en miniaturas */
+        opacity: 0.7 !important; /* 70% Opacidad */
         transition: opacity 0.2s !important;
     }
     .galeria-70-grid img:hover {
         opacity: 1 !important;
     }
 
-    /* Contenedor estricto para la imagen final de 1280x720 */
+    /* Contenedor estricto para el visor de la imagen de 1280x720 */
     .galeria-70-visor-imagen {
         position: relative !important;
         background-color: rgba(0, 0, 0, 0.7) !important;
         padding: 5px !important;
         border-radius: 8px !important;
+    }
+
+    /* Ajuste para el botón de cerrar específico del visor de imagen grande */
+    .galeria-70-visor-imagen .galeria-70-btn-cerrar-exacto {
+        top: -15px !important; /* Lo saca ligeramente del borde para que sea clicable al 100% */
+        right: -15px !important;
     }
 
     /* Imagen en tamaño original estricto */
@@ -408,7 +415,7 @@
         opacity: 0.7 !important; /* Imagen final al 70% */
     }
 
-    /* Modo responsivo dinámico por si la pantalla del usuario mide menos de 1280x720 */
+    /* Modo responsivo por si la pantalla del usuario mide menos de 1280x720 */
     @media (max-width: 1340px) or (max-height: 760px) {
         .galeria-70-imagen-real {
             width: 90vw !important;
@@ -447,12 +454,13 @@
 <!-- VENTANA EMERGENTE 2: Visor de Imagen Ampliada -->
 <div id="galeria70VisorGrande" class="galeria-70-modal-pantalla-completa">
     <div class="galeria-70-visor-imagen">
+        <!-- El botón de cerrar ahora tiene prioridad absoluta sobre la imagen de abajo -->
         <button class="galeria-70-btn-cerrar-exacto" onclick="galeria70_cerrar('galeria70VisorGrande')">&times;</button>
         <img id="galeria70ImgDestino" class="galeria-70-imagen-real" src="" alt="Vista Previa">
     </div>
 </div>
 
-<!-- LÓGICA DE CONTROL (Nombres de funciones protegidos) -->
+<!-- LÓGICA DE CONTROL PROTEGIDA -->
 <script>
     function galeria70_abrir(id) {
         document.getElementById(id).style.display = 'flex';
@@ -467,7 +475,7 @@
         galeria70_abrir('galeria70VisorGrande');
     }
 
-    // Evento para cerrar haciendo clic en las zonas vacías exteriores
+    // Mantiene la funcionalidad secundaria de cerrar haciendo clic fuera
     window.addEventListener('click', function(e) {
         const modalG = document.getElementById('galeria70ModalFondo');
         const modalV = document.getElementById('galeria70VisorGrande');
@@ -475,5 +483,4 @@
         if (e.target === modalV) modalV.style.display = 'none';
     });
 </script>
-
 
