@@ -658,3 +658,61 @@
         });
     })();
 </script>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen con Brillo</title>
+    <style>
+        /* --- CONFIGURACIÓN EDITABLE --- */
+        :root {
+            --tamano-imagen: 150px;       /* Cambia este valor para hacerla más grande o pequeña */
+            --color-brillo: #00d2ff;      /* Cambia el color del brillo (puedes usar nombres, hex o rgb) */
+            --intensidad-brillo: 20px;    /* Qué tan lejos se extiende el brillo */
+            --velocidad-brillo: 1.5s;     /* Qué tan rápido parpadea el brillo */
+        }
+
+        /* --- POSICIONAMIENTO Y ESTILO --- */
+        .contenedor-imagen {
+            position: absolute;
+            top: 20px;                     /* Distancia desde la parte superior */
+            right: 20px;                   /* Distancia desde la derecha */
+            z-index: 1000;                 /* Asegura que quede por encima de otros elementos */
+        }
+
+        .imagen-brillante {
+            width: var(--tamano-imagen);
+            height: var(--tamano-imagen);
+            object-fit: cover;             /* Evita que la imagen se deforme al cambiar el tamaño */
+            border-radius: 8px;            /* Bordes redondeados del recuadro (usa 50% para un círculo) */
+            
+            /* Animación del brillo */
+            animation: parpadeoBrillo var(--velocidad-brillo) infinite alternate ease-in-out;
+        }
+
+        /* --- EFECTO DE BRILLO EN MOVIMIENTO --- */
+        @keyframes parpadeoBrillo {
+            from {
+                box-shadow: 0 0 5px var(--color-brillo), 
+                            0 0 10px var(--color-brillo);
+            }
+            to {
+                box-shadow: 0 0 var(--intensidad-brillo) var(--color-brillo), 
+                            0 0 calc(var(--intensidad-brillo) * 1.5) var(--color-brillo);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CONTENEDOR DE LA IMAGEN -->
+    <div class="contenedor-imagen">
+        <!-- Reemplaza "tu-imagen.jpg" por el enlace o nombre de tu archivo de imagen -->
+        <img src="https://placeholder.com" alt="Imagen con brillo" class="imagen-brillante">
+    </div>
+
+</body>
+</html>
+
