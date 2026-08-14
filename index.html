@@ -81,6 +81,7 @@
 
 </body>
 </html>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -90,10 +91,10 @@
     <style>
         /* Se mantiene libre el body para no alterar tu fondo original ni tus títulos */
 
-        /* BARRA INFERIOR FIJA: Los botones se quedan acoplados abajo al centro */
+        /* BARRA INFERIOR FIJA: Se elevó a 190px (aprox. 5 cm) desde el borde inferior */
         .contenedor-botones {
             position: fixed;
-            bottom: 30px; /* Distancia desde el borde inferior de la pantalla */
+            bottom: 190px; /* Aquí se aplicó la elevación solicitada */
             left: 50%;
             transform: translateX(-50%); /* Centrado horizontal perfecto */
             display: flex;
@@ -125,7 +126,7 @@
         .ventana {
             display: none; /* Ocultas por defecto */
             position: fixed;
-            top: 45%; /* Ligeramente más arriba del centro para no tapar los botones de abajo */
+            top: 40%; /* Se subió ligeramente al 40% para mantener equilibrio visual */
             left: 50%;
             transform: translate(-50%, -50%);
             width: 350px;
@@ -182,7 +183,7 @@
 </head>
 <body>
 
-    <!-- Botones acoplados fijamente en la parte inferior central -->
+    <!-- Botones acoplados fijamente elevados en la parte inferior central -->
     <div class="contenedor-botones">
         <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
         <button class="btn-abrir" id="btn2" onclick="alternarVentana('ventana2')">Abrir Ventana Verde</button>
@@ -230,10 +231,6 @@
 
 </body>
 </html>
-
-
-
-
 
 
 
