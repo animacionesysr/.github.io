@@ -75,21 +75,6 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a; 
-        }
-
-        /* --- Telón de fondo con Máxima Prioridad --- */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.6); /* Un poco más oscuro para aislar el contenido trasero */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 999998 !important; /* Capa penúltima absoluta */
         }
 
         /* ==========================================================================
@@ -102,7 +87,7 @@
             transform: translateX(-50%);
             display: flex;
             gap: 15px;
-            z-index: 100; /* Nivel bajo controlado */
+            z-index: 1001;
         }
 
         .btn-abrir {
@@ -129,18 +114,20 @@
         .ventana {
             display: none;
             position: fixed;
-            top: 50%; 
+            top: 50%; /* Centrado vertical exacto */
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px; 
-            max-height: 80vh; 
+            width: 450px; /* Se amplió el ancho a 450px para organizar mejor las imágenes */
+            max-height: 80vh; /* Máxima altura permitida: 80% de la pantalla */
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 999999 !important; /* CAPA MÁXIMA ABSOLUTA DEL NAVEGADOR */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
             box-sizing: border-box;
+            
+            /* Habilita el scroll interno si el contenido supera la altura */
             overflow-y: auto; 
         }
 
@@ -157,15 +144,15 @@
             border-radius: 10px;
         }
 
-        /* --- TRANSPARENCIAS PERSONALIZADAS --- */
+        /* --- TRANSPARENCIAS PERSONALIZADAS (70% transparente: alfa 0.3) --- */
         #ventana1 {
-            background: rgba(231, 76, 60, 0.35); 
-            border: 1px solid rgba(231, 76, 60, 0.5);
+            background: rgba(231, 76, 60, 0.3); 
+            border: 1px solid rgba(231, 76, 60, 0.4);
         }
 
         #ventana2 {
-            background: rgba(46, 204, 113, 0.35);
-            border: 1px solid rgba(46, 204, 113, 0.5);
+            background: rgba(46, 204, 113, 0.3);
+            border: 1px solid rgba(46, 204, 113, 0.4);
         }
 
         /* --- CONTENIDO INTERNO --- */
@@ -185,23 +172,24 @@
             margin-bottom: 20px;
         }
 
-        /* --- GALERÍA DE IMÁGENES EN CUADRÍCULA --- */
+        /* --- NUEVO: GALERÍA DE IMÁGENES EN CUADRÍCULA (Soporta +5 imágenes) --- */
         .galeria-imagenes {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 10px; 
+            grid-template-columns: repeat(2, 1fr); /* 2 imágenes por fila de forma organizada */
+            gap: 10px; /* Separación entre fotos */
             margin-bottom: 20px;
         }
 
         .ventana-img {
             width: 100%;
-            height: 120px; 
+            height: 120px; /* Altura ideal para la cuadrícula */
             object-fit: cover;
             border-radius: 6px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             transition: transform 0.2s;
         }
 
+        /* Efecto visual al pasar el cursor sobre cualquier imagen */
         .ventana-img:hover {
             transform: scale(1.03);
         }
@@ -234,9 +222,6 @@
 </head>
 <body>
 
-    <!-- Capa oscura de fondo para bloqueo total -->
-    <div id="overlay" class="overlay" onclick="cerrarVentanas()"></div>
-
     <!-- Botones disparadores -->
     <div id="contenedorBotones">
         <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
@@ -246,9 +231,13 @@
     <!-- Ventana Número 1 -->
     <div class="ventana" id="ventana1">
         <h2>Ventana Roja</h2>
+        
+        <!-- Bloque de texto largo -->
         <p>
             Este es un ejemplo de texto bastante extenso para demostrar el nuevo sistema de desplazamiento. Puedes rellenar esta sección con párrafos enteros de información, especificaciones técnicas, historias o descripciones detalladas. Al superar la altura máxima configurada, la ventana activará automáticamente una elegante barra de scroll lateral en el costado derecho. De esta manera, el diseño general no se desborda y sigue luciendo limpio, manteniendo los botones ocultos y enfocando al usuario únicamente en este contenido.
         </p>
+
+        <!-- Galería para poner más de 5 imágenes (Aquí hay 6) -->
         <div class="galeria-imagenes">
             <img src="https://picsum.photos" alt="Imagen 1" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 2" class="ventana-img">
@@ -257,40 +246,57 @@
             <img src="https://picsum.photos" alt="Imagen 5" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 6" class="ventana-img">
         </div>
+
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
     <!-- Ventana Número 2 -->
     <div class="ventana" id="ventana2">
         <h2>Ventana Verde</h2>
+        
         <p>
             Esta segunda ventana aplica exactamente la misma lógica de adaptabilidad. No importa si agregas 5, 10 o 20 imágenes o textos gigantescos; todo se encapsula perfectamente dentro de la cuadrícula interna. Los bordes translúcidos con desenfoque de fondo "backdrop-filter" se mantienen fijos mientras el usuario desliza la información, logrando un acabado moderno y profesional estilo cristal (Glassmorphism).
         </p>
+
+        <!-- Segunda galería de ejemplo -->
         <div class="galeria-imagenes">
             <img src="https://picsum.photos" alt="Imagen 7" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 8" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 9" class="ventana-img">
             <img src="https://picsum.photos0" alt="Imagen 10" class="ventana-img">
+            <img src="https://picsum.photos1" alt="Imagen 11" class="ventana-img">
+            <img src="https://picsum.photos2" alt="Imagen 12" class="ventana-img">
         </div>
+
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
-    <!-- JavaScript para controlar la lógica de apertura y cierre -->
     <script>
+        const contenedorBotones = document.getElementById('contenedorBotones');
+
         function alternarVentana(idVentana) {
-            cerrarVentanas();
-            document.getElementById(idVentana).style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
+            const ventanas = document.querySelectorAll('.ventana');
+            const ventanaObjetivo = document.getElementById(idVentana);
+            const estaAbierta = ventanaObjetivo.style.display === 'block';
+
+            ventanas.forEach(v => v.style.display = 'none');
+
+            if (!estaAbierta) {
+                ventanaObjetivo.style.display = 'block';
+                contenedorBotones.style.display = 'none';
+                ventanaObjetivo.scrollTop = 0; // Resetea el scroll hacia arriba al abrirse
+            } else {
+                contenedorBotones.style.display = 'flex';
+            }
         }
 
         function cerrarVentanas() {
             const ventanas = document.querySelectorAll('.ventana');
-            ventanas.forEach(ventana => {
-                ventana.style.display = 'none';
-            });
-            document.getElementById('overlay').style.display = 'none';
+            ventanas.forEach(v => v.style.display = 'none');
+            contenedorBotones.style.display = 'flex';
         }
     </script>
+
 </body>
 </html>
 
