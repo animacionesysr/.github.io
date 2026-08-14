@@ -42,152 +42,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventanas Transparentes Personalizables</title>
+    <title>Mi Primera Página Web</title>
     <style>
-        /* Se mantiene libre el body para no alterar tu fondo original ni tus títulos */
-
-        /* BARRA LATERAL FIJA: Los botones se quedan acoplados a la izquierda de tu web */
-        .contenedor-botones {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        /* Contenedor fijo en la parte inferior */
+        .contenedor-inferior {
             position: fixed;
-            top: 50%;
-            left: 20px; /* Distancia desde el borde izquierdo */
-            transform: translateY(-50%); /* Centrado vertical perfecto */
-            display: flex;
-            flex-direction: column; /* Alinea los botones uno debajo del otro */
-            gap: 15px;
-            z-index: 1001; /* Asegura que queden por encima de todo */
-        }
-
-        /* Estilo de los botones disparadores */
-        .btn-abrir {
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            text-align: left; /* Alineación del texto del botón */
-        }
-
-        /* Personalización individual de botones */
-        #btn1 { background-color: #e74c3c; }
-        #btn1:hover { background-color: #c0392b; transform: scale(1.05); }
-        
-        #btn2 { background-color: #2ecc71; }
-        #btn2:hover { background-color: #27ae60; transform: scale(1.05); }
-
-        /* --- VENTANAS (70% Transparentes) --- */
-        .ventana {
-            display: none; /* Ocultas por defecto */
-            position: fixed;
-            top: 50%;
-            left: 55%; /* Movida ligeramente a la derecha para no tapar los botones laterales */
-            transform: translate(-50%, -50%);
-            width: 350px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-        }
-
-        /* Ventana 1: Personalización (Fondo Rojo 70% transparente: alfa 0.3) */
-        #ventana1 {
-            background: rgba(231, 76, 60, 0.3); 
-            border: 1px solid rgba(231, 76, 60, 0.4);
-        }
-
-        /* Ventana 2: Personalización (Fondo Verde 70% transparente: alfa 0.3) */
-        #ventana2 {
-            background: rgba(46, 204, 113, 0.3);
-            border: 1px solid rgba(46, 204, 113, 0.4);
-        }
-
-        /* Contenido interno de las ventanas */
-        .ventana h2 {
-            margin-top: 0;
-            font-size: 24px;
-        }
-
-        .ventana p {
-            font-size: 15px;
-            line-height: 1.5;
-            opacity: 0.9;
-        }
-
-        /* Botón de cierre dentro de las ventanas */
-        .btn-cerrar {
-            margin-top: 15px;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 5px;
-            cursor: pointer;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            font-weight: bold;
-            transition: background 0.2s;
+            text-align: center;
+            padding-bottom: 30px; /* Espacio respecto al borde inferior */
+            box-sizing: border-box;
         }
-
-        .btn-cerrar:hover {
-            background: rgba(255, 255, 255, 0.4);
+        h1 {
+            color: #ffffff;
+            margin: 0 0 10px 0; /* Margen inferior para separar del párrafo */
+        }
+        p {
+            color: #ffffff;
+            font-size: 18px;
+            margin: 0;
         }
     </style>
 </head>
 <body>
 
-    <!-- Botones acoplados fijamente al lado izquierdo -->
-    <div class="contenedor-botones">
-        <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
-        <button class="btn-abrir" id="btn2" onclick="alternarVentana('ventana2')">Abrir Ventana Verde</button>
+    <div class="contenedor-inferior">
+        <h1>¡Hola, Bienvenidos!</h1>
+        <p>En esta pagina encontraras todo lo relacionado al tridente de las almas .</p>
     </div>
-
-    <!-- Ventana Número 1 -->
-    <div class="ventana" id="ventana1">
-        <h2>Ventana Roja</h2>
-        <p>Esta es la primera ventana. Tiene un diseño independiente, bordes suavizados y un 70% de transparencia real.</p>
-        <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
-    </div>
-
-    <!-- Ventana Número 2 -->
-    <div class="ventana" id="ventana2">
-        <h2>Ventana Verde</h2>
-        <p>Esta es la segunda ventana. Al abrirla, la ventana roja se cerrará automáticamente si estaba activa.</p>
-        <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
-    </div>
-
-    <script>
-        // Función principal para controlar la lógica
-        function alternarVentana(idVentana) {
-            // 1. Selecciona todas las ventanas de la página
-            const ventanas = document.querySelectorAll('.ventana');
-            
-            // 2. Guarda el estado actual de la ventana que queremos abrir (si ya está visible o no)
-            const ventanaObjetivo = document.getElementById(idVentana);
-            const estaAbierta = ventanaObjetivo.style.display === 'block';
-
-            // 3. Cierra absolutamente todas las ventanas abiertas primero
-            ventanas.forEach(v => v.style.display = 'none');
-
-            // 4. Si la ventana clickeada estaba cerrada, ahora la abre
-            if (!estaAbierta) {
-                ventanaObjetivo.style.display = 'block';
-            }
-        }
-
-        // Función simple para el botón de cierre manual interno
-        function cerrarVentanas() {
-            const ventanas = document.querySelectorAll('.ventana');
-            ventanas.forEach(v => v.style.display = 'none');
-        }
-    </script>
 
 </body>
 </html>
+
 
 
 
