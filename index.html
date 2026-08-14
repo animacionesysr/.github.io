@@ -151,12 +151,12 @@
         /* ==========================================================================
            2. BARRA DE BOTONES DISPARADORES (Ubicación y espaciado)
            ========================================================================== */
-        .contenedor-botones {
+        #contenedorBotones {
             position: fixed;
             bottom: 190px; /* Elevación desde el borde inferior (aprox. 5 cm) */
             left: 50%;
             transform: translateX(-50%); /* Centrado horizontal perfecto */
-            display: flex;
+            display: flex; /* Se usa flex para mostrarlos alineados */
             gap: 15px; /* Separación entre los botones */
             z-index: 1001; /* Por encima de todo */
         }
@@ -232,7 +232,7 @@
             text-align: justify; /* Alineación del párrafo */
         }
 
-        /* --- NUEVO: ESTILO PARA LAS IMÁGENES --- */
+        /* --- ESTILO PARA LAS IMÁGENES --- */
         .ventana-img {
             width: 100%; /* Ocupa el 100% del ancho de la ventana */
             height: 180px; /* Altura fija para la imagen */
@@ -268,32 +268,33 @@
 </head>
 <body>
 
-    <!-- Botones disparadores -->
-    <div class="contenedor-botones">
+    <!-- Botones disparadores (Se le añadió un ID para controlarlo con JS) -->
+    <div id="contenedorBotones">
         <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
         <button class="btn-abrir" id="btn2" onclick="alternarVentana('ventana2')">Abrir Ventana Verde</button>
     </div>
 
     <!-- Ventana Número 1 -->
     <div class="ventana" id="ventana1">
-        <!-- Puedes cambiar el link de 'src' por tu propia imagen local o de internet -->
         <img src="https://picsum.photos" alt="Imagen Ventana 1" class="ventana-img">
         <h2>Ventana Roja</h2>
-        <p>Esta es la primera ventana. Tiene un diseño independiente, bordes suavizados, una imagen superior adaptable y un 70% de transparencia real.</p>
+        <p>Esta es la primera ventana. Al abrirse, notarás que los botones del menú inferior desaparecen por completo para no estorbar.</p>
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
     <!-- Ventana Número 2 -->
     <div class="ventana" id="ventana2">
-        <!-- Ejemplo de imagen en la segunda ventana -->
         <img src="https://picsum.photos" alt="Imagen Ventana 2" class="ventana-img">
         <h2>Ventana Verde</h2>
-        <p>Esta es la segunda ventana. Al abrirla, la ventana roja se cerrará automáticamente si estaba activa. También incluye su propia imagen personalizada.</p>
+        <p>Esta es la segunda ventana. Al presionar 'Cerrar Ventana', el cuadro desaparecerá y los botones principales volverán al instante.</p>
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
     <script>
-        // Función principal para controlar la apertura y cierre exclusivo
+        // Guardamos el contenedor de botones en una variable constante
+        const contenedorBotones = document.getElementById('contenedorBotones');
+
+        // Función principal para controlar la apertura y el ocultado del menú
         function alternarVentana(idVentana) {
             const ventanas = document.querySelectorAll('.ventana');
             const ventanaObjetivo = document.getElementById(idVentana);
@@ -302,21 +303,26 @@
             // Cierra todas las ventanas antes de actuar
             ventanas.forEach(v => v.style.display = 'none');
 
-            // Si estaba cerrada, la abre
             if (!estaAbierta) {
+                // Si la ventana se va a abrir, mostramos la ventana y OCULTAMOS los botones
                 ventanaObjetivo.style.display = 'block';
+                contenedorBotones.style.display = 'none';
+            } else {
+                // En caso de que se volviera a tocar (cerrar), muestra los botones
+                contenedorBotones.style.display = 'flex';
             }
         }
 
-        // Función para el botón de cierre manual
+        // Función para el botón de cierre manual (Restablece los botones principales)
         function cerrarVentanas() {
             const ventanas = document.querySelectorAll('.ventana');
             ventanas.forEach(v => v.style.display = 'none');
+            
+            // Volvemos a MOSTRAR los botones al cerrar la ventana
+            contenedorBotones.style.display = 'flex';
         }
     </script>
 
 </body>
 </html>
-
-
 
