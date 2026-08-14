@@ -742,7 +742,6 @@
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -753,15 +752,24 @@
     <link rel="stylesheet" href="https://cloudflare.com">
     
     <style>
+        /* Bloqueo total del movimiento de la pantalla */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;      /* Ocupa el 100% de la altura de la pantalla */
+            width: 100vw;       /* Ocupa el 100% del ancho de la pantalla */
+            overflow: hidden;   /* ELIMINA las barras de scroll y bloquea el deslizamiento */
+        }
+
         /* Contenedor principal de la barra */
         .sidebar-social {
-            position: fixed; /* Mantiene la barra fija al hacer scroll */
-            right: 0;        /* La pega al borde derecho */
-            top: 50%;        /* La centra verticalmente */
-            transform: translateY(-50%); /* Ajuste perfecto de centrado */
+            position: fixed; 
+            right: 0;        
+            top: 50%;        
+            transform: translateY(-50%); 
             display: flex;
-            flex-direction: column; /* Alinea los elementos en vertical */
-            z-index: 1000;   /* Asegura que quede por encima de todo */
+            flex-direction: column; 
+            z-index: 1000;   
         }
 
         /* Estilo general para cada enlace/icono */
@@ -771,11 +779,11 @@
             align-items: center;
             width: 50px;
             height: 50px;
-            color: white;    /* Color del icono */
-            font-size: 20px; /* Tamaño del icono */
+            color: white;    
+            font-size: 20px; 
             text-decoration: none;
-            transition: all 0.3s ease; /* Animación suave al pasar el mouse */
-            border-radius: 5px 0 0 5px; /* Redondea solo las esquinas izquierdas */
+            transition: all 0.3s ease; 
+            border-radius: 5px 0 0 5px; 
         }
 
         /* Colores de fondo para cada red social */
@@ -786,8 +794,8 @@
 
         /* Efecto de expansión al pasar el cursor (Hover) */
         .sidebar-social a:hover {
-            width: 60px; /* Se hace un poco más ancho */
-            padding-right: 10px; /* Mueve el icono sutilmente */
+            width: 60px; 
+            padding-right: 10px; 
         }
     </style>
 </head>
@@ -795,18 +803,20 @@
 
     <!-- Contenedor de las redes sociales -->
     <div class="sidebar-social">
-        <!-- Reemplaza el '#' por tus enlaces reales -->
         <a href="#" class="facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
         <a href="#" class="instagram" target="_blank"><i class="fab fa-instagram"></i></a>
         <a href="#" class="x-twitter" target="_blank"><i class="fab fa-x-twitter"></i></a>
         <a href="#" class="youtube" target="_blank"><i class="fab fa-youtube"></i></a>
     </div>
 
-    <!-- Contenido de prueba para demostrar el scroll de la página -->
-    <div style="padding: 20px; height: 2000px;">
-        <h1>Tu sitio web</h1>
-        <p>Haz scroll hacia abajo para ver cómo la barra se mantiene fija a la derecha.</p>
+    <!-- Contenido de la página fija -->
+    <div style="padding: 20px;">
+        <h1>Tu sitio web fijo</h1>
+        <p>Intenta deslizar hacia abajo usando la rueda del mouse o el teclado; verás que la página está completamente bloqueada.</p>
     </div>
+
+</body>
+</html>
 
 </body>
 </html>
