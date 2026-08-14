@@ -484,166 +484,177 @@
     });
 </script>
 
+<!-- ====================================================================== -->
+<!-- 1. ESTILOS CSS AISLADOS (Añádelos dentro de tu etiqueta <head> o archivo CSS) -->
+<!-- ====================================================================== -->
+<style>
+    /* Botón flotante al ras del margen izquierdo */
+    button.__modulo_exclusivo_btn_abrir {
+        position: fixed !important;
+        left: 0 !important; 
+        top: 40px !important; 
+        padding: 12px 20px !important;
+        background-color: #007BFF !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-top-right-radius: 5px !important; 
+        border-bottom-right-radius: 5px !important;
+        cursor: pointer !important;
+        font-size: 16px !important;
+        font-family: Arial, sans-serif !important;
+        box-shadow: 2px 4px 6px rgba(0,0,0,0.3) !important;
+        z-index: 999999 !important; /* Prioridad máxima sobre fondos */
+        margin: 0 !important;
+        transition: background-color 0.2s ease !important;
+    }
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventana Emergente con Modo Administrador</title>
-    <style>
-        /* Fondo con imagen de ejemplo */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: url('https://picsum.photos') no-repeat center center fixed;
-            background-size: cover;
-            height: 100vh;
-        }
+    button.__modulo_exclusivo_btn_abrir:hover {
+        background-color: #0056b3 !important;
+    }
 
-        /* Botón a la izquierda, arriba y fijo (no se desliza) */
-        .btn-abrir {
-            position: fixed;
-            left: 30px;
-            top: 40px; /* Posicionado arriba, respetando márgenes */
-            padding: 12px 24px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            z-index: 10;
-        }
+    /* Fondo de la capa del modal */
+    div.__modulo_exclusivo_modal_fondo {
+        display: none; 
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        z-index: 1000000 !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
 
-        .btn-abrir:hover {
-            background-color: #0056b3;
-        }
+    /* Contenedor emergente con 70% de transparencia (30% opacidad blanca) */
+    div.__modulo_exclusivo_modal_contenido {
+        background-color: rgba(255, 255, 255, 0.3) !important; 
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding: 40px 30px 30px 30px !important; 
+        border-radius: 12px !important;
+        width: 80% !important;
+        max-width: 600px !important;
+        max-height: 80vh !important;
+        overflow-y: auto !important; 
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+        color: #000000 !important;
+        font-family: Arial, sans-serif !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+    }
 
-        /* Fondo de la ventana modal */
-        .modal-fondo {
-            display: none; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
+    /* Botón X de cerrar autónomo */
+    button.__modulo_exclusivo_btn_cerrar {
+        position: absolute !important;
+        top: 10px !important;
+        right: 15px !important;
+        background: none !important;
+        border: none !important;
+        font-size: 30px !important; 
+        cursor: pointer !important;
+        color: #000000 !important;
+        line-height: 1 !important;
+        z-index: 1000010 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 
-        /* Ventana con 70% de transparencia */
-        .modal-contenido {
-            background-color: rgba(255, 255, 255, 0.3); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 12px;
-            width: 80%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            color: #000;
-            position: relative;
-        }
+    button.__modulo_exclusivo_btn_cerrar:hover {
+        color: #ff0000 !important;
+    }
 
-        .btn-cerrar {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #000;
-        }
+    /* Imágenes de contexto internas */
+    div.__modulo_exclusivo_modal_contenido img {
+        width: 100% !important;
+        max-height: 250px !important;
+        object-fit: cover !important;
+        margin: 15px 0 !important;
+        border-radius: 6px !important;
+        display: block !important;
+    }
 
-        .modal-contenido img {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            margin: 15px 0;
-            border-radius: 6px;
-        }
+    /* Indicador visual de modo edición para el administrador */
+    .__modulo_exclusivo_modo_editor_activo {
+        outline: 2px dashed #28a745 !important;
+        background-color: rgba(255, 255, 255, 0.4) !important;
+    }
+</style>
 
-        /* Indicador visual exclusivo para cuando tú estés editando */
-        .modo-editor {
-            outline: 2px dashed #28a745 !important;
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-    </style>
-</head>
-<body>
+<!-- ====================================================================== -->
+<!-- 2. ESTRUCTURA HTML (Pégala en cualquier lugar dentro de las etiquetas <body>) -->
+<!-- ====================================================================== -->
 
-    <!-- Botón fijo arriba a la izquierda -->
-    <button class="btn-abrir" onclick="abrirModal()">Abrir Menú</button>
+<!-- Botón de apertura blindado -->
+<button class="__modulo_exclusivo_btn_abrir" onclick="__modulo_exclusivo_Abrir()">Abrir Menú</button>
 
-    <!-- Ventana emergente -->
-    <div class="modal-fondo" id="miModal">
-        <div class="modal-contenido">
-            <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
+<!-- Ventana emergente independiente -->
+<div class="__modulo_exclusivo_modal_fondo" id="__modulo_exclusivo_IdModal">
+    <div class="__modulo_exclusivo_modal_contenido">
+        <!-- Botón de cierre garantizado -->
+        <button class="__modulo_exclusivo_btn_cerrar" onclick="__modulo_exclusivo_Cerrar()">&times;</button>
+        
+        <!-- Bloque de texto extenso e imágenes protegido para usuarios -->
+        <div id="__modulo_exclusivo_IdAreaEditable" contenteditable="false">
+            <h2 style="margin-top: 0; color: #000000; font-family: Arial, sans-serif;">Título Configurable</h2>
             
-            <!-- Bloque protegido por defecto -->
-            <div id="areaEditable" contenteditable="false">
-                <h2 style="margin-top: 0;">Título de la Ventana</h2>
-                
-                <p>Este es el texto extenso del contexto. Los usuarios normales que entren a la página solo podrán leer este contenido sin poder modificarlo de ninguna manera.</p>
-                
-                <img src="https://picsum.photos" alt="Imagen 1">
-                
-                <p>Aquí se encuentra la segunda sección de texto descriptivo acompañada de otra imagen complementaria justo debajo.</p>
-                
-                <img src="https://picsum.photos" alt="Imagen 2">
-                
-                <p>Fin del contenido de la ventana emergente transparente.</p>
-            </div>
+            <p style="color: #000000; font-family: Arial, sans-serif; line-height: 1.5;">Este es un texto extenso asignado como contexto. Los usuarios e invitados que visiten la página web solo podrán realizar lecturas de este espacio, ya que carecen de permisos de alteración.</p>
+            
+            <img src="https://picsum.photos" alt="Imagen Contexto 1">
+            
+            <p style="color: #000000; font-family: Arial, sans-serif; line-height: 1.5;">Aquí se ubica el desarrollo secundario de tu bloque informativo, seguido inmediatamente por la segunda ilustración requerida por el diseño.</p>
+            
+            <img src="https://picsum.photos" alt="Imagen Contexto 2">
+            
+            <p style="color: #000000; font-family: Arial, sans-serif; line-height: 1.5;">Finalización del bloque de datos e información complementaria del módulo transparente.</p>
         </div>
     </div>
+</div>
 
-    <script>
-        const modal = document.getElementById('miModal');
-        const areaEditable = document.getElementById('areaEditable');
+<!-- ====================================================================== -->
+<!-- 3. JAVASCRIPT SEGURO (Colócalo justo antes del cierre de tu etiqueta </body>) -->
+<!-- ====================================================================== -->
+<script>
+    (function() {
+        // Encapsulamos las variables locales en una función anónima autoejecutable
+        const modalObj = document.getElementById('__modulo_exclusivo_IdModal');
+        const areaEditableObj = document.getElementById('__modulo_exclusivo_IdAreaEditable');
 
-        function abrirModal() {
-            modal.style.display = 'flex';
-        }
+        // Definimos las funciones en el entorno global de forma ultra específica
+        window.__modulo_exclusivo_Abrir = function() {
+            modalObj.style.display = 'flex';
+        };
 
-        function cerrarModal() {
-            modal.style.display = 'none';
-        }
+        window.__modulo_exclusivo_Cerrar = function() {
+            modalObj.style.display = 'none';
+        };
 
-        window.onclick = function(event) {
-            if (event.target === modal) {
-                cerrarModal();
+        // Cerrar ventana al pulsar sobre el fondo externo
+        window.addEventListener('click', function(event) {
+            if (event.target === modalObj) {
+                window.__modulo_exclusivo_Cerrar();
             }
-        }
+        });
 
-        // LÓGICA EXCLUSIVA PARA TI (ADMINISTRADOR)
-        // Presiona Ctrl + E en tu teclado para activar/desactivar la edición
+        // CONTROL DE EDICIÓN EXCLUSIVA PARA EL ADMINISTRADOR (Usa Ctrl + E)
         window.addEventListener('keydown', function(event) {
             if (event.ctrlKey && event.key.toLowerCase() === 'e') {
-                event.preventDefault(); // Evita funciones del navegador
+                event.preventDefault(); // Detiene acciones predeterminadas del navegador
                 
-                // Cambia el estado de edición
-                if (areaEditable.contenteditable === "true" || areaEditable.getAttribute('contenteditable') === 'true') {
-                    areaEditable.setAttribute('contenteditable', 'false');
-                    areaEditable.classList.remove('modo-editor');
-                    alert('Modo edición: DESACTIVADO (Protegido para usuarios)');
+                const estadoActual = areaEditableObj.getAttribute('contenteditable');
+                
+                if (estadoActual === 'true') {
+                    areaEditableObj.setAttribute('contenteditable', 'false');
+                    areaEditableObj.classList.remove('__modulo_exclusivo_modo_editor_activo');
+                    alert('Modo administrador: BLOQUEADO (Los cambios son ahora visibles para usuarios)');
                 } else {
-                    areaEditable.setAttribute('contenteditable', 'true');
-                    areaEditable.classList.add('modo-editor');
-                    areaEditable.focus();
-                    alert('Modo edición: ACTIVADO (Solo tú puedes editar ahora)');
+                    areaEditableObj.setAttribute('contenteditable', 'true');
+                    areaEditableObj.classList.add('__modulo_exclusivo_modo_editor_activo');
+                    areaEditableObj.focus();
+                    alert('Modo administrador: COMPLETAMENTE EDITABLE (Haz tus cambios directamente)');
                 }
             }
         });
-    </script>
-
-</body>
-</html>
+    })();
+</script>
