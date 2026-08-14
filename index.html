@@ -124,7 +124,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            z-index: 5000000;
+            z-index: 100000;
             box-sizing: border-box;
             
             /* Habilita el scroll interno si el contenido supera la altura */
@@ -317,7 +317,7 @@
         border: none !important;
         border-radius: 0 8px 8px 0 !important;
         cursor: pointer !important;
-        z-index: 999999 !important; /* Por encima de tu interfaz */
+        z-index: 100000 !important; /* Por encima de tu interfaz */
         transition: background 0.3s !important;
     }
     .galeria-70-btn-abrir:hover {
@@ -333,7 +333,7 @@
         width: 100vw !important;
         height: 100vh !important;
         background-color: rgba(15, 15, 15, 0.7) !important; /* Fondo general al 70% */
-        z-index: 10000 !important; /* Máxima prioridad visual */
+        z-index: 100000 !important; /* Máxima prioridad visual */
         justify-content: center !important;
         align-items: center !important;
         backdrop-filter: blur(4px); /* Suave desenfoque de fondo */
@@ -366,7 +366,7 @@
         cursor: pointer !important;
         text-align: center !important;
         padding: 0 !important;
-        z-index: 10000 !important; /* Forzado al frente de la imagen */
+        z-index: 100000 !important; /* Forzado al frente de la imagen */
         transition: background 0.2s !important;
     }
     .galeria-70-btn-cerrar-exacto:hover {
@@ -505,7 +505,7 @@
         font-size: 16px !important;
         font-family: Arial, sans-serif !important;
         box-shadow: 2px 4px 6px rgba(0,0,0,0.3) !important;
-        z-index: 10000 !important; /* Prioridad máxima sobre fondos */
+        z-index: 100000 !important; /* Prioridad máxima sobre fondos */
         margin: 0 !important;
         transition: background-color 0.2s ease !important;
     }
@@ -523,7 +523,7 @@
         width: 100% !important;
         height: 100% !important;
         background-color: rgba(0, 0, 0, 0.4) !important;
-        z-index: 10000 !important;
+        z-index: 100000 !important;
         justify-content: center !important;
         align-items: center !important;
     }
@@ -558,7 +558,7 @@
         cursor: pointer !important;
         color: #000000 !important;
         line-height: 1 !important;
-        z-index: 10000 !important;
+        z-index: 100000 !important;
         padding: 0 !important;
         margin: 0 !important;
     }
@@ -698,7 +698,7 @@
             position: fixed;               
             top: var(--margen-superior);                     
             right: var(--margen-derecho);                   
-            z-index: 99999;                
+            z-index: 100000;                
             line-height: 0;                
         }
 
