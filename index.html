@@ -743,3 +743,72 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redes Sociales Flotantes</title>
+    <!-- Enlace a Font Awesome para cargar los iconos -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        /* Contenedor principal de la barra */
+        .sidebar-social {
+            position: fixed; /* Mantiene la barra fija al hacer scroll */
+            right: 0;        /* La pega al borde derecho */
+            top: 50%;        /* La centra verticalmente */
+            transform: translateY(-50%); /* Ajuste perfecto de centrado */
+            display: flex;
+            flex-direction: column; /* Alinea los elementos en vertical */
+            z-index: 1000;   /* Asegura que quede por encima de todo */
+        }
+
+        /* Estilo general para cada enlace/icono */
+        .sidebar-social a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            color: white;    /* Color del icono */
+            font-size: 20px; /* Tamaño del icono */
+            text-decoration: none;
+            transition: all 0.3s ease; /* Animación suave al pasar el mouse */
+            border-radius: 5px 0 0 5px; /* Redondea solo las esquinas izquierdas */
+        }
+
+        /* Colores de fondo para cada red social */
+        .sidebar-social .facebook { background-color: #1877F2; }
+        .sidebar-social .instagram { background-color: #E1306C; }
+        .sidebar-social .x-twitter { background-color: #000000; }
+        .sidebar-social .youtube { background-color: #FF0000; }
+
+        /* Efecto de expansión al pasar el cursor (Hover) */
+        .sidebar-social a:hover {
+            width: 60px; /* Se hace un poco más ancho */
+            padding-right: 10px; /* Mueve el icono sutilmente */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor de las redes sociales -->
+    <div class="sidebar-social">
+        <!-- Reemplaza el '#' por tus enlaces reales -->
+        <a href="#" class="facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="x-twitter" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" class="youtube" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Contenido de prueba para demostrar el scroll de la página -->
+    <div style="padding: 20px; height: 2000px;">
+        <h1>Tu sitio web</h1>
+        <p>Haz scroll hacia abajo para ver cómo la barra se mantiene fija a la derecha.</p>
+    </div>
+
+</body>
+</html>
+
+
