@@ -13,3 +13,43 @@ h1 {
 p {
     font-size: 18px;
 }
+/* --- ESTILOS GENERALES (Para computadoras) --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor {
+    display: flex; /* Alinea los elementos de lado a lado */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.contenido {
+    flex: 3; /* Ocupa más espacio */
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+.lateral {
+    flex: 1; /* Ocupa menos espacio */
+    background: #ddd;
+    padding: 20px;
+}
+
+/* --- ESTILOS PARA MÓVILES (Pantallas menores a 768px) --- */
+@media (max-width: 768px) {
+    .contenedor {
+        flex-direction: column; /* Apila los elementos uno abajo del otro */
+        padding: 10px;
+    }
+
+    /* Asegura que las imágenes no se desborden de la pantalla */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
