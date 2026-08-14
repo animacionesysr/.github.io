@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página con Fondo Completo</title>
+    <style>
+        /* Restablece los márgenes del navegador */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* Configura la imagen de fondo */
+        .fondo-completo {
+            /* Reemplaza la URL por la ruta de tu imagen */
+            background-image: url('render 5.png'); 
+            
+            /* Asegura el alto total de la pantalla */
+            height: 100vh; 
+            
+            /* Centra la imagen vertical y horizontalmente */
+            background-position: center; 
+            
+            /* Evita que la imagen se repita como mosaico */
+            background-repeat: no-repeat; 
+            
+            /* Escala la imagen para cubrir todo el espacio sin deformarse */
+            background-size: cover; 
+            
+            /* Mantiene el fondo fijo al hacer scroll (opcional) */
+            background-attachment: fixed; 
+        }
+
+        /* Contenedor opcional para tu contenido */
+        .contenido {
+            color: white;
+            text-align: center;
+            padding-top: 20vh;
+            font-family: Arial, sans-serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor principal que lleva el fondo -->
+    <div class="fondo-completo">
+        
+        <!-- Tu contenido va aquí adentro -->
+        <div class="contenido">
+            <h1>¡Hola, Mundo!</h1>
+            <p>Esta página tiene un fondo de ancho y alto total.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
 
