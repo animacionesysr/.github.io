@@ -484,3 +484,149 @@
     });
 </script>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botón y Ventana Emergente Editable</title>
+    <style>
+        /* Estilos generales del cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        /* Botón posicionado a la izquierda (no centrado) */
+        .btn-abrir {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 12px 24px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .btn-abrir:hover {
+            background-color: #0056b3;
+        }
+
+        /* Fondo oscuro detrás de la ventana */
+        .modal-fondo {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ventana emergente con 70% de transparencia (0.3 de opacidad en el fondo) */
+        .modal-contenido {
+            background-color: rgba(255, 255, 255, 0.3); 
+            backdrop-filter: blur(10px); /* Efecto difuminado elegante */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto; /* Barra de desplazamiento si el texto es muy largo */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            color: #111; /* Texto oscuro para que sea legible sobre fondo transparente */
+            position: relative;
+        }
+
+        /* Botón para cerrar la ventana */
+        .btn-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Estilos para las imágenes dentro de la ventana */
+        .modal-contenido img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        /* Estilo visual para indicar que las secciones son editables al pasar el cursor */
+        [contenteditable="true"]:hover {
+            outline: 1px dashed #007BFF;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón de apertura -->
+    <button class="btn-abrir" onclick="abrirModal()">Abrir Información</button>
+
+    <!-- Estructura de la ventana emergente -->
+    <div class="modal-fondo" id="miModal">
+        <div class="modal-contenido">
+            <!-- Botón X para cerrar -->
+            <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
+            
+            <!-- Todo este bloque es 100% editable por el usuario -->
+            <div contenteditable="true">
+                <h2 style="margin-top: 0;">Título Editable (Haz clic aquí para cambiarlo)</h2>
+                
+                <p>Este es un bloque de texto bastante largo que puedes editar directamente desde tu navegador. Puedes borrar, escribir cosas nuevas o pegar lo que necesites. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                
+                <!-- Imagen 1 (Reemplaza el src con tu enlace) -->
+                <img src="https://picsum.photos" alt="Imagen de ejemplo 1">
+                
+                <p>Sección intermedia de texto. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Puedes seguir añadiendo párrafos o descripciones según lo requiera tu contexto.</p>
+                
+                <!-- Imagen 2 (Reemplaza el src con tu enlace) -->
+                <img src="https://picsum.photos" alt="Imagen de ejemplo 2">
+                
+                <p>Conclusión del texto extenso. Al tener la propiedad de edición activa, cualquier usuario que abra esta ventana podrá modificar esta información visualmente en tiempo real.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para controlar la lógica de apertura y cierre -->
+    <script>
+        const modal = document.getElementById('miModal');
+
+        function abrirModal() {
+            modal.style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            modal.style.display = 'none';
+        }
+
+        // Cierra la ventana si el usuario hace clic fuera del recuadro transparente
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
