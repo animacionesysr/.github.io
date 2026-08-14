@@ -37,167 +37,150 @@
 </body>
 </html>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Primera Página Web</title>
+    <title>Ventanas Transparentes Personalizables</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a; /* Cambiado a oscuro para que el texto blanco sea visible */
-            
-            /* Cambios clave para congelar y centrar */
-            margin: 0;
-            height: 100vh;             /* Usa el 80% de la altura de la pantalla */
+        /* Se eliminó el estilo del body para no alterar tu fondo original */
+
+        /* Contenedor de los botones principales */
+        .contenedor-botones {
+            margin-bottom: 30px;
             display: flex;
-            flex-direction: column;    /* Alinea los elementos uno abajo del otro */
-            justify-content: center;   /* Centrado vertical exacto (Cambiable) */
-            align-items: center;       /* Centrado horizontal exacto */
-            overflow: hidden;          /* Bloquea las barras de scroll */
+            gap: 15px;
         }
-        h1 {
-            color: #ffffff;            /* Color dorado */
-            margin: 10px 0;            /* Controla el espacio arriba/abajo del título */
+
+        /* Estilo de los botones disparadores */
+        .btn-abrir {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
         }
-        p {
-            color: #ffffff;            /* Corregido: agregado el '#' faltante */
-            font-size: 18px;
-            margin: 10px 0;            /* Controla el espacio arriba/abajo del párrafo */
+
+        /* Personalización individual de botones */
+        #btn1 { background-color: #e74c3c; }
+        #btn1:hover { background-color: #c0392b; transform: scale(1.05); }
+        
+        #btn2 { background-color: #2ecc71; }
+        #btn2:hover { background-color: #27ae60; transform: scale(1.05); }
+
+        /* --- VENTANAS (70% Transparentes) --- */
+        .ventana {
+            display: none; /* Ocultas por defecto */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        /* Ventana 1: Personalización (Fondo Rojo 70% transparente: alfa 0.3) */
+        #ventana1 {
+            background: rgba(231, 76, 60, 0.3); 
+            border: 1px solid rgba(231, 76, 60, 0.4);
+        }
+
+        /* Ventana 2: Personalización (Fondo Verde 70% transparente: alfa 0.3) */
+        #ventana2 {
+            background: rgba(46, 204, 113, 0.3);
+            border: 1px solid rgba(46, 204, 113, 0.4);
+        }
+
+        /* Contenido interno de las ventanas */
+        .ventana h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .ventana p {
+            font-size: 15px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* Botón de cierre dentro de las ventanas */
+        .btn-cerrar {
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-cerrar:hover {
+            background: rgba(255, 255, 255, 0.4);
         }
     </style>
 </head>
 <body>
-    <h1>¡Hola Bienvenido!</h1>
-    <p>En esta pagina encontraras todo lo relacionado con el tridente de las almas.</p>
+
+    <!-- Botones para activar las ventanas -->
+    <div class="contenedor-botones">
+        <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
+        <button class="btn-abrir" id="btn2" onclick="alternarVentana('ventana2')">Abrir Ventana Verde</button>
+    </div>
+
+    <!-- Ventana Número 1 -->
+    <div class="ventana" id="ventana1">
+        <h2>Ventana Roja</h2>
+        <p>Esta es la primera ventana. Tiene un diseño independiente, bordes suavizados y un 70% de transparencia real.</p>
+        <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
+    </div>
+
+    <!-- Ventana Número 2 -->
+    <div class="ventana" id="ventana2">
+        <h2>Ventana Verde</h2>
+        <p>Esta es la segunda ventana. Al abrirla, la ventana roja se cerrará automáticamente si estaba activa.</p>
+        <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
+    </div>
+
+    <script>
+        // Función principal para controlar la lógica
+        function alternarVentana(idVentana) {
+            // 1. Selecciona todas las ventanas de la página
+            const ventanas = document.querySelectorAll('.ventana');
+            
+            // 2. Guarda el estado actual de la ventana que queremos abrir (si ya está visible o no)
+            const ventanaObjetivo = document.getElementById(idVentana);
+            const estaAbierta = ventanaObjetivo.style.display === 'block';
+
+            // 3. Cierra absolutamente todas las ventanas abiertas primero
+            ventanas.forEach(v => v.style.display = 'none');
+
+            // 4. Si la ventana clickeada estaba cerrada, ahora la abre
+            if (!estaAbierta) {
+                ventanaObjetivo.style.display = 'block';
+            }
+        }
+
+        // Función simple para el botón de cierre manual interno
+        function cerrarVentanas() {
+            const ventanas = document.querySelectorAll('.ventana');
+            ventanas.forEach(v => v.style.display = 'none');
+        }
+    </script>
+
 </body>
 </html>
-
-<!-- COPIA ESTA SECCIÓN DE ESTILOS EN TU <head> O TU ARCHIVO .css -->
-<style>
-    /* Contenedor para alinear los botones en tu diseño */
-    .contenedor-botones-web {
-        margin: 20px 0;
-        display: flex;
-        gap: 15px;
-        justify-content: center; /* Centra los botones, cámbialo si lo necesitas */
-    }
-
-    /* Estilo base de tus nuevos botones */
-    .btn-personalizado {
-        padding: 12px 24px;
-        font-size: 16px;
-        font-weight: bold;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: transform 0.2s, background 0.3s;
-    }
-
-    /* PERSONALIZACIÓN INDIVIDUAL DE BOTONES (Cambia los colores a tu gusto) */
-    #btn-opcion1 { background-color: #3498db; }
-    #btn-opcion1:hover { background-color: #2980b9; transform: scale(1.02); }
-    
-    #btn-opcion2 { background-color: #9b59b6; }
-    #btn-opcion2:hover { background-color: #8e44ad; transform: scale(1.02); }
-
-    /* --- VENTANAS INTEGRADAS (No tapan títulos, se adaptan al flujo de tu web) --- */
-    .ventana-integrada {
-        display: none; /* Ocultas por defecto */
-        position: relative; /* Se coloca debajo de los botones de forma natural */
-        margin: 20px auto; /* Centrada con margen arriba y abajo */
-        width: 90%;
-        max-width: 500px; /* Ancho máximo para que no ocupe toda la pantalla */
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        
-        /* 70% de Transparencia real con desenfoque de fondo */
-        backdrop-filter: blur(12px); 
-        -webkit-backdrop-filter: blur(12px);
-        box-sizing: border-box;
-    }
-
-    /* Ventana 1: Personalización (Fondo Azul con 70% de transparencia -> alfa 0.3) */
-    #ventana-contenido1 {
-        background: rgba(52, 152, 219, 0.3); 
-        border: 1px solid rgba(52, 152, 219, 0.4);
-        color: #fff; /* Cambia a #000 si tu fondo es muy claro y necesitas texto negro */
-    }
-
-    /* Ventana 2: Personalización (Fondo Morado con 70% de transparencia -> alfa 0.3) */
-    #ventana-contenido2 {
-        background: rgba(155, 89, 182, 0.3);
-        border: 1px solid rgba(155, 89, 182, 0.4);
-        color: #fff;
-    }
-
-    /* Botón de cierre interno */
-    .btn-cerrar-integrado {
-        margin-top: 15px;
-        padding: 8px 16px;
-        background: rgba(255, 255, 255, 0.2);
-        color: inherit;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        border-radius: 6px;
-        cursor: pointer;
-        width: 100%;
-        font-weight: bold;
-        transition: background 0.2s;
-    }
-
-    .btn-cerrar-integrado:hover {
-        background: rgba(255, 255, 255, 0.4);
-    }
-</style>
-
-<!-- COPIA ESTA ESTRUCTURA EXACTAMENTE DEBAJO DE LOS TÍTULOS QUE YA TIENES -->
-<div class="contenedor-botones-web">
-    <button class="btn-personalizado" id="btn-opcion1" onclick="gestionarVentanas('ventana-contenido1')">Ver Sección 1</button>
-    <button class="btn-personalizado" id="btn-opcion2" onclick="gestionarVentanas('ventana-contenido2')">Ver Sección 2</button>
-</div>
-
-<!-- Ventana de Contenido 1 -->
-<div class="ventana-integrada" id="ventana-contenido1">
-    <h3>Contenido Personalizado 1</h3>
-    <p>Esta pestaña aparece justo debajo de tus títulos y botones. No tapa nada porque empuja el resto de tu web hacia abajo de forma limpia.</p>
-    <button class="btn-cerrar-integrado" onclick="cerrarTodasLasVentanas()">Ocultar pestaña</button>
-</div>
-
-<!-- Ventana de Contenido 2 -->
-<div class="ventana-integrada" id="ventana-contenido2">
-    <h3>Contenido Personalizado 2</h3>
-    <p>Al hacer clic aquí, la ventana anterior se oculta automáticamente para dejar espacio a esta nueva información.</p>
-    <button class="btn-cerrar-integrado" onclick="cerrarTodasLasVentanas()">Ocultar pestaña</button>
-</div>
-
-<!-- SCRIPT EN JAVASCRIPT (Puedes dejarlo al final de tu archivo HTML) -->
-<script>
-    function gestionarVentanas(idObjetivo) {
-        const todasLasVentanas = document.querySelectorAll('.ventana-integrada');
-        const ventanaActual = document.getElementById(idObjetivo);
-        
-        // Verifica si la ventana presionada ya estaba visible
-        const yaEstabaVisible = ventanaActual.style.display === 'block';
-
-        // Oculta todas primero para cumplir la regla de cerrar la pestaña abierta
-        todasLasVentanas.forEach(ventana => ventana.style.display = 'none');
-
-        // Si no estaba visible, la muestra
-        if (!yaEstabaVisible) {
-            ventanaActual.style.display = 'block';
-        }
-    }
-
-    function cerrarTodasLasVentanas() {
-        const todasLasVentanas = document.querySelectorAll('.ventana-integrada');
-        todasLasVentanas.forEach(ventana => ventana.style.display = 'none');
-    }
-</script>
-
 
 
 
