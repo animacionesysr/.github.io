@@ -13,3 +13,15 @@ h1 {
 p {
     font-size: 18px;
 }
+/* Para pantallas móviles (menos de 768px) */
+@media (max-width: 768px) {
+  .tus-botones {
+    margin: 5px; /* Reduce el espacio alrededor del botón */
+  }
+}
+@media (max-width: 768px) {
+  .contenedor-botones {
+    justify-content: center; /* Centra los botones */
+    gap: 10px; /* Controla la separación exacta en píxeles */
+  }
+}
