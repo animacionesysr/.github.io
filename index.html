@@ -299,4 +299,193 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería Transparente</title>
+    <style>
+        /* Estilos Base */
+        body {
+            font-family: Arial, sans-serif;
+            background: #222;
+            color: #fff;
+            margin: 0;
+            height: 100vh;
+        }
+
+        /* Botón Principal (Fijo al lado izquierdo y centrado verticalmente) */
+        .btn-abrir {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 15px 25px;
+            font-size: 18px;
+            background-color: rgba(0, 123, 255, 0.7); /* Azul con 70% opacidad */
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0; /* Bordes redondeados solo a la derecha */
+            cursor: pointer;
+            transition: background 0.3s, padding-left 0.2s;
+            z-index: 900;
+        }
+        .btn-abrir:hover {
+            background-color: rgba(0, 123, 255, 0.9);
+            padding-left: 30px; /* Pequeño efecto al pasar el mouse */
+        }
+
+        /* Ventanas Modales (70% Opacidad de fondo) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo negro al 70% */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Contenido de la Galería (12 Imágenes) */
+        .modal-galeria {
+            background-color: rgba(50, 50, 50, 0.7); /* Fondo gris al 70% */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+        }
+
+        /* Rejilla para las 12 imágenes */
+        .grid-imagenes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .grid-imagenes img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 5px;
+            opacity: 0.7; /* Miniaturas al 70% */
+            transition: opacity 0.3s;
+        }
+
+        .grid-imagenes img:hover {
+            opacity: 1;
+        }
+
+        /* Botones de Cerrar (70% Opacidad) */
+        .btn-cerrar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(255, 0, 0, 0.7); /* Rojo al 70% */
+            color: white;
+            border: none;
+            font-size: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .btn-cerrar:hover {
+            background: rgba(255, 0, 0, 0.9);
+        }
+
+        /* Ventana de Visor de Imagen Grande */
+        .visor-contenido {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo al 70% */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Tamaño estricto de 1280x720 para la imagen completa */
+        .imagen-grande {
+            width: 1280px;
+            height: 720px;
+            object-fit: contain;
+            display: block;
+            opacity: 0.7; /* Imagen final al 70% de opacidad */
+        }
+
+        /* Ajuste responsivo básico para pantallas pequeñas */
+        @media (max-width: 1300px) {
+            .imagen-grande {
+                width: 90vw;
+                height: auto;
+                max-height: 80vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón Principal (Fijo a la izquierda) -->
+    <button class="btn-abrir" onclick="abrirModal('modalGaleria')">Ver Galería</button>
+
+    <!-- VENTANA 1: Galería de 12 Imágenes -->
+    <div id="modalGaleria" class="modal">
+        <div class="modal-galeria">
+            <button class="btn-cerrar" onclick="cerrarModal('modalGaleria')">&times;</button>
+            <h3 style="margin-top:0; text-align:center;">Selecciona una imagen</h3>
+            
+            <div class="grid-imagenes">
+                <!-- Puedes editar los enlaces "src" con tus propias imágenes aquí -->
+                <img src="https://picsum.photos" alt="Imagen 1" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 2" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 3" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 4" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 5" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 6" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 7" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 8" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos" alt="Imagen 9" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos0" alt="Imagen 10" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos1" alt="Imagen 11" onclick="verImagenGrande(this.src)">
+                <img src="https://picsum.photos2" alt="Imagen 12" onclick="verImagenGrande(this.src)">
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANA 2: Visor de Imagen a 1280x720 -->
+    <div id="modalVisor" class="modal">
+        <div class="visor-contenido">
+            <button class="btn-cerrar" onclick="cerrarModal('modalVisor')">&times;</button>
+            <img id="imgDestino" class="imagen-grande" src="" alt="Imagen Ampliada">
+        </div>
+    </div>
+
+    <!-- Lógica de Funcionamiento -->
+    <script>
+        function abrirModal(idModal) {
+            document.getElementById(idModal).style.display = 'flex';
+        }
+
+        function cerrarModal(idModal) {
+            document.getElementById(idModal).style.display = 'none';
+        }
+
+        function verImagenGrande(urlImagen) {
+            document.getElementById('imgDestino').src = urlImagen;
+            abrirModal('modalVisor');
+        }
+
+        window.onclick = function(event) {
+            const modal1 = document.getElementById('modalGaleria');
+            const modal2 = document.getElementById('modalVisor');
+            if (event.target == modal1) modal1.style.display = 'none';
+            if (event.target == modal2) modal2.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
 
