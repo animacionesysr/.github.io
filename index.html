@@ -378,9 +378,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Botón de Imágenes Personalizable</title>
+  <title>Botón de Imágenes Flotante a la Izquierda</title>
   <style>
-    /* --- VARIABLES PERSONALIZABLES (Modifica los colores aquí) --- */
+    /* --- VARIABLES PERSONALIZABLES --- */
     :root {
       --color-boton-abrir: #007BFF;
       --color-boton-abrir-hover: #0056b3;
@@ -403,35 +403,48 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-right: 10px;
       transition: opacity 0.3s ease, background-color 0.3s ease;
     }
 
-    /* Botón específico de Imágenes */
+    /* UBICACIÓN FIJA EN LA IZQUIERDA PARA EL BOTÓN IMÁGENES */
     #btn-imagenes {
       background-color: var(--color-boton-abrir);
       color: var(--color-texto-boton);
+      position: fixed; /* Se queda fijo al hacer scroll */
+      left: 0;
+      top: 50%; /* Lo centra verticalmente */
+      transform: translateY(-50%); /* Ajuste perfecto de centrado */
+      z-index: 999; /* Se asegura de estar por encima del contenido común */
+      border-radius: 0 8px 8px 0; /* Bordes redondeados solo a la derecha */
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
     }
 
     #btn-imagenes:hover {
       background-color: var(--color-boton-abrir-hover);
+      padding-left: 30px; /* Pequeño efecto dinámico al pasar el mouse */
     }
 
-    /* Otros botones de ejemplo en la página */
+    /* Contenedor decorativo para los otros botones comunes de tu web */
+    .contenedor-otros-botones {
+      text-align: center;
+      margin-top: 50px;
+    }
+
     .otros-botones {
       background-color: #6c757d;
       color: white;
+      margin: 0 10px;
     }
 
     /* Clase que ocultará los demás botones de la página */
     .oculto {
       opacity: 0 !important;
-      pointer-events: none; /* Evita que se puedan clickear mientras no se ven */
+      pointer-events: none;
     }
 
     /* --- ESTILO DE LA VENTANA MODAL (70% TRANSPARENCIA) --- */
     .ventana-modal {
-      display: none; /* Oculta por defecto */
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
@@ -439,12 +452,11 @@
       height: 100%;
       background-color: var(--color-fondo-ventana);
       z-index: 1000;
-      overflow-y: auto; /* Permite scroll si hay muchas imágenes */
+      overflow-y: auto;
       padding: 40px 20px;
       box-sizing: border-box;
     }
 
-    /* Contenedor del contenido dentro de la ventana */
     .contenido-modal {
       max-width: 1000px;
       margin: 0 auto;
@@ -452,7 +464,6 @@
       text-align: center;
     }
 
-    /* Botón de cerrar */
     .btn-cerrar {
       position: absolute;
       top: -20px;
@@ -482,36 +493,36 @@
     .galeria-grid img {
       width: 100%;
       height: 150px;
-      object-fit: cover; /* Hace que las imágenes se adapten sin deformarse */
+      object-fit: cover;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
       transition: transform 0.2s;
     }
 
     .galeria-grid img:hover {
-      transform: scale(1.05); /* Efecto visual al pasar el mouse */
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
-  <!-- BOTONES DE LA PÁGINA -->
-  <!-- El botón de imágenes tiene un ID único, los demás tienen la clase 'otros-botones' -->
+  <!-- BOTÓN DE IMÁGENES (FIJO A LA IZQUIERDA) -->
   <button id="btn-imagenes" class="btn-pagina">Imágenes</button>
-  <button class="btn-pagina otros-botones">Inicio</button>
-  <button class="btn-pagina otros-botones">Contacto</button>
-  <button class="btn-pagina otros-botones">Acerca de</button>
 
-  <!-- VENTANA MODAL (EL CONTENEDOR TRANSPARENTE) -->
+  <!-- OTROS BOTONES DE EJEMPLO EN LA PÁGINA -->
+  <div class="contenedor-otros-botones">
+    <button class="btn-pagina otros-botones">Inicio</button>
+    <button class="btn-pagina otros-botones">Contacto</button>
+    <button class="btn-pagina otros-botones">Acerca de</button>
+  </div>
+
+  <!-- VENTANA MODAL (70% TRANSPARENTE) -->
   <div id="mi-ventana-modal" class="ventana-modal">
     <div class="contenido-modal">
       
-      <!-- Botón para cerrar la ventana -->
       <button id="btn-cerrar-modal" class="btn-cerrar">Cerrar ×</button>
 
-      <!-- Contenedor para tus 10 a 15 imágenes -->
       <div class="galeria-grid">
-        <!-- Reemplaza el atributo 'src' con las rutas o links reales de tus imágenes -->
         <img src="https://picsum.photos" alt="Imagen 1">
         <img src="https://picsum.photos" alt="Imagen 2">
         <img src="https://picsum.photos" alt="Imagen 3">
@@ -529,24 +540,21 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT PARA EL LOGIC DE OCULTAR/MOSTRAR -->
+  <!-- SCRIPT DE CONTROL -->
   <script>
     const btnImagenes = document.getElementById('btn-imagenes');
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
     const ventanaModal = document.getElementById('mi-ventana-modal');
-    // Selecciona todos los botones que no sean el de imágenes
     const otrosBotones = document.querySelectorAll('.otros-botones');
 
-    // Acción al abrir
     btnImagenes.addEventListener('click', () => {
-      ventanaModal.style.display = 'block'; // Muestra la ventana
-      otrosBotones.forEach(boton => boton.classList.add('oculto')); // Desaparece los otros botones
+      ventanaModal.style.display = 'block';
+      otrosBotones.forEach(boton => boton.classList.add('oculto'));
     });
 
-    // Acción al cerrar
     btnCerrarModal.addEventListener('click', () => {
-      ventanaModal.style.display = 'none'; // Oculta la ventana
-      otrosBotones.forEach(boton => boton.classList.remove('oculto')); // Reaparece los otros botones
+      ventanaModal.style.display = 'none';
+      otrosBotones.forEach(boton => boton.classList.remove('oculto'));
     });
   </script>
 
