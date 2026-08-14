@@ -373,5 +373,180 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería con Control de Botones</title>
+  <style>
+    /* --- VARIABLES PERSONALIZABLES --- */
+    :root {
+      --color-boton-abrir: #007BFF;
+      --color-boton-abrir-hover: #0056b3;
+      --color-texto-boton: #ffffff;
+      --color-fondo-ventana: rgba(0, 0, 0, 0.7); /* 70% de transparencia */
+      --color-boton-cerrar: #ff4d4d;
+      --color-boton-cerrar-hover: #cc0000;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f9;
+    }
+
+    /* --- ESTILO DEL BOTÓN PRINCIPAL (IZQUIERDA) --- */
+    #btn-imagenes {
+      background-color: var(--color-boton-abrir);
+      color: var(--color-texto-boton);
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s, padding-left 0.3s;
+    }
+
+    #btn-imagenes:hover {
+      background-color: var(--color-boton-abrir-hover);
+      padding-left: 30px;
+    }
+
+    /* --- CLASE PARA OCULTAR TUS DOS BOTONES --- */
+    /* Usamos display: none para que no ocupen espacio ni interfieran visualmente */
+    .ocultar-elemento {
+      display: none !important;
+    }
+
+    /* --- ESTILO DE LA VENTANA MODAL (70% TRANSPARENCIA) --- */
+    .ventana-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-fondo-ventana);
+      z-index: 1000; /* Capa por encima de todo */
+      overflow-y: auto;
+      padding: 80px 20px 40px 20px; /* Espacio superior para que no choque con el botón cerrar */
+      box-sizing: border-box;
+    }
+
+    .contenido-modal {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* BOTÓN DE CERRAR CORREGIDO (FIJO EN LA ESQUINA SUPERIOR DERECHA) */
+    .btn-cerrar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--color-boton-cerrar);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1001; /* Asegura estar por encima del fondo y de las imágenes */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    .btn-cerrar:hover {
+      background-color: var(--color-boton-cerrar-hover);
+      transform: scale(1.05);
+    }
+
+    /* --- CUADRÍCULA DE IMÁGENES --- */
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .galeria-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BOTÓN DE IMÁGENES -->
+  <button id="btn-imagenes">Imágenes</button>
+
+  <!-- TUS DOS BOTONES EXISTENTES -->
+  <!-- IMPORTANTE: Añade la clase "interfaz-a-ocultar" a los botones que ya tienes en tu web -->
+  <div style="text-align: center; margin-top: 50px;">
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 1</button>
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 2</button>
+  </div>
+
+  <!-- VENTANA MODAL (70% TRANSPARENTE) -->
+  <div id="mi-ventana-modal" class="ventana-modal">
+    
+    <!-- El botón de cerrar ahora es independiente y fijo -->
+    <button id="btn-cerrar-modal" class="btn-cerrar">Cerrar ×</button>
+
+    <div class="contenido-modal">
+      <div class="galeria-grid">
+        <img src="https://picsum.photos" alt="Imagen 1">
+        <img src="https://picsum.photos" alt="Imagen 2">
+        <img src="https://picsum.photos" alt="Imagen 3">
+        <img src="https://picsum.photos" alt="Imagen 4">
+        <img src="https://picsum.photos" alt="Imagen 5">
+        <img src="https://picsum.photos" alt="Imagen 6">
+        <img src="https://picsum.photos" alt="Imagen 7">
+        <img src="https://picsum.photos" alt="Imagen 8">
+        <img src="https://picsum.photos" alt="Imagen 9">
+        <img src="https://picsum.photos0" alt="Imagen 10">
+        <img src="https://picsum.photos1" alt="Imagen 11">
+        <img src="https://picsum.photos2" alt="Imagen 12">
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT DE CONTROL -->
+  <script>
+    const btnImagenes = document.getElementById('btn-imagenes');
+    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+    const ventanaModal = document.getElementById('mi-ventana-modal');
+    
+    // Selecciona de forma automática los botones que tengan la clase que asignamos
+    const botonesAAfectar = document.querySelectorAll('.interfaz-a-ocultar');
+
+    // Acción al abrir la ventana
+    btnImagenes.addEventListener('click', () => {
+      ventanaModal.style.display = 'block';
+      // Oculta por completo tus dos botones
+      botonesAAfectar.forEach(boton => boton.classList.add('ocultar-elemento'));
+    });
+
+    // Acción al cerrar la ventana
+    btnCerrarModal.addEventListener('click', () => {
+      ventanaModal.style.display = 'none';
+      // Devuelve tus dos botones a la normalidad
+      botonesAAfectar.forEach(boton => boton.classList.remove('ocultar-elemento'));
+    });
+  </script>
+
+</body>
+</html>
+
 
 
