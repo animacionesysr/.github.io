@@ -44,13 +44,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventanas Transparentes Personalizables</title>
     <style>
-        /* Se eliminó el estilo del body para no alterar tu fondo original */
+        /* Se mantiene libre el body para no alterar tu fondo original ni tus títulos */
 
-        /* Contenedor de los botones principales */
+        /* BARRA LATERAL FIJA: Los botones se quedan acoplados a la izquierda de tu web */
         .contenedor-botones {
-            margin-bottom: 30px;
+            position: fixed;
+            top: 50%;
+            left: 20px; /* Distancia desde el borde izquierdo */
+            transform: translateY(-50%); /* Centrado vertical perfecto */
             display: flex;
+            flex-direction: column; /* Alinea los botones uno debajo del otro */
             gap: 15px;
+            z-index: 1001; /* Asegura que queden por encima de todo */
         }
 
         /* Estilo de los botones disparadores */
@@ -63,6 +68,8 @@
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, background 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: left; /* Alineación del texto del botón */
         }
 
         /* Personalización individual de botones */
@@ -77,7 +84,7 @@
             display: none; /* Ocultas por defecto */
             position: fixed;
             top: 50%;
-            left: 50%;
+            left: 55%; /* Movida ligeramente a la derecha para no tapar los botones laterales */
             transform: translate(-50%, -50%);
             width: 350px;
             padding: 25px;
@@ -133,7 +140,7 @@
 </head>
 <body>
 
-    <!-- Botones para activar las ventanas -->
+    <!-- Botones acoplados fijamente al lado izquierdo -->
     <div class="contenedor-botones">
         <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
         <button class="btn-abrir" id="btn2" onclick="alternarVentana('ventana2')">Abrir Ventana Verde</button>
@@ -166,12 +173,9 @@
             // 3. Cierra absolutamente todas las ventanas abiertas primero
             ventanas.forEach(v => v.style.display = 'none');
 
-            // 4. Si la ventana clickeada estaba cerrada, ahora la abre y desliza la pantalla
+            // 4. Si la ventana clickeada estaba cerrada, ahora la abre
             if (!estaAbierta) {
                 ventanaObjetivo.style.display = 'block';
-                
-                // LÍNEA NUEVA: Desliza la pantalla de forma suave hacia la ventana abierta
-                ventanaObjetivo.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
@@ -184,8 +188,6 @@
 
 </body>
 </html>
-
-    
 
 
 
