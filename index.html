@@ -299,4 +299,219 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería con Cierre Aislado</title>
+  <style>
+    /* --- VARIABLES PERSONALIZABLES --- */
+    :root {
+      --color-boton-abrir: #007BFF;
+      --color-boton-abrir-hover: #0056b3;
+      --color-texto-boton: #ffffff;
+      --color-fondo-ventana: rgba(0, 0, 0, 0.7); /* 70% de transparencia */
+      --color-boton-cerrar: #ff4d4d;
+      --color-boton-cerrar-hover: #cc0000;
+    }
 
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f9;
+    }
+
+    /* --- ESTILO DEL BOTÓN PRINCIPAL (IZQUIERDA) --- */
+    #btn-imagenes {
+      background-color: var(--color-boton-abrir);
+      color: var(--color-texto-boton);
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Clase para ocultar elementos de tu página */
+    .ocultar-elemento {
+      display: none !important;
+    }
+
+    /* --- ESTILO DE LA VENTANA MODAL (70% TRANSPARENCIA) --- */
+    .ventana-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-fondo-ventana);
+      z-index: 99999; /* Por encima de tus otros botones */
+      overflow-y: auto;
+      padding: 100px 20px 40px 20px; /* Margen superior amplio */
+      box-sizing: border-box;
+    }
+
+    .contenido-modal {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* CAPA AISLANTE EXCLUSIVA PARA EL BOTÓN DE CERRAR */
+    .contenedor-fijo-cerrar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100005; /* La capa más alta de la app, libre de solapamientos */
+      pointer-events: auto; /* Asegura que el clic funcione solo aquí */
+    }
+
+    .btn-cerrar {
+      background-color: var(--color-boton-cerrar);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: background-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-cerrar:hover {
+      background-color: var(--color-boton-cerrar-hover);
+      transform: scale(1.05);
+    }
+
+    /* --- CUADRÍCULA DE IMÁGENES --- */
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .galeria-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      cursor: zoom-in;
+    }
+
+    /* --- LIGHTBOX (ZOOM) --- */
+    .lightbox-zoom {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 200000;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+    }
+
+    .lightbox-zoom img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BOTÓN DE IMÁGENES -->
+  <button id="btn-imagenes">Imágenes</button>
+
+  <!-- TUS OTROS BOTONES (Añádeles la clase "interfaz-a-ocultar" para borrarlos al abrir) -->
+  <div style="text-align: center; margin-top: 50px;">
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 1</button>
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 2</button>
+  </div>
+
+  <!-- VENTANA MODAL DE LA GALERÍA -->
+  <div id="mi-ventana-modal" class="ventana-modal">
+    
+    <!-- CONTENEDOR AISLADO: Evita enlaces erróneos con elementos inferiores -->
+    <div class="contenedor-fijo-cerrar">
+      <button id="btn-cerrar-modal" class="btn-cerrar">Cerrar ×</button>
+    </div>
+
+    <div class="contenido-modal">
+      <div class="galeria-grid">
+        <img src="https://picsum.photos" alt="Imagen 1">
+        <img src="https://picsum.photos" alt="Imagen 2">
+        <img src="https://picsum.photos" alt="Imagen 3">
+        <img src="https://picsum.photos" alt="Imagen 4">
+        <img src="https://picsum.photos" alt="Imagen 5">
+        <img src="https://picsum.photos" alt="Imagen 6">
+        <img src="https://picsum.photos" alt="Imagen 7">
+        <img src="https://picsum.photos" alt="Imagen 8">
+        <img src="https://picsum.photos" alt="Imagen 9">
+        <img src="https://picsum.photos0" alt="Imagen 10">
+        <img src="https://picsum.photos1" alt="Imagen 11">
+        <img src="https://picsum.photos2" alt="Imagen 12">
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX DE ZOOM -->
+  <div id="lightbox" class="lightbox-zoom">
+    <img id="imagen-maximizada" src="" alt="Zoom">
+  </div>
+
+  <!-- SCRIPT DE CONTROL -->
+  <script>
+    const btnImagenes = document.getElementById('btn-imagenes');
+    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+    const ventanaModal = document.getElementById('mi-ventana-modal');
+    const botonesAAfectar = document.querySelectorAll('.interfaz-a-ocultar');
+
+    const lightbox = document.getElementById('lightbox');
+    const imagenMaximizada = document.getElementById('imagen-maximizada');
+    const imagenesGaleria = document.querySelectorAll('.galeria-grid img');
+
+    // Abrir galería
+    btnImagenes.addEventListener('click', () => {
+      ventanaModal.style.display = 'block';
+      botonesAAfectar.forEach(boton => boton.classList.add('ocultar-elemento'));
+    });
+
+    // Cerrar galería
+    btnCerrarModal.addEventListener('click', () => {
+      ventanaModal.style.display = 'none';
+      botonesAAfectar.forEach(boton => boton.classList.remove('ocultar-elemento'));
+    });
+
+    // Abrir Zoom
+    imagenesGaleria.forEach(img => {
+      img.addEventListener('click', (e) => {
+        imagenMaximizada.src = e.target.src;
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    // Cerrar Zoom
+    lightbox.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+      imagenMaximizada.src = "";
+    });
+  </script>
+
+</body>
+</html>
