@@ -483,15 +483,14 @@
         if (e.target === modalV) modalV.style.display = 'none';
     });
 </script>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventana Emergente con Modo Administrador</title>
+    <title>Ventana Emergente Corregida</title>
     <style>
-        /* Fondo con imagen de ejemplo */
+        /* Fondo con imagen */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -501,19 +500,20 @@
             height: 100vh;
         }
 
-        /* Botón a la izquierda, arriba y fijo (no se desliza) */
+        /* Botón al ras del margen izquierdo de la página */
         .btn-abrir {
             position: fixed;
-            left: 30px;
-            top: 40px; /* Posicionado arriba, respetando márgenes */
-            padding: 12px 24px;
+            left: 0; /* Totalmente al borde */
+            top: 40px; /* Posición superior fija */
+            padding: 12px 20px;
             background-color: #007BFF;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-top-right-radius: 5px; /* Bordes redondeados solo a la derecha */
+            border-bottom-right-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 2px 4px 6px rgba(0,0,0,0.3);
             z-index: 10;
         }
 
@@ -541,7 +541,7 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
+            padding: 40px 30px 30px 30px; /* Más espacio superior para que no tape la X */
             border-radius: 12px;
             width: 80%;
             max-width: 600px;
@@ -552,15 +552,22 @@
             position: relative;
         }
 
+        /* Botón X de cerrar */
         .btn-cerrar {
             position: absolute;
-            top: 15px;
+            top: 10px;
             right: 15px;
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 30px; /* Más grande para fácil clic */
             cursor: pointer;
             color: #000;
+            line-height: 1;
+            z-index: 110; /* Asegura que esté por encima del texto */
+        }
+
+        .btn-cerrar:hover {
+            color: #ff0000; /* Se vuelve rojo al pasar el cursor */
         }
 
         .modal-contenido img {
@@ -571,7 +578,7 @@
             border-radius: 6px;
         }
 
-        /* Indicador visual exclusivo para cuando tú estés editando */
+        /* Indicador visual de edición */
         .modo-editor {
             outline: 2px dashed #28a745 !important;
             background-color: rgba(255, 255, 255, 0.4);
@@ -580,15 +587,16 @@
 </head>
 <body>
 
-    <!-- Botón fijo arriba a la izquierda -->
+    <!-- Botón al ras del margen izquierdo -->
     <button class="btn-abrir" onclick="abrirModal()">Abrir Menú</button>
 
     <!-- Ventana emergente -->
     <div class="modal-fondo" id="miModal">
         <div class="modal-contenido">
+            <!-- Botón de cierre garantizado -->
             <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
             
-            <!-- Bloque protegido por defecto -->
+            <!-- Bloque de contenido -->
             <div id="areaEditable" contenteditable="false">
                 <h2 style="margin-top: 0;">Título de la Ventana</h2>
                 
@@ -606,9 +614,11 @@
     </div>
 
     <script>
+        // Referencias a los elementos del DOM
         const modal = document.getElementById('miModal');
         const areaEditable = document.getElementById('areaEditable');
 
+        // Funciones de control de la ventana
         function abrirModal() {
             modal.style.display = 'flex';
         }
@@ -617,28 +627,27 @@
             modal.style.display = 'none';
         }
 
+        // Cierra la ventana si el usuario hace clic fuera del recuadro transparente
         window.onclick = function(event) {
             if (event.target === modal) {
                 cerrarModal();
             }
         }
 
-        // LÓGICA EXCLUSIVA PARA TI (ADMINISTRADOR)
-        // Presiona Ctrl + E en tu teclado para activar/desactivar la edición
+        // LÓGICA DE EDICIÓN EXCLUSIVA (Presiona Ctrl + E)
         window.addEventListener('keydown', function(event) {
             if (event.ctrlKey && event.key.toLowerCase() === 'e') {
-                event.preventDefault(); // Evita funciones del navegador
+                event.preventDefault(); 
                 
-                // Cambia el estado de edición
-                if (areaEditable.contenteditable === "true" || areaEditable.getAttribute('contenteditable') === 'true') {
+                if (areaEditable.getAttribute('contenteditable') === 'true') {
                     areaEditable.setAttribute('contenteditable', 'false');
                     areaEditable.classList.remove('modo-editor');
-                    alert('Modo edición: DESACTIVADO (Protegido para usuarios)');
+                    alert('Modo edición: DESACTIVADO');
                 } else {
                     areaEditable.setAttribute('contenteditable', 'true');
                     areaEditable.classList.add('modo-editor');
                     areaEditable.focus();
-                    alert('Modo edición: ACTIVADO (Solo tú puedes editar ahora)');
+                    alert('Modo edición: ACTIVADO (Solo tú puedes editar)');
                 }
             }
         });
@@ -646,3 +655,4 @@
 
 </body>
 </html>
+
