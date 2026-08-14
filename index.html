@@ -132,6 +132,226 @@
 
 </body>
 </html>
+<!-- BOTONES PRINCIPALES -->
+<div class="contenedor-botones-emergentes">
+  <button class="btn-abrir-popup" onclick="abrirPopup('popup1')">Abrir Ventana 1</button>
+  <button class="btn-abrir-popup" onclick="abrirPopup('popup2')">Abrir Ventana 2</button>
+</div>
+
+<!-- VENTANA EMERGENTE 1 -->
+<div id="popup1" class="popup-overlay">
+  <div class="popup-contenido">
+    <button class="btn-cerrar-popup" onclick="cerrarPopup('popup1')">&times;</button>
+    
+    <h2>Título de la Ventana 1</h2>
+    
+    <div class="popup-texto">
+      <p>Aquí puedes escribir todo el texto largo que necesites. Este contenedor tiene una barra de desplazamiento interna automática para que el diseño no se rompa si agregas miles de palabras. Puedes estructurarlo con párrafos, listas o títulos adicionales según lo requieras.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
+    <h3>Galería de Imágenes (70% Transparentes)</h3>
+    <div class="popup-galeria">
+      <!-- Reemplaza las URLs de las imágenes (src) por las tuyas -->
+      <img src="https://picsum.photos" alt="Imagen 1" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos" alt="Imagen 2" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos" alt="Imagen 3" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos" alt="Imagen 4" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos" alt="Imagen 5" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos" alt="Imagen 6" onclick="ampliarImagen(this)">
+    </div>
+  </div>
+</div>
+
+<!-- VENTANA EMERGENTE 2 -->
+<div id="popup2" class="popup-overlay">
+  <div class="popup-contenido">
+    <button class="btn-cerrar-popup" onclick="cerrarPopup('popup2')">&times;</button>
+    
+    <h2>Título de la Ventana 2</h2>
+    
+    <div class="popup-texto">
+      <p>Este es el texto editable para la segunda ventana emergente. Al igual que la primera, es completamente independiente y soporta grandes volúmenes de información sin alterar el tamaño de la ventana ni el diseño general de tu sitio web.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+
+    <h3>Galería de Imágenes (70% Transparentes)</h3>
+    <div class="popup-galeria">
+      <img src="https://picsum.photos" alt="Imagen 7" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos" alt="Imagen 8" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos" alt="Imagen 9" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos0" alt="Imagen 10" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos1" alt="Imagen 11" onclick="ampliarImagen(this)">
+      <img src="https://picsum.photos2" alt="Imagen 12" onclick="ampliarImagen(this)">
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX PARA VER IMÁGENES EN TAMAÑO COMPLETO -->
+<div id="lightbox-visor" class="lightbox" onclick="cerrarImagen()">
+  <span class="lightbox-cerrar">&times;</span>
+  <img class="lightbox-contenido" id="img-ampliada">
+</div>
+
+<!-- ESTILOS CSS (Aislados para no romper tu diseño) -->
+<style>
+/* Contenedor de tus botones */
+.contenedor-botones-emergentes {
+  display: flex;
+  gap: 15px;
+  margin: 20px;
+}
+.btn-abrir-popup {
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+.btn-abrir-popup:hover {
+  background-color: #0056b3;
+}
+
+/* Ventanas emergentes (Fondo oscuro detrás de la ventana) */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 99999; /* Prioridad alta para que se vea por encima de todo */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caja de contenido de la ventana */
+.popup-contenido {
+  background: #ffffff;
+  width: 90%;
+  max-width: 650px;
+  max-height: 85vh;
+  padding: 25px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Botón de cerrar de la ventana */
+.btn-cerrar-popup {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Zona de texto con scroll interno */
+.popup-texto {
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding-right: 10px;
+  max-height: 200px; /* Ajusta este tamaño si quieres más o menos texto visible a la vez */
+  font-size: 15px;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* Cuadrícula de 6 imágenes */
+.popup-galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+.popup-galeria img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.7; /* 70% de opacidad (semitransparente) */
+  transition: opacity 0.3s, transform 0.2s;
+}
+/* Efecto hover: se vuelve 100% opaca al pasar el mouse por encima */
+.popup-galeria img:hover {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* Lightbox para pantalla completa sin perder el fondo */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 100000; /* Por encima de la ventana emergente */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro translúcido */
+  justify-content: center;
+  align-items: center;
+}
+.lightbox-contenido {
+  max-width: 90%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  animation: zoomEfecto 0.25s ease-out;
+}
+.lightbox-cerrar {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes zoomEfecto {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+
+<!-- SCRIPT JAVASCRIPT (Funcionalidad aislada) -->
+<script>
+// Abre la ventana emergente seleccionada
+function abrirPopup(id) {
+  document.getElementById(id).style.display = 'flex';
+}
+
+// Cierra la ventana emergente seleccionada
+function cerrarPopup(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+// Muestra la imagen clickeada en pantalla completa
+function ampliarImagen(elemento) {
+  const lightbox = document.getElementById('lightbox-visor');
+  const imgAmpliada = document.getElementById('img-ampliada');
+  imgAmpliada.src = elemento.src;
+  lightbox.style.display = 'flex';
+}
+
+// Cierra el visor de pantalla completa
+function cerrarImagen() {
+  document.getElementById('lightbox-visor').style.display = 'none';
+}
+</script>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
