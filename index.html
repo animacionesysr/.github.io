@@ -588,4 +588,106 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería con Zoom</title>
+    <style>
+        /* Estilos de las imágenes en la galería */
+        .galeria {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .galeria img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .galeria img:hover {
+            opacity: 0.8;
+        }
+
+        /* Estilos de la ventana modal (oculta por defecto) */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Imagen dentro de la modal */
+        .modal-contenido {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 4px;
+            animation: zoom 0.3s ease-in-out;
+        }
+
+        /* Botón para cerrar */
+        .cerrar {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Animación de apertura */
+        @keyframes zoom {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Galería de imágenes -->
+    <div class="galeria">
+        <img src="https://picsum.photos" alt="Imagen 1" class="zoom-img">
+        <img src="https://picsum.photos" alt="Imagen 2" class="zoom-img">
+        <img src="https://picsum.photos" alt="Imagen 3" class="zoom-img">
+    </div>
+
+    <!-- Estructura de la ventana modal -->
+    <div id="miModal" class="modal" onclick="cerrarModal()">
+        <span class="cerrar">&times;</span>
+        <img class="modal-contenido" id="imgModal">
+    </div>
+
+    <script>
+        const modal = document.getElementById("miModal");
+        const imgModal = document.getElementById("imgModal");
+        const imagenes = document.querySelectorAll(".zoom-img");
+
+        // Asignar el evento click a todas las imágenes de la galería
+        imagenes.forEach(img => {
+            img.addEventListener("click", function() {
+                modal.style.display = "flex";    // Muestra la modal
+                imgModal.src = this.src;         // Copia la ruta de la imagen
+            });
+        });
+
+        // Función para cerrar la modal al hacer clic fuera o en la 'X'
+        function cerrarModal() {
+            modal.style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
 
