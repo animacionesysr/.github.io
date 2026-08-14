@@ -59,7 +59,6 @@
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -75,6 +74,20 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
+            background-color: #1a1a1a; /* Fondo oscuro para contrastar el diseño de cristal */
+        }
+
+        /* --- NUEVO: Telón de fondo (Overlay) para bloquear elementos traseros --- */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1500; /* Por debajo de la ventana, por encima de los botones */
         }
 
         /* ==========================================================================
@@ -87,7 +100,7 @@
             transform: translateX(-50%);
             display: flex;
             gap: 15px;
-            z-index: 1001;
+            z-index: 1000; /* Reducido para quedar por debajo de las ventanas */
         }
 
         .btn-abrir {
@@ -114,20 +127,18 @@
         .ventana {
             display: none;
             position: fixed;
-            top: 50%; /* Centrado vertical exacto */
+            top: 50%; 
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px; /* Se amplió el ancho a 450px para organizar mejor las imágenes */
-            max-height: 80vh; /* Máxima altura permitida: 80% de la pantalla */
+            width: 450px; 
+            max-height: 80vh; 
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
+            z-index: 2000; /* Incrementado para estar por encima de TODO */
             box-sizing: border-box;
-            
-            /* Habilita el scroll interno si el contenido supera la altura */
             overflow-y: auto; 
         }
 
@@ -144,7 +155,7 @@
             border-radius: 10px;
         }
 
-        /* --- TRANSPARENCIAS PERSONALIZADAS (70% transparente: alfa 0.3) --- */
+        /* --- TRANSPARENCIAS PERSONALIZADAS --- */
         #ventana1 {
             background: rgba(231, 76, 60, 0.3); 
             border: 1px solid rgba(231, 76, 60, 0.4);
@@ -172,24 +183,23 @@
             margin-bottom: 20px;
         }
 
-        /* --- NUEVO: GALERÍA DE IMÁGENES EN CUADRÍCULA (Soporta +5 imágenes) --- */
+        /* --- GALERÍA DE IMÁGENES EN CUADRÍCULA --- */
         .galeria-imagenes {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 imágenes por fila de forma organizada */
-            gap: 10px; /* Separación entre fotos */
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
             margin-bottom: 20px;
         }
 
         .ventana-img {
             width: 100%;
-            height: 120px; /* Altura ideal para la cuadrícula */
+            height: 120px; 
             object-fit: cover;
             border-radius: 6px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             transition: transform 0.2s;
         }
 
-        /* Efecto visual al pasar el cursor sobre cualquier imagen */
         .ventana-img:hover {
             transform: scale(1.03);
         }
@@ -222,6 +232,9 @@
 </head>
 <body>
 
+    <!-- Capa oscura de fondo para bloqueo visual -->
+    <div id="overlay" class="overlay" onclick="cerrarVentanas()"></div>
+
     <!-- Botones disparadores -->
     <div id="contenedorBotones">
         <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
@@ -231,13 +244,9 @@
     <!-- Ventana Número 1 -->
     <div class="ventana" id="ventana1">
         <h2>Ventana Roja</h2>
-        
-        <!-- Bloque de texto largo -->
         <p>
             Este es un ejemplo de texto bastante extenso para demostrar el nuevo sistema de desplazamiento. Puedes rellenar esta sección con párrafos enteros de información, especificaciones técnicas, historias o descripciones detalladas. Al superar la altura máxima configurada, la ventana activará automáticamente una elegante barra de scroll lateral en el costado derecho. De esta manera, el diseño general no se desborda y sigue luciendo limpio, manteniendo los botones ocultos y enfocando al usuario únicamente en este contenido.
         </p>
-
-        <!-- Galería para poner más de 5 imágenes (Aquí hay 6) -->
         <div class="galeria-imagenes">
             <img src="https://picsum.photos" alt="Imagen 1" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 2" class="ventana-img">
@@ -246,59 +255,48 @@
             <img src="https://picsum.photos" alt="Imagen 5" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 6" class="ventana-img">
         </div>
-
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
     <!-- Ventana Número 2 -->
     <div class="ventana" id="ventana2">
         <h2>Ventana Verde</h2>
-        
         <p>
             Esta segunda ventana aplica exactamente la misma lógica de adaptabilidad. No importa si agregas 5, 10 o 20 imágenes o textos gigantescos; todo se encapsula perfectamente dentro de la cuadrícula interna. Los bordes translúcidos con desenfoque de fondo "backdrop-filter" se mantienen fijos mientras el usuario desliza la información, logrando un acabado moderno y profesional estilo cristal (Glassmorphism).
         </p>
-
-        <!-- Segunda galería de ejemplo -->
         <div class="galeria-imagenes">
             <img src="https://picsum.photos" alt="Imagen 7" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 8" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 9" class="ventana-img">
             <img src="https://picsum.photos0" alt="Imagen 10" class="ventana-img">
-            <img src="https://picsum.photos1" alt="Imagen 11" class="ventana-img">
-            <img src="https://picsum.photos2" alt="Imagen 12" class="ventana-img">
         </div>
-
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
+    <!-- JavaScript para controlar la lógica de apertura y cierre -->
     <script>
-        const contenedorBotones = document.getElementById('contenedorBotones');
-
         function alternarVentana(idVentana) {
-            const ventanas = document.querySelectorAll('.ventana');
-            const ventanaObjetivo = document.getElementById(idVentana);
-            const estaAbierta = ventanaObjetivo.style.display === 'block';
-
-            ventanas.forEach(v => v.style.display = 'none');
-
-            if (!estaAbierta) {
-                ventanaObjetivo.style.display = 'block';
-                contenedorBotones.style.display = 'none';
-                ventanaObjetivo.scrollTop = 0; // Resetea el scroll hacia arriba al abrirse
-            } else {
-                contenedorBotones.style.display = 'flex';
-            }
+            // Cerrar cualquier ventana abierta primero
+            cerrarVentanas();
+            
+            // Mostrar la ventana seleccionada y el overlay protector
+            document.getElementById(idVentana).style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
         }
 
         function cerrarVentanas() {
+            // Ocultar todas las ventanas de la clase .ventana
             const ventanas = document.querySelectorAll('.ventana');
-            ventanas.forEach(v => v.style.display = 'none');
-            contenedorBotones.style.display = 'flex';
+            ventanas.forEach(ventana => {
+                ventana.style.display = 'none';
+            });
+            // Ocultar el overlay
+            document.getElementById('overlay').style.display = 'none';
         }
     </script>
-
 </body>
 </html>
+
 <!-- CÓDIGO HTML Y CSS OPTIMIZADO Y CORREGIDO -->
 <style>
     /* Botón flotante a la izquierda (Aislado) */
