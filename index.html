@@ -668,9 +668,9 @@
     <style>
         /* --- CONFIGURACIÓN EDITABLE --- */
         :root {
-            --tamano-imagen: 150px;       /* Cambia este valor para hacerla más grande o pequeña */
-            --color-brillo: #00d2ff;      /* Cambia el color del brillo (puedes usar nombres, hex o rgb) */
-            --intensidad-brillo: 20px;    /* Qué tan lejos se extiende el brillo */
+            --tamano-imagen: 100px;       /* Cambia este valor para hacerla más grande o pequeña (ej: 80px, 150px) */
+            --color-brillo: #00d2ff;      /* Cambia el color del brillo (puedes usar gold, red, #ff0000, etc.) */
+            --intensidad-brillo: 15px;    /* Qué tan lejos se extiende el brillo */
             --velocidad-brillo: 1.5s;     /* Qué tan rápido parpadea el brillo */
         }
 
@@ -687,6 +687,7 @@
             height: var(--tamano-imagen);
             object-fit: cover;             /* Evita que la imagen se deforme al cambiar el tamaño */
             border-radius: 8px;            /* Bordes redondeados del recuadro (usa 50% para un círculo) */
+            display: block;                /* Elimina espacios en blanco inferiores internos */
             
             /* Animación del brillo */
             animation: parpadeoBrillo var(--velocidad-brillo) infinite alternate ease-in-out;
@@ -709,10 +710,11 @@
 
     <!-- CONTENEDOR DE LA IMAGEN -->
     <div class="contenedor-imagen">
-        <!-- Reemplaza "render 5.png" por el enlace o nombre de tu archivo de imagen -->
-        <img src="https://placeholder.com" alt="Imagen con brillo" class="imagen-brillante">
+        <!-- Esta URL funciona de inmediato. Cuando quieras usar la tuya, reemplaza todo lo que está dentro de src="" -->
+        <img src="render 5.png" alt="Imagen con brillo" class="imagen-brillante">
     </div>
 
 </body>
 </html>
+
 
