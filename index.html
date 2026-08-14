@@ -136,278 +136,219 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventanas Transparentes Avanzadas</title>
-    <style>
-        /* ==========================================================================
-           1. CONFIGURACIÓN GENERAL Y FUENTES
-           ========================================================================== */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            background-color: #222;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería con Cierre Aislado</title>
+  <style>
+    /* --- VARIABLES PERSONALIZABLES --- */
+    :root {
+      --color-boton-abrir: #007BFF;
+      --color-boton-abrir-hover: #0056b3;
+      --color-texto-boton: #ffffff;
+      --color-fondo-ventana: rgba(0, 0, 0, 0.7); /* 70% de transparencia */
+      --color-boton-cerrar: #ff4d4d;
+      --color-boton-cerrar-hover: #cc0000;
+    }
 
-        /* ==========================================================================
-           2. BARRA DE BOTONES DISPARADORES
-           ========================================================================== */
-        #contenedorBotones {
-            position: fixed;
-            bottom: 190px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 1001;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f9;
+    }
 
-        .btn-abrir {
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+    /* --- ESTILO DEL BOTÓN PRINCIPAL (IZQUIERDA) --- */
+    #btn-imagenes {
+      background-color: var(--color-boton-abrir);
+      color: var(--color-texto-boton);
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
 
-        #btn1 { background-color: #e74c3c; }
-        #btn1:hover { background-color: #c0392b; transform: scale(1.05); }
-        
-        #btn2 { background-color: #2ecc71; }
-        #btn2:hover { background-color: #27ae60; transform: scale(1.05); }
+    /* Clase para ocultar elementos de tu página */
+    .ocultar-elemento {
+      display: none !important;
+    }
 
-        /* ==========================================================================
-           3. DISEÑO DE LAS VENTANAS FLOTANTES (Con scroll interno)
-           ========================================================================== */
-        .ventana {
-            display: none;
-            position: fixed;
-            top: 50%; 
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 450px; 
-            max-height: 80vh; 
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-sizing: border-box;
-            overflow-y: auto; 
-        }
+    /* --- ESTILO DE LA VENTANA MODAL (70% TRANSPARENCIA) --- */
+    .ventana-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-fondo-ventana);
+      z-index: 99999; /* Por encima de tus otros botones */
+      overflow-y: auto;
+      padding: 100px 20px 40px 20px; /* Margen superior amplio */
+      box-sizing: border-box;
+    }
 
-        /* --- Estilo estético de la barra de desplazamiento (Scrollbar) --- */
-        .ventana::-webkit-scrollbar {
-            width: 6px;
-        }
-        .ventana::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-        .ventana::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-        }
+    .contenido-modal {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
 
-        /* --- TRANSPARENCIAS PERSONALIZADAS --- */
-        #ventana1 {
-            background: rgba(231, 76, 60, 0.3); 
-            border: 1px solid rgba(231, 76, 60, 0.4);
-        }
+    /* CAPA AISLANTE EXCLUSIVA PARA EL BOTÓN DE CERRAR */
+    .contenedor-fijo-cerrar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100005; /* La capa más alta de la app, libre de solapamientos */
+      pointer-events: auto; /* Asegura que el clic funcione solo aquí */
+    }
 
-        #ventana2 {
-            background: rgba(46, 204, 113, 0.3);
-            border: 1px solid rgba(46, 204, 113, 0.4);
-        }
+    .btn-cerrar {
+      background-color: var(--color-boton-cerrar);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: background-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
 
-        /* --- CONTENIDO INTERNO --- */
-        .ventana h2 {
-            margin-top: 0;
-            font-size: 26px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 10px;
-        }
+    .btn-cerrar:hover {
+      background-color: var(--color-boton-cerrar-hover);
+      transform: scale(1.05);
+    }
 
-        .ventana p {
-            font-size: 15px;
-            line-height: 1.6;
-            opacity: 0.95;
-            text-align: justify;
-            margin-bottom: 20px;
-        }
+    /* --- CUADRÍCULA DE IMÁGENES --- */
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
 
-        /* --- GALERÍA DE IMÁGENES EN CUADRÍCULA --- */
-        .galeria-imagenes {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 10px; 
-            margin-bottom: 20px;
-        }
+    .galeria-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      cursor: zoom-in;
+    }
 
-        .ventana-img {
-            width: 100%;
-            height: 120px; 
-            object-fit: cover;
-            border-radius: 6px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
+    /* --- LIGHTBOX (ZOOM) --- */
+    .lightbox-zoom {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 200000;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+    }
 
-        .ventana-img:hover {
-            transform: scale(1.03);
-        }
-
-        /* --- BOTÓN DE CIERRE FIJO INTERNO --- */
-        .btn-cerrar {
-            margin-top: 5px;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn-cerrar:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-        
-        .btn-cerrar:active {
-            transform: scale(0.98);
-        }
-
-        /* ==========================================================================
-           4. MODAL PARA IMAGEN EN TAMAÑO COMPLETO (Lightbox)
-           ========================================================================== */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            cursor: zoom-out;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            animation: zoomEfecto 0.2s ease-out;
-        }
-
-        @keyframes zoomEfecto {
-            from { transform: scale(0.7); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-    </style>
+    .lightbox-zoom img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Botones disparadores -->
-    <div id="contenedorBotones">
-        <button class="btn-abrir" id="btn1" onclick="alternarVentana('ventana1')">Abrir Ventana Roja</button>
-        <button class="btn-abrir" id="btn2" onclick="alternarVentana('ventana2')">Abrir Ventana Verde</button>
+  <!-- BOTÓN DE IMÁGENES -->
+  <button id="btn-imagenes">Imágenes</button>
+
+  <!-- TUS OTROS BOTONES (Añádeles la clase "interfaz-a-ocultar" para borrarlos al abrir) -->
+  <div style="text-align: center; margin-top: 50px;">
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 1</button>
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 2</button>
+  </div>
+
+  <!-- VENTANA MODAL DE LA GALERÍA -->
+  <div id="mi-ventana-modal" class="ventana-modal">
+    
+    <!-- CONTENEDOR AISLADO: Evita enlaces erróneos con elementos inferiores -->
+    <div class="contenedor-fijo-cerrar">
+      <button id="btn-cerrar-modal" class="btn-cerrar">Cerrar ×</button>
     </div>
 
-    <!-- Ventana Número 1 -->
-    <div class="ventana" id="ventana1">
-        <h2>Ventana Roja</h2>
-        <p>Este es un ejemplo de texto bastante extenso para demostrar el nuevo sistema de desplazamiento...</p>
-
-        <div class="galeria-imagenes">
-            <img src="render 5.png" alt="Imagen 1" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 2" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 3" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 4" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 5" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 6" class="ventana-img">
-        </div>
-
-        <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
+    <div class="contenido-modal">
+      <div class="galeria-grid">
+        <img src="https://picsum.photos" alt="Imagen 1">
+        <img src="https://picsum.photos" alt="Imagen 2">
+        <img src="https://picsum.photos" alt="Imagen 3">
+        <img src="https://picsum.photos" alt="Imagen 4">
+        <img src="https://picsum.photos" alt="Imagen 5">
+        <img src="https://picsum.photos" alt="Imagen 6">
+        <img src="https://picsum.photos" alt="Imagen 7">
+        <img src="https://picsum.photos" alt="Imagen 8">
+        <img src="https://picsum.photos" alt="Imagen 9">
+        <img src="https://picsum.photos0" alt="Imagen 10">
+        <img src="https://picsum.photos1" alt="Imagen 11">
+        <img src="https://picsum.photos2" alt="Imagen 12">
+      </div>
     </div>
+  </div>
 
-    <!-- Ventana Número 2 -->
-    <div class="ventana" id="ventana2">
-        <h2>Ventana Verde</h2>
-        <p>Esta segunda ventana aplica exactamente la misma lógica de adaptabilidad...</p>
+  <!-- LIGHTBOX DE ZOOM -->
+  <div id="lightbox" class="lightbox-zoom">
+    <img id="imagen-maximizada" src="" alt="Zoom">
+  </div>
 
-        <div class="galeria-imagenes">
-            <img src="render 5.png" alt="Imagen 7" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 8" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 9" class="ventana-img">
-            <img src="https://picsum.photos" alt="Imagen 10" class="ventana-img">
-        </div>
+  <!-- SCRIPT DE CONTROL -->
+  <script>
+    const btnImagenes = document.getElementById('btn-imagenes');
+    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+    const ventanaModal = document.getElementById('mi-ventana-modal');
+    const botonesAAfectar = document.querySelectorAll('.interfaz-a-ocultar');
 
-        <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
-    </div>
+    const lightbox = document.getElementById('lightbox');
+    const imagenMaximizada = document.getElementById('imagen-maximizada');
+    const imagenesGaleria = document.querySelectorAll('.galeria-grid img');
 
-    <!-- Contenedor Lightbox para la vista completa -->
-    <div id="lightbox" class="lightbox" onclick="cerrarImagen()">
-        <img id="imgCompleta" src="" alt="Vista Completa">
-    </div>
+    // Abrir galería
+    btnImagenes.addEventListener('click', () => {
+      ventanaModal.style.display = 'block';
+      botonesAAfectar.forEach(boton => boton.classList.add('ocultar-elemento'));
+    });
 
-    <!-- LÓGICA JAVASCRIPT CORREGIDA -->
-    <script>
-        function alternarVentana(idVentana) {
-            const ventanaObjetivo = document.getElementById(idVentana);
-            
-            // Si la ventana clickeada ya estaba abierta, simplemente la cierra
-            if (ventanaObjetivo.style.display === 'block') {
-                ventanaObjetivo.style.display = 'none';
-            } else {
-                // Si estaba cerrada, limpia las demás y abre la correcta
-                cerrarVentanas();
-                ventanaObjetivo.style.display = 'block';
-            }
-        }
+    // Cerrar galería
+    btnCerrarModal.addEventListener('click', () => {
+      ventanaModal.style.display = 'none';
+      botonesAAfectar.forEach(boton => boton.classList.remove('ocultar-elemento'));
+    });
 
-        function cerrarVentanas() {
-            const ventanas = document.querySelectorAll('.ventana');
-            ventanas.forEach(v => {
-                v.style.display = 'none'; // Línea corregida sin duplicaciones de propiedades
-            });
-        }
+    // Abrir Zoom
+    imagenesGaleria.forEach(img => {
+      img.addEventListener('click', (e) => {
+        imagenMaximizada.src = e.target.src;
+        lightbox.style.display = 'flex';
+      });
+    });
 
-        // Eventos para abrir imágenes en tamaño completo
-        document.querySelectorAll('.ventana-img').forEach(imagen => {
-            imagen.addEventListener('click', function() {
-                const src = this.getAttribute('src');
-                document.getElementById('imgCompleta').setAttribute('src', src);
-                document.getElementById('lightbox').style.display = 'flex';
-            });
-        });
+    // Cerrar Zoom
+    lightbox.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+      imagenMaximizada.src = "";
+    });
+  </script>
 
-        function cerrarImagen() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-    </script>
 </body>
 </html>
-
-
-
 
 <!DOCTYPE html>
 <html lang="es">
