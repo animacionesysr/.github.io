@@ -59,6 +59,7 @@
 
 </body>
 </html>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -74,10 +75,10 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a; /* Fondo oscuro para contrastar el diseño de cristal */
+            background-color: #1a1a1a; 
         }
 
-        /* --- NUEVO: Telón de fondo (Overlay) para bloquear elementos traseros --- */
+        /* --- Telón de fondo con Máxima Prioridad --- */
         .overlay {
             display: none;
             position: fixed;
@@ -85,9 +86,10 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
-            z-index: 1500; /* Por debajo de la ventana, por encima de los botones */
+            background: rgba(0, 0, 0, 0.6); /* Un poco más oscuro para aislar el contenido trasero */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 999998 !important; /* Capa penúltima absoluta */
         }
 
         /* ==========================================================================
@@ -100,7 +102,7 @@
             transform: translateX(-50%);
             display: flex;
             gap: 15px;
-            z-index: 1000; /* Reducido para quedar por debajo de las ventanas */
+            z-index: 100; /* Nivel bajo controlado */
         }
 
         .btn-abrir {
@@ -134,10 +136,10 @@
             max-height: 80vh; 
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 2000; /* Incrementado para estar por encima de TODO */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 999999 !important; /* CAPA MÁXIMA ABSOLUTA DEL NAVEGADOR */
             box-sizing: border-box;
             overflow-y: auto; 
         }
@@ -157,13 +159,13 @@
 
         /* --- TRANSPARENCIAS PERSONALIZADAS --- */
         #ventana1 {
-            background: rgba(231, 76, 60, 0.3); 
-            border: 1px solid rgba(231, 76, 60, 0.4);
+            background: rgba(231, 76, 60, 0.35); 
+            border: 1px solid rgba(231, 76, 60, 0.5);
         }
 
         #ventana2 {
-            background: rgba(46, 204, 113, 0.3);
-            border: 1px solid rgba(46, 204, 113, 0.4);
+            background: rgba(46, 204, 113, 0.35);
+            border: 1px solid rgba(46, 204, 113, 0.5);
         }
 
         /* --- CONTENIDO INTERNO --- */
@@ -232,7 +234,7 @@
 </head>
 <body>
 
-    <!-- Capa oscura de fondo para bloqueo visual -->
+    <!-- Capa oscura de fondo para bloqueo total -->
     <div id="overlay" class="overlay" onclick="cerrarVentanas()"></div>
 
     <!-- Botones disparadores -->
@@ -276,26 +278,22 @@
     <!-- JavaScript para controlar la lógica de apertura y cierre -->
     <script>
         function alternarVentana(idVentana) {
-            // Cerrar cualquier ventana abierta primero
             cerrarVentanas();
-            
-            // Mostrar la ventana seleccionada y el overlay protector
             document.getElementById(idVentana).style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
 
         function cerrarVentanas() {
-            // Ocultar todas las ventanas de la clase .ventana
             const ventanas = document.querySelectorAll('.ventana');
             ventanas.forEach(ventana => {
                 ventana.style.display = 'none';
             });
-            // Ocultar el overlay
             document.getElementById('overlay').style.display = 'none';
         }
     </script>
 </body>
 </html>
+
 
 <!-- CÓDIGO HTML Y CSS OPTIMIZADO Y CORREGIDO -->
 <style>
