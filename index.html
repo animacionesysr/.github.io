@@ -148,7 +148,7 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
-            background-color: #222; /* Añadido un fondo para contrastar */
+            background-color: #222;
         }
 
         /* ==========================================================================
@@ -259,7 +259,7 @@
             border-radius: 6px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             transition: transform 0.2s;
-            cursor: pointer; /* Cambiado a pointer para indicar que es clickeable */
+            cursor: pointer;
         }
 
         .ventana-img:hover {
@@ -292,7 +292,7 @@
         }
 
         /* ==========================================================================
-           4. NUEVO: MODAL PARA IMAGEN EN TAMAÑO COMPLETO (Lightbox)
+           4. MODAL PARA IMAGEN EN TAMAÑO COMPLETO (Lightbox)
            ========================================================================== */
         .lightbox {
             display: none;
@@ -302,7 +302,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000; /* Por encima de las otras ventanas */
+            z-index: 2000;
             justify-content: center;
             align-items: center;
             cursor: zoom-out;
@@ -363,26 +363,34 @@
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
-    <!-- NUEVO: Contenedor Lightbox para la vista completa -->
+    <!-- Contenedor Lightbox para la vista completa -->
     <div id="lightbox" class="lightbox" onclick="cerrarImagen()">
         <img id="imgCompleta" src="" alt="Vista Completa">
     </div>
 
-    <!-- LÓGICA JAVASCRIPT -->
+    <!-- LÓGICA JAVASCRIPT CORREGIDA -->
     <script>
-        // Funciones previas de control de ventanas existentes
         function alternarVentana(idVentana) {
-            cerrarVentanas();
-            document.getElementById(idVentana).style.display = 'block';
+            const ventanaObjetivo = document.getElementById(idVentana);
+            
+            // Si la ventana clickeada ya estaba abierta, simplemente la cierra
+            if (ventanaObjetivo.style.display === 'block') {
+                ventanaObjetivo.style.display = 'none';
+            } else {
+                // Si estaba cerrada, limpia las demás y abre la correcta
+                cerrarVentanas();
+                ventanaObjetivo.style.display = 'block';
+            }
         }
 
         function cerrarVentanas() {
             const ventanas = document.querySelectorAll('.ventana');
-            ventanas.forEach(v => v.style.style.display = 'none'); // Corrección menor de sintaxis heredada
-            ventanas.forEach(v => v.style.display = 'none');
+            ventanas.forEach(v => {
+                v.style.display = 'none'; // Línea corregida sin duplicaciones de propiedades
+            });
         }
 
-        // NUEVAS: Funciones para controlar el tamaño de imagen completo
+        // Eventos para abrir imágenes en tamaño completo
         document.querySelectorAll('.ventana-img').forEach(imagen => {
             imagen.addEventListener('click', function() {
                 const src = this.getAttribute('src');
@@ -397,6 +405,7 @@
     </script>
 </body>
 </html>
+
 
 
 
