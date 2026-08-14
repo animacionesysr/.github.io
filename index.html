@@ -289,54 +289,6 @@
             <img src="https://picsum.photos2" alt="Imagen 12" class="ventana-img">
         </div>
           </div>
-  </div>
-
-  <!-- LIGHTBOX DE ZOOM -->
-  <div id="lightbox" class="lightbox-zoom">
-    <img id="imagen-maximizada" src="" alt="Zoom">
-  </div>
-
-  <!-- SCRIPT DE CONTROL -->
-  <script>
-    const btnImagenes = document.getElementById('btn-imagenes');
-    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
-    const ventanaModal = document.getElementById('mi-ventana-modal');
-    const botonesAAfectar = document.querySelectorAll('.interfaz-a-ocultar');
-
-    const lightbox = document.getElementById('lightbox');
-    const imagenMaximizada = document.getElementById('imagen-maximizada');
-    const imagenesGaleria = document.querySelectorAll('.galeria-grid img');
-
-    // Abrir galería
-    btnImagenes.addEventListener('click', () => {
-      ventanaModal.style.display = 'block';
-      botonesAAfectar.forEach(boton => boton.classList.add('ocultar-elemento'));
-    });
-
-    // Cerrar galería
-    btnCerrarModal.addEventListener('click', () => {
-      ventanaModal.style.display = 'none';
-      botonesAAfectar.forEach(boton => boton.classList.remove('ocultar-elemento'));
-    });
-
-    // Abrir Zoom
-    imagenesGaleria.forEach(img => {
-      img.addEventListener('click', (e) => {
-        imagenMaximizada.src = e.target.src;
-        lightbox.style.display = 'flex';
-      });
-    });
-
-    // Cerrar Zoom
-    lightbox.addEventListener('click', () => {
-      lightbox.style.display = 'none';
-      imagenMaximizada.src = "";
-    });
-  </script>
-
-</body>
-</html>
-
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
