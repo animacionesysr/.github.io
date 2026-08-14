@@ -373,3 +373,200 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botón de Galería Modal</title>
+    <style>
+        /* --- VARIABLES PERSONALIZABLES (Cambia los colores aquí) --- */
+        :root {
+            --color-boton-abrir: #007BFF;
+            --color-boton-abrir-hover: #0056b3;
+            --color-texto-boton: #ffffff;
+            --color-fondo-modal: rgba(0, 0, 0, 0.7);
+            --color-ventana: #ffffff;
+            --color-boton-cerrar: #dc3545;
+            --color-boton-cerrar-hover: #bd2130;
+            --borde-radio: 8px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* --- BOTÓN PRINCIPAL --- */
+        .btn-imagenes {
+            background-color: var(--color-boton-abrir);
+            color: var(--color-texto-boton);
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: var(--borde-radio);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-imagenes:hover {
+            background-color: var(--color-boton-abrir-hover);
+        }
+
+        /* --- VENTANA MODAL (FONDO) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-fondo-modal);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Estado activo de la modal */
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* --- CONTENEDOR DE LA VENTANA --- */
+        .modal-ventana {
+            background-color: var(--color-ventana);
+            padding: 20px;
+            border-radius: var(--borde-radio);
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-ventana {
+            transform: scale(1);
+        }
+
+        /* --- ENCABEZADO Y BOTÓN CERRAR --- */
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .btn-cerrar {
+            background-color: var(--color-boton-cerrar);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: var(--borde-radio);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-cerrar:hover {
+            background-color: var(--color-boton-cerrar-hover);
+        }
+
+        /* --- CUADRÍCULA DE IMÁGENES (10 espacios) --- */
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+        }
+
+        .galeria-grid img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: calc(var(--borde-radio) / 2);
+            background-color: #ddd; /* Fondo gris mientras carga */
+            transition: transform 0.2s;
+        }
+
+        .galeria-grid img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón Principal -->
+    <button class="btn-imagenes" id="btnAbrir">Imágenes</button>
+
+    <!-- Ventana Emergente (Modal) -->
+    <div class="modal-overlay" id="modalGaleria">
+        <div class="modal-ventana">
+            
+            <div class="modal-header">
+                <h3>Mi Galería</h3>
+                <button class="btn-cerrar" id="btnCerrar">Cerrar</button>
+            </div>
+
+            <!-- Contenedor para las 10 imágenes -->
+            <div class="galeria-grid">
+                <!-- Reemplaza las URL de 'src' con tus propias imágenes -->
+                <img src="https://picsum.photos" alt="Imagen 1">
+                <img src="https://picsum.photos" alt="Imagen 2">
+                <img src="https://picsum.photos" alt="Imagen 3">
+                <img src="https://picsum.photos" alt="Imagen 4">
+                <img src="https://picsum.photos" alt="Imagen 5">
+                <img src="https://picsum.photos" alt="Imagen 6">
+                <img src="https://picsum.photos" alt="Imagen 7">
+                <img src="https://picsum.photos" alt="Imagen 8">
+                <img src="https://picsum.photos" alt="Imagen 9">
+                <img src="https://picsum.photos0" alt="Imagen 10">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Lógica de funcionamiento -->
+    <script>
+        const btnAbrir = document.getElementById('btnAbrir');
+        const btnCerrar = document.getElementById('btnCerrar');
+        const modal = document.getElementById('modalGaleria');
+
+        // Abrir ventana
+        btnAbrir.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        // Cerrar ventana desde el botón
+        btnCerrar.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Cerrar ventana haciendo clic fuera de ella
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
+
