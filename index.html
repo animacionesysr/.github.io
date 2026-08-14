@@ -372,13 +372,12 @@
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galería con Control de Botones</title>
+  <title>Galería Completa con Zoom de Imágenes</title>
   <style>
     /* --- VARIABLES PERSONALIZABLES --- */
     :root {
@@ -404,7 +403,7 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 999;
+      z-index: 999; /* Por debajo de la ventana modal */
       padding: 12px 24px;
       font-size: 16px;
       border: none;
@@ -419,8 +418,7 @@
       padding-left: 30px;
     }
 
-    /* --- CLASE PARA OCULTAR TUS DOS BOTONES --- */
-    /* Usamos display: none para que no ocupen espacio ni interfieran visualmente */
+    /* Clase para ocultar tus dos botones de forma opcional si aún lo deseas */
     .ocultar-elemento {
       display: none !important;
     }
@@ -434,9 +432,9 @@
       width: 100%;
       height: 100%;
       background-color: var(--color-fondo-ventana);
-      z-index: 1000; /* Capa por encima de todo */
+      z-index: 99999; /* NÚMERO MUY ALTO: Se posiciona por encima de cualquier botón o elemento */
       overflow-y: auto;
-      padding: 80px 20px 40px 20px; /* Espacio superior para que no choque con el botón cerrar */
+      padding: 80px 20px 40px 20px;
       box-sizing: border-box;
     }
 
@@ -446,7 +444,7 @@
       text-align: center;
     }
 
-    /* BOTÓN DE CERRAR CORREGIDO (FIJO EN LA ESQUINA SUPERIOR DERECHA) */
+    /* BOTÓN DE CERRAR FIJO EN LA ESQUINA */
     .btn-cerrar {
       position: fixed;
       top: 20px;
@@ -459,7 +457,7 @@
       font-weight: bold;
       border-radius: 5px;
       cursor: pointer;
-      z-index: 1001; /* Asegura estar por encima del fondo y de las imágenes */
+      z-index: 100000; /* Por encima del fondo de la galería */
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       transition: background-color 0.2s, transform 0.2s;
     }
@@ -482,6 +480,41 @@
       object-fit: cover;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      cursor: zoom-in; /* Cambia el cursor para indicar que se puede expandir */
+      transition: transform 0.2s;
+    }
+
+    .galeria-grid img:hover {
+      transform: scale(1.03);
+    }
+
+    /* --- VENTANA DE TAMAÑO ORIGINAL (LIGHTBOX DE ZOOM) --- */
+    .lightbox-zoom {
+      display: none; /* Oculto por defecto */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9); /* Fondo casi oscuro para resaltar la imagen */
+      z-index: 200000; /* La capa más alta de toda la página */
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out; /* Indica que al hacer clic se cierra */
+    }
+
+    .lightbox-zoom img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain; /* Muestra el tamaño original proporcional sin recortar */
+      border-radius: 4px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+      animation: zoomEfecto 0.25s ease-out; /* Suaviza la apertura */
+    }
+
+    @keyframes zoomEfecto {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
@@ -490,21 +523,20 @@
   <!-- BOTÓN DE IMÁGENES -->
   <button id="btn-imagenes">Imágenes</button>
 
-  <!-- TUS DOS BOTONES EXISTENTES -->
-  <!-- IMPORTANTE: Añade la clase "interfaz-a-ocultar" a los botones que ya tienes en tu web -->
+  <!-- TUS OTROS BOTONES (Ahora se quedarán atrás automáticamente por el z-index) -->
   <div style="text-align: center; margin-top: 50px;">
-    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 1</button>
-    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px;">Tu Botón Existente 2</button>
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px; font-size: 16px;">Tu Botón Existente 1</button>
+    <button class="interfaz-a-ocultar" style="padding: 10px; margin: 5px; font-size: 16px;">Tu Botón Existente 2</button>
   </div>
 
-  <!-- VENTANA MODAL (70% TRANSPARENTE) -->
+  <!-- VENTANA MODAL DE LA GALERÍA (70% TRANSPARENTE) -->
   <div id="mi-ventana-modal" class="ventana-modal">
     
-    <!-- El botón de cerrar ahora es independiente y fijo -->
     <button id="btn-cerrar-modal" class="btn-cerrar">Cerrar ×</button>
 
     <div class="contenido-modal">
       <div class="galeria-grid">
+        <!-- Reemplaza los enlaces "src" con tus imágenes reales -->
         <img src="https://picsum.photos" alt="Imagen 1">
         <img src="https://picsum.photos" alt="Imagen 2">
         <img src="https://picsum.photos" alt="Imagen 3">
@@ -521,32 +553,51 @@
     </div>
   </div>
 
+  <!-- SEGUNDA CAPA: VENTANA PARA VER TAMAÑO ORIGINAL (LIGHTBOX) -->
+  <div id="lightbox" class="lightbox-zoom">
+    <img id="imagen-maximizada" src="" alt="Zoom">
+  </div>
+
   <!-- SCRIPT DE CONTROL -->
   <script>
     const btnImagenes = document.getElementById('btn-imagenes');
     const btnCerrarModal = document.getElementById('btn-cerrar-modal');
     const ventanaModal = document.getElementById('mi-ventana-modal');
-    
-    // Selecciona de forma automática los botones que tengan la clase que asignamos
     const botonesAAfectar = document.querySelectorAll('.interfaz-a-ocultar');
 
-    // Acción al abrir la ventana
+    // Elementos del Lightbox (Zoom)
+    const lightbox = document.getElementById('lightbox');
+    const imagenMaximizada = document.getElementById('imagen-maximizada');
+    const imagenesGaleria = document.querySelectorAll('.galeria-grid img');
+
+    // 1. Abrir la galería principal
     btnImagenes.addEventListener('click', () => {
       ventanaModal.style.display = 'block';
-      // Oculta por completo tus dos botones
       botonesAAfectar.forEach(boton => boton.classList.add('ocultar-elemento'));
     });
 
-    // Acción al cerrar la ventana
+    // 2. Cerrar la galería principal
     btnCerrarModal.addEventListener('click', () => {
       ventanaModal.style.display = 'none';
-      // Devuelve tus dos botones a la normalidad
       botonesAAfectar.forEach(boton => boton.classList.remove('ocultar-elemento'));
+    });
+
+    // 3. Control del Zoom: Clic en cualquier imagen de la cuadrícula
+    imagenesGaleria.forEach(img => {
+      img.addEventListener('click', (e) => {
+        const rutaImagen = e.target.src; // Captura el link de la imagen clickeada
+        imagenMaximizada.src = rutaImagen; // Se la asigna a la ventana de zoom
+        lightbox.style.display = 'flex'; // Muestra la ventana de zoom centrada
+      });
+    });
+
+    // 4. Cerrar el Zoom: Clic en cualquier parte de la pantalla negra
+    lightbox.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+      imagenMaximizada.src = ""; // Limpia la ruta por rendimiento
     });
   </script>
 
 </body>
 </html>
-
-
 
