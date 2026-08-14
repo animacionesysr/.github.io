@@ -666,34 +666,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imagen con Brillo</title>
     <style>
-        /* --- CONFIGURACIÓN EDITABLE --- */
-        :root {
-            --tamano-imagen: 30px;       /* Cambia este valor para hacerla más grande o pequeña (ej: 80px, 150px) */
-            --color-brillo: #ff0000;      /* Cambia el color del brillo (puedes usar gold, red, #ff0000, etc.) */
-            --intensidad-brillo: 15px;    /* Qué tan lejos se extiende el brillo */
-            --velocidad-brillo: 1.5s;     /* Qué tan rápido parpadea el brillo */
+        /* EVITA QUE LA PÁGINA AGREGUE MÁRGENES CASUALES QUE CORRAN LA IMAGEN */
+        body {
+            margin: 0;
+            padding: 0;
         }
 
-        /* --- POSICIONAMIENTO Y ESTILO --- */
+        /* --- CONFIGURACIÓN EDITABLE --- */
+        :root {
+            --tamano-imagen: 100px;       /* Cambia el ancho y alto aquí */
+            --color-brillo: #00d2ff;      /* Cambia el color del brillo aquí */
+            --intensidad-brillo: 15px;    
+            --velocidad-brillo: 1.5s;     
+        }
+
+        /* --- POSICIONAMIENTO INQUEBRANTABLE --- */
         .contenedor-imagen {
-            position: absolute;
-            top: 20px;                     /* Distancia desde la parte superior */
-            right: 20px;                   /* Distancia desde la derecha */
-            z-index: 1000;                 /* Asegura que quede por encima de otros elementos */
+            position: fixed;               /* fixed evita que se corra con el contenido o el scroll */
+            top: 15px;                     /* Distancia exacta desde el borde superior */
+            right: 15px;                   /* Distancia exacta desde el borde derecho */
+            z-index: 99999;                /* Fuerza a la imagen a estar por encima de TODO */
+            line-height: 0;                /* Elimina espacios fantasma debajo de la imagen */
         }
 
         .imagen-brillante {
             width: var(--tamano-imagen);
             height: var(--tamano-imagen);
-            object-fit: cover;             /* Evita que la imagen se deforme al cambiar el tamaño */
-            border-radius: 8px;            /* Bordes redondeados del recuadro (usa 50% para un círculo) */
-            display: block;                /* Elimina espacios en blanco inferiores internos */
+            object-fit: cover;             
+            border-radius: 8px;            
+            box-sizing: border-box;        /* Evita que el tamaño se desfase */
             
             /* Animación del brillo */
             animation: parpadeoBrillo var(--velocidad-brillo) infinite alternate ease-in-out;
         }
 
-        /* --- EFECTO DE BRILLO EN MOVIMIENTO --- */
+        /* --- EFECTO DE BRILLO --- */
         @keyframes parpadeoBrillo {
             from {
                 box-shadow: 0 0 5px var(--color-brillo), 
@@ -710,11 +717,11 @@
 
     <!-- CONTENEDOR DE LA IMAGEN -->
     <div class="contenedor-imagen">
-        <!-- Esta URL funciona de inmediato. Cuando quieras usar la tuya, reemplaza todo lo que está dentro de src="" -->
         <img src="comics ysr.png" alt="Imagen con brillo" class="imagen-brillante">
     </div>
 
 </body>
 </html>
+
 
 
