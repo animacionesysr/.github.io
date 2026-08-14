@@ -291,6 +291,46 @@
         .btn-cerrar:active {
             transform: scale(0.98);
         }
+
+        /* ==========================================================================
+           NUEVO SCRIPT ADICIONAL: VISUALIZADOR PANTALLA COMPLETA (Sin alterar lo anterior)
+           ========================================================================== */
+        .ventana-img {
+            cursor: zoom-in; /* Cambia el cursor a lupa para indicar que es clickeable */
+        }
+
+        #modalFullImage {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000; /* Por encima de las ventanas flotantes */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #modalFullImage.activo {
+            display: flex;
+            opacity: 1;
+        }
+
+        #imgFullView {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        #modalFullImage.activo #imgFullView {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body>
@@ -337,41 +377,20 @@
             <img src="https://picsum.photos" alt="Imagen 8" class="ventana-img">
             <img src="https://picsum.photos" alt="Imagen 9" class="ventana-img">
             <img src="https://picsum.photos0" alt="Imagen 10" class="ventana-img">
-            <img src="https://picsum.photos1" alt="Imagen 11" class="ventana-img">
-            <img src="https://picsum.photos2" alt="Imagen 12" class="ventana-img">
         </div>
 
         <button class="btn-cerrar" onclick="cerrarVentanas()">Cerrar Ventana</button>
     </div>
 
+    <!-- ESTRUCTURA DEL MODAL NUEVO (Escondido por defecto) -->
+    <div id="modalFullImage" onclick="cerrarImagen()">
+        <img id="imgFullView" src="" alt="Vista Completa">
+    </div>
+
+    <!-- SCRIPTS CORE Y NUEVA FUNCIONALIDAD -->
     <script>
-        const contenedorBotones = document.getElementById('contenedorBotones');
+        // Funciones originales del comportamiento de tus ventanas
 
-        function alternarVentana(idVentana) {
-            const ventanas = document.querySelectorAll('.ventana');
-            const ventanaObjetivo = document.getElementById(idVentana);
-            const estaAbierta = ventanaObjetivo.style.display === 'block';
-
-            ventanas.forEach(v => v.style.display = 'none');
-
-            if (!estaAbierta) {
-                ventanaObjetivo.style.display = 'block';
-                contenedorBotones.style.display = 'none';
-                ventanaObjetivo.scrollTop = 0; // Resetea el scroll hacia arriba al abrirse
-            } else {
-                contenedorBotones.style.display = 'flex';
-            }
-        }
-
-        function cerrarVentanas() {
-            const ventanas = document.querySelectorAll('.ventana');
-            ventanas.forEach(v => v.style.display = 'none');
-            contenedorBotones.style.display = 'flex';
-        }
-    </script>
-
-</body>
-</html>
 
 <!DOCTYPE html>
 <html lang="es">
