@@ -137,98 +137,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botones Personalizables con Ventanas Emergentes</title>
+    <title>Botones y Ventanas Modificadas</title>
     <style>
         /* ========================================================
-           ESTILOS DE LOS BOTONES FLOTANTES (PERSONALIZABLES)
+           ESTILOS DE LOS BOTONES FLOTANTES (EDITABLES)
            ======================================================== */
         .contenedor-botones {
             position: fixed;
-            bottom: 100px; /* Distancia desde abajo (aprox. 10cm virtuales) */
+            bottom: 280px; /* Subido 5cm aprox en pantalla respecto al anterior */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 20px; /* Espacio entre los dos botones */
-            z-index: 999; /* Asegura que estén por encima de tu contenido */
+            gap: 20px; 
+            z-index: 999; 
         }
 
+        /* Modifica estos valores para editar el aspecto de tus botones */
         .btn-personalizado {
             padding: 15px 30px;
             font-size: 16px;
             font-weight: bold;
-            color: #ffffff;
-            background-color: #007bff; /* Cambia el color de fondo aquí */
-            border: none;
-            border-radius: 25px; /* Bordes redondeados */
+            color: #ffffff; /* Color del texto */
+            background-color: #28a745; /* Color de fondo (Editable) */
+            border: 2px solid transparent; /* Borde (Editable) */
+            border-radius: 5px; /* Bordes rectos/redondeados (Editable) */
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
         }
 
         .btn-personalizado:hover {
-            background-color: #0056b3; /* Color al pasar el mouse */
-            transform: translateY(-2px);
+            background-color: #218838; /* Color al pasar el mouse (Editable) */
+            transform: scale(1.05); /* Efecto de aumento al pasar el mouse */
         }
 
         /* ========================================================
-           ESTILOS DE LA VENTANA EMERGENTE (MODAL)
+           ESTILOS DE LA VENTANA EMERGENTE (70% SEMITRANSPARENTE)
            ======================================================== */
         .modal {
-            display: none; /* Oculto por defecto */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* 70% de transparencia de fondo oscuro */
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro exterior */
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
 
         .modal-contenido {
-            background-color: rgba(255, 255, 255, 0.95); /* Fondo del cuadro de texto/fotos */
-            width: 80%;
-            max-width: 700px;
-            max-height: 85vh;
-            padding: 30px;
-            border-radius: 15px;
+            /* 70% de transparencia blanca (Cambia el último valor 0.7 para ajustar) */
+            background-color: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(5px); /* Opcional: difumina el fondo original para leer mejor */
+            width: 85%;
+            max-width: 800px;
+            height: 75vh; /* Altura fija para controlar el contenido largo */
+            padding: 40px 30px;
+            border-radius: 12px;
             position: relative;
-            overflow-y: auto; /* Permite scroll interno si el contenido es largo */
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CONTENEDOR INTERNO PARA TEXTO LARGO E IMÁGENES */
+        .modal-scrollable {
+            overflow-y: auto; /* Activa la barra de desplazamiento interna */
+            padding-right: 15px;
+            text-align: left; /* Alineación ideal para lectura de textos largos */
+        }
+
+        .modal-scrollable h2 {
             text-align: center;
+            margin-top: 0;
+        }
+
+        .texto-largo {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #111111;
+            margin-bottom: 25px;
+            white-space: pre-line; /* Respeta los saltos de línea de tu texto */
         }
 
         .btn-cerrar {
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 30px;
+            font-size: 32px;
             background: none;
             border: none;
             cursor: pointer;
-            color: #333;
+            color: #000000;
+            z-index: 1010;
         }
 
         /* Cuadrícula de 6 imágenes */
         .galeria-imagenes {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .galeria-imagenes img {
             width: 100%;
-            height: 120px;
+            height: 140px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: transform 0.2s;
         }
 
         .galeria-imagenes img:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         /* ========================================================
@@ -241,7 +265,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -251,10 +275,9 @@
             max-width: 90%;
             max-height: 90vh;
             object-fit: contain;
-            border-radius: 5px;
         }
 
-        /* Clase para bloquear el scroll de la pantalla trasera */
+        /* Bloqueo de scroll trasero */
         .bloquear-scroll {
             overflow: hidden !important;
         }
@@ -263,11 +286,11 @@
 <body>
 
     <!-- ========================================================
-         ZONA DE TUS BOTONES
+         ZONA DE BOTONES (EDITABLES DESDE AQUÍ)
          ======================================================== -->
     <div class="contenedor-botones">
-        <button class="btn-personalizado" onclick="abrirModal('modal1')">Ventana 1</button>
-        <button class="btn-personalizado" onclick="abrirModal('modal2')">Ventana 2</button>
+        <button class="btn-personalizado" onclick="abrirModal('modal1')">Ver Información 1</button>
+        <button class="btn-personalizado" onclick="abrirModal('modal2')">Ver Información 2</button>
     </div>
 
     <!-- ========================================================
@@ -276,17 +299,27 @@
     <div id="modal1" class="modal" onclick="cerrarModalFuera(event, 'modal1')">
         <div class="modal-contenido">
             <button class="btn-cerrar" onclick="cerrarModal('modal1')">&times;</button>
-            <h2>Título de la Ventana 1</h2>
-            <p>Aquí puedes escribir el texto personalizado que necesites para la primera sección.</p>
             
-            <div class="galeria-imagenes">
-                <!-- Reemplaza las URL "://placeholder.com" por los enlaces de tus imágenes -->
-                <img src="https://://placeholder.com/300" alt="Foto 1" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 2" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 3" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 4" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 5" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 6" onclick="abrirLightbox(this.src)">
+            <!-- Zona interna con scroll automático para el texto largo -->
+            <div class="modal-scrollable">
+                <h2>Sección de Contenido Extenso 1</h2>
+                
+                <div class="texto-largo">
+                    Escribe aquí todo el texto largo que necesites introducir. 
+                    
+                    Gracias a la propiedad "overflow-y", si tu texto supera la altura máxima de la ventana, aparecerá automáticamente una barra de navegación interna en este lateral. Esto evitará por completo que tu página web de fondo se deslice o pierda su posición actual.
+                    
+                    Puedes agregar múltiples párrafos, listas o cualquier elemento HTML extra sin temor a romper la estructura visual que ya tienes definida.
+                </div>
+                
+                <div class="galeria-imagenes">
+                    <img src="https://placeholder.com" alt="Foto 1" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 2" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 3" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 4" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 5" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 6" onclick="abrirLightbox(this.src)">
+                </div>
             </div>
         </div>
     </div>
@@ -297,67 +330,57 @@
     <div id="modal2" class="modal" onclick="cerrarModalFuera(event, 'modal2')">
         <div class="modal-contenido">
             <button class="btn-cerrar" onclick="cerrarModal('modal2')">&times;</button>
-            <h2>Título de la Ventana 2</h2>
-            <p>Este es el texto personalizado de la segunda ventana emergente.</p>
             
-            <div class="galeria-imagenes">
-                <img src="https://://placeholder.com/300" alt="Foto 1" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 2" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 3" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 4" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 5" onclick="abrirLightbox(this.src)">
-                <img src="https://://placeholder.com/300" alt="Foto 6" onclick="abrirLightbox(this.src)">
+            <div class="modal-scrollable">
+                <h2>Sección de Contenido Extenso 2</h2>
+                
+                <div class="texto-largo">
+                    Este es el espacio de texto largo asignado para la segunda ventana emergente.
+                    
+                    Puedes copiar y pegar grandes cantidades de texto o descripciones de productos aquí. La ventana mantendrá su transparencia del 70% fija permitiendo intuir los colores de fondo de tu web trasera mientras se lee el contenido de forma cómoda.
+                </div>
+                
+                <div class="galeria-imagenes">
+                    <img src="https://placeholder.com" alt="Foto 1" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 2" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 3" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 4" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 5" onclick="abrirLightbox(this.src)">
+                    <img src="https://placeholder.com" alt="Foto 6" onclick="abrirLightbox(this.src)">
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ========================================================
-         VISUALIZADOR DE IMAGEN COMPLETA (LIGHTBOX)
-         ======================================================== -->
+    <!-- VISUALIZADOR LIGHTBOX -->
     <div id="lightbox" class="lightbox" onclick="cerrarLightbox()">
         <img id="imagen-completa" src="" alt="Imagen Completa">
     </div>
 
-    <!-- ========================================================
-         LÓGICA JAVASCRIPT
-         ======================================================== -->
+    <!-- SCRIPT DE CONTROL -->
     <script>
-        // Abre la ventana emergente y bloquea el scroll del fondo
         function abrirModal(idModal) {
             document.getElementById(idModal).style.display = "flex";
             document.body.classList.add("bloquear-scroll");
         }
 
-        // Cierra la ventana emergente y devuelve el scroll al fondo
         function cerrarModal(idModal) {
             document.getElementById(idModal).style.display = "none";
             document.body.classList.remove("bloquear-scroll");
         }
 
-        // Permite cerrar la ventana si el usuario hace click fuera del cuadro blanco
         function cerrarModalFuera(event, idModal) {
             if (event.target === document.getElementById(idModal)) {
                 cerrarModal(idModal);
             }
         }
 
-        // Abre la imagen a pantalla completa
         function abrirLightbox(src) {
             const lightbox = document.getElementById("lightbox");
-            const imgCompleta = document.getElementById("imagen-completa");
-            imgCompleta.src = src;
-            lightbox.style.display = "flex";
-        }
-
-        // Cierra la vista de pantalla completa
-        function cerrarLightbox() {
-            document.getElementById("lightbox").style.display = "none";
-        }
-    </script>
+   </script>
 
 </body>
 </html>
-
 
 <!DOCTYPE html>
 <html lang="es">
