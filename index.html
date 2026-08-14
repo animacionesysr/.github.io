@@ -376,298 +376,181 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería en Carrusel con Ocultado</title>
-    <style>
-        /* --- VARIABLES PERSONALIZABLES --- */
-        :root {
-            --color-boton-abrir: #007BFF;
-            --color-boton-abrir-hover: #0056b3;
-            --color-texto-boton: #ffffff;
-            --color-fondo-modal: rgba(0, 0, 0, 0.8);
-            --color-ventana: #ffffff;
-            --color-boton-cerrar: #dc3545;
-            --color-boton-cerrar-hover: #bd2130;
-            --color-flechas: #333333;
-            --borde-radio: 8px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botón de Imágenes Personalizable</title>
+  <style>
+    /* --- VARIABLES PERSONALIZABLES (Modifica los colores aquí) --- */
+    :root {
+      --color-boton-abrir: #007BFF;
+      --color-boton-abrir-hover: #0056b3;
+      --color-texto-boton: #ffffff;
+      --color-fondo-ventana: rgba(0, 0, 0, 0.7); /* 70% de transparencia */
+      --color-boton-cerrar: #ff4d4d;
+      --color-boton-cerrar-hover: #cc0000;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f9;
-            height: 100vh;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f9;
+    }
 
-        /* --- CLASE PARA OCULTAR OTROS BOTONES --- */
-        .ocultar-boton {
-            opacity: 0 !important;
-            pointer-events: none !important;
-            transition: opacity 0.3s ease !important;
-        }
+    /* --- ESTILO DE LOS BOTONES DE LA PÁGINA --- */
+    .btn-pagina {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: opacity 0.3s ease, background-color 0.3s ease;
+    }
 
-        /* --- BOTÓN PRINCIPAL FIJO A LA IZQUIERDA --- */
-        .btn-imagenes {
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--color-boton-abrir);
-            color: var(--color-texto-boton);
-            border: none;
-            padding: 15px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: var(--borde-radio);
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            z-index: 10;
-        }
+    /* Botón específico de Imágenes */
+    #btn-imagenes {
+      background-color: var(--color-boton-abrir);
+      color: var(--color-texto-boton);
+    }
 
-        .btn-imagenes:hover {
-            background-color: var(--color-boton-abrir-hover);
-            transform: translateY(-50%) scale(1.05);
-        }
+    #btn-imagenes:hover {
+      background-color: var(--color-boton-abrir-hover);
+    }
 
-        /* --- EJEMPLOS DE OTROS BOTONES (Simulación de tu página) --- */
-        .otros-botones-demo {
-            display: flex;
-            gap: 10px;
-            padding: 20px;
-            justify-content: center;
-        }
-        .otros-botones-demo button {
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
+    /* Otros botones de ejemplo en la página */
+    .otros-botones {
+      background-color: #6c757d;
+      color: white;
+    }
 
-        /* --- VENTANA MODAL (FONDO) --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--color-fondo-modal);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
-        }
+    /* Clase que ocultará los demás botones de la página */
+    .oculto {
+      opacity: 0 !important;
+      pointer-events: none; /* Evita que se puedan clickear mientras no se ven */
+    }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+    /* --- ESTILO DE LA VENTANA MODAL (70% TRANSPARENCIA) --- */
+    .ventana-modal {
+      display: none; /* Oculta por defecto */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-fondo-ventana);
+      z-index: 1000;
+      overflow-y: auto; /* Permite scroll si hay muchas imágenes */
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
 
-        /* --- CONTENEDOR DE LA VENTANA --- */
-        .modal-ventana {
-            background-color: var(--color-ventana);
-            padding: 25px;
-            border-radius: var(--borde-radio);
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-            position: relative;
-            transform: scale(0.7);
-            transition: transform 0.3s ease;
-        }
+    /* Contenedor del contenido dentro de la ventana */
+    .contenido-modal {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      text-align: center;
+    }
 
-        .modal-overlay.active .modal-ventana {
-            transform: scale(1);
-        }
+    /* Botón de cerrar */
+    .btn-cerrar {
+      position: absolute;
+      top: -20px;
+      right: 10px;
+      background-color: var(--color-boton-cerrar);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
 
-        /* --- ENCABEZADO --- */
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+    .btn-cerrar:hover {
+      background-color: var(--color-boton-cerrar-hover);
+    }
 
-        .modal-header h3 {
-            margin: 0;
-        }
+    /* --- CUADRÍCULA DE IMÁGENES --- */
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 40px;
+    }
 
-        .btn-cerrar {
-            background-color: var(--color-boton-cerrar);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: var(--borde-radio);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+    .galeria-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover; /* Hace que las imágenes se adapten sin deformarse */
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
 
-        .btn-cerrar:hover {
-            background-color: var(--color-boton-cerrar-hover);
-        }
-
-        /* --- CONTENEDOR CARRUSEL --- */
-        .carrusel-contenedor {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-            border-radius: var(--borde-radio);
-        }
-
-        .carrusel-tracks {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.4s ease-in-out;
-        }
-
-        .carrusel-item {
-            min-width: 100%;
-            height: 100%;
-            box-sizing: border-box;
-        }
-
-        .carrusel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- CONTROLES DE NAVEGACIÓN --- */
-        .carrusel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.7);
-            color: var(--color-flechas);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.2s;
-            user-select: none;
-        }
-
-        .carrusel-nav:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .prev { left: 10px; }
-        .next { right: 10px; }
-    </style>
+    .galeria-grid img:hover {
+      transform: scale(1.05); /* Efecto visual al pasar el mouse */
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Simulación de otros botones de tu web (se desvanecerán) -->
-    <div class="otros-botones-demo">
-        <button>Inicio</button>
-        <button>Contacto</button>
-        <button>Servicios</button>
+  <!-- BOTONES DE LA PÁGINA -->
+  <!-- El botón de imágenes tiene un ID único, los demás tienen la clase 'otros-botones' -->
+  <button id="btn-imagenes" class="btn-pagina">Imágenes</button>
+  <button class="btn-pagina otros-botones">Inicio</button>
+  <button class="btn-pagina otros-botones">Contacto</button>
+  <button class="btn-pagina otros-botones">Acerca de</button>
+
+  <!-- VENTANA MODAL (EL CONTENEDOR TRANSPARENTE) -->
+  <div id="mi-ventana-modal" class="ventana-modal">
+    <div class="contenido-modal">
+      
+      <!-- Botón para cerrar la ventana -->
+      <button id="btn-cerrar-modal" class="btn-cerrar">Cerrar ×</button>
+
+      <!-- Contenedor para tus 10 a 15 imágenes -->
+      <div class="galeria-grid">
+        <!-- Reemplaza el atributo 'src' con las rutas o links reales de tus imágenes -->
+        <img src="https://picsum.photos" alt="Imagen 1">
+        <img src="https://picsum.photos" alt="Imagen 2">
+        <img src="https://picsum.photos" alt="Imagen 3">
+        <img src="https://picsum.photos" alt="Imagen 4">
+        <img src="https://picsum.photos" alt="Imagen 5">
+        <img src="https://picsum.photos" alt="Imagen 6">
+        <img src="https://picsum.photos" alt="Imagen 7">
+        <img src="https://picsum.photos" alt="Imagen 8">
+        <img src="https://picsum.photos" alt="Imagen 9">
+        <img src="https://picsum.photos0" alt="Imagen 10">
+        <img src="https://picsum.photos1" alt="Imagen 11">
+        <img src="https://picsum.photos2" alt="Imagen 12">
+      </div>
+
     </div>
+  </div>
 
-    <!-- Botón Principal alineado a la izquierda -->
-    <button class="btn-imagenes" id="btnAbrir">Imágenes</button>
+  <!-- JAVASCRIPT PARA EL LOGIC DE OCULTAR/MOSTRAR -->
+  <script>
+    const btnImagenes = document.getElementById('btn-imagenes');
+    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+    const ventanaModal = document.getElementById('mi-ventana-modal');
+    // Selecciona todos los botones que no sean el de imágenes
+    const otrosBotones = document.querySelectorAll('.otros-botones');
 
-    <!-- Ventana Emergente (Modal) -->
-    <div class="modal-overlay" id="modalGaleria">
-        <div class="modal-ventana">
-            
-            <div class="modal-header">
-                <h3>Mi Galería</h3>
-                <button class="btn-cerrar" id="btnCerrar">Cerrar</button>
-            </div>
+    // Acción al abrir
+    btnImagenes.addEventListener('click', () => {
+      ventanaModal.style.display = 'block'; // Muestra la ventana
+      otrosBotones.forEach(boton => boton.classList.add('oculto')); // Desaparece los otros botones
+    });
 
-            <!-- Estructura del Carrusel -->
-            <div class="carrusel-contenedor">
-                <div class="carrusel-tracks" id="track">
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 1"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 2"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 3"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 4"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 5"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 6"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 7"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 8"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos" alt="Imagen 9"></div>
-                    <div class="carrusel-item"><img src="https://picsum.photos0" alt="Imagen 10"></div>
-                </div>
+    // Acción al cerrar
+    btnCerrarModal.addEventListener('click', () => {
+      ventanaModal.style.display = 'none'; // Oculta la ventana
+      otrosBotones.forEach(boton => boton.classList.remove('oculto')); // Reaparece los otros botones
+    });
+  </script>
 
-                <!-- Botones del carrusel -->
-                <button class="carrusel-nav prev" id="btnPrev">&#10094;</button>
-                <button class="carrusel-nav next" id="btnNext">&#10095;</button>
-            </div>
+</body>
+</html>
 
-        </div>
-    </div>
-
-    <!-- JavaScript Actualizado -->
-    <script>
-        const btnAbrir = document.getElementById('btnAbrir');
-        const btnCerrar = document.getElementById('btnCerrar');
-        const modal = document.getElementById('modalGaleria');
-
-        const track = document.getElementById('track');
-        const btnPrev = document.getElementById('btnPrev');
-        const btnNext = document.getElementById('btnNext');
-        const items = document.querySelectorAll('.carrusel-item');
-        
-        let indexActual = 0;
-        const totalItems = items.length;
-
-        // --- FUNCIONES PARA INTEGRAR EN TU WEB ---
-        
-        function abrirGaleria() {
-            modal.classList.add('active');
-            
-            // Busca todos los botones de la página
-            const todosLosBotones = document.querySelectorAll('button');
-            todosLosBotones.forEach(boton => {
-                // Oculta todos los botones EXCEPTO los que están dentro de la ventana modal
-                if (!modal.contains(boton)) {
-                    boton.classList.add('ocultar-boton');
-                }
-            });
-        }
-
-        function cerrarGaleria() {
-            modal.classList.remove('active');
-            
-            // Regresa todos los botones a la normalidad
-            const botonesOcultos = document.querySelectorAll('.ocultar-boton');
-            botonesOcultos.forEach(boton => {
-                boton.classList.remove('ocultar-boton');
-            });
-        }
-
-        // --- ENLACES DE EVENTOS ---
-        btnAbrir.addEventListener('click', abrirGaleria);
-        btnCerrar.addEventListener('click', cerrarGaleria);
-        
-        // Cerrar al hacer clic en el fondo oscuro
-        modal.addEventListener('click', (e) => { 
-            if (e.target === modal) cerrarGaleria(); 
-        });
-
-        // --- LÓGICA DEL CARRUSEL ---
-        function actualizarCarrusel() {
-            track.style.transform = `translateX(-${indexActual * 100}%)`;
-        }
-
-        btnNext.addEventListener('click', () => {
-            indexActual = (indexActual + 1) % totalItems;
-            actualizarCarrusel();
-        });
-
-        btnPrev.addEventListener('click', () => {
 
