@@ -166,9 +166,12 @@
             // 3. Cierra absolutamente todas las ventanas abiertas primero
             ventanas.forEach(v => v.style.display = 'none');
 
-            // 4. Si la ventana clickeada estaba cerrada, ahora la abre
+            // 4. Si la ventana clickeada estaba cerrada, ahora la abre y desliza la pantalla
             if (!estaAbierta) {
                 ventanaObjetivo.style.display = 'block';
+                
+                // LÍNEA NUEVA: Desliza la pantalla de forma suave hacia la ventana abierta
+                ventanaObjetivo.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
@@ -181,8 +184,6 @@
 
 </body>
 </html>
-
-
 
     
 
