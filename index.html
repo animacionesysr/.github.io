@@ -16,42 +16,43 @@
         .fondo-completo {
             /* Reemplaza la URL por la ruta de tu imagen */
             background-image: url('render 5.png'); 
-            
-            /* Asegura el alto total de la pantalla */
             height: 100vh; 
-            
-            /* Centra la imagen vertical y horizontalmente */
             background-position: center; 
-            
-            /* Evita que la imagen se repita como mosaico */
             background-repeat: no-repeat; 
-            
-            /* Escala la imagen para cubrir todo el espacio sin deformarse */
             background-size: cover; 
-            
-            /* Mantiene el fondo fijo al hacer scroll (opcional) */
             background-attachment: fixed; 
+
+            /* --- Nuevas propiedades para centrar abajo --- */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Empuja el contenido al fondo */
+            align-items: center;       /* Centra el contenido horizontalmente */
         }
 
-        /* Contenedor opcional para tu contenido */
-        .contenido {
+        /* Contenedor del contenido en la parte inferior */
+        .contenido-abajo {
             color: white;
             text-align: center;
-            padding-top: 20vh;
             font-family: Arial, sans-serif;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            
+            /* Margen inferior para que el texto no toque el borde de la pantalla */
+            margin-bottom: 40px; 
+            
+            /* Limita el ancho para que el texto no se estire demasiado en pantallas grandes */
+            max-width: 80%; 
         }
     </style>
 </head>
 <body>
 
-    <!-- Contenedor principal que lleva el fondo -->
+    <!-- Contenedor principal con el fondo -->
     <div class="fondo-completo">
         
-        <!-- Tu contenido va aquí adentro -->
-        <div class="contenido">
+        <!-- El contenido ahora se alineará abajo automáticamente -->
+        <div class="contenido-abajo">
             <h1>¡Hola, Mundo!</h1>
-            <p>Esta página tiene un fondo de ancho y alto total.</p>
+            <p>Este texto se mantiene centrado en la parte inferior de la pantalla.</p>
         </div>
 
     </div>
