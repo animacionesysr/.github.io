@@ -11,7 +11,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://googleapis.com" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* ============ VARIABLES EDITABLES ============ */
     :root {
@@ -110,15 +110,13 @@
       padding: 0.75rem 1rem;
     }
     .nav-links {
-      display: flex;
+      display: none;
       gap: 1.5rem;
       list-style: none;
-      font-size: 1.1rem;
+      font-size: 0.875rem;
       font-weight: 900;
       text-transform: uppercase;
-      font-family: var(--font-comic);
     }
-    .nav-links a { cursor: pointer; }
     .nav-links a:hover { color: var(--boom); }
     .nav-cta {
       background: var(--boom);
@@ -127,7 +125,6 @@
       border-radius: 8px;
       font-family: var(--font-comic);
       font-size: 1.1rem;
-      cursor: pointer;
     }
     .nav-cta:hover { transform: translateY(-2px); }
 
@@ -171,14 +168,19 @@
       border: var(--border);
       box-shadow: 6px 6px 0 var(--ink);
       transition: transform 0.15s ease;
-      cursor: pointer;
     }
     .btn:hover { transform: translateY(-4px); }
     .btn-primary { background: var(--boom); color: var(--paper); }
     .btn-secondary { background: var(--paper); color: var(--ink); }
 
-    .hero-image-wrap { position: relative; }
-    .hero-image { transform: rotate(-2deg); background: var(--paper); padding: 0.75rem; }
+    .hero-image-wrap {
+      position: relative;
+    }
+    .hero-image {
+      transform: rotate(-2deg);
+      background: var(--paper);
+      padding: 0.75rem;
+    }
     .hero-bubble {
       position: absolute;
       bottom: -1.5rem;
@@ -190,6 +192,18 @@
       border: var(--border);
       box-shadow: 4px 4px 0 var(--ink);
       z-index: 5;
+    }
+    .hero-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 20px;
+      width: 0;
+      height: 0;
+      border: 12px solid transparent;
+      border-top-color: var(--ink);
+      border-left: 0;
+      transform: rotate(-15deg);
     }
 
     /* ============ ONOMATOPEYAS ============ */
@@ -205,7 +219,10 @@
       justify-content: center;
       gap: 1.5rem;
     }
-    .onomatopeyas span { font-family: var(--font-comic); font-size: 1.75rem; }
+    .onomatopeyas span {
+      font-family: var(--font-comic);
+      font-size: 1.75rem;
+    }
     .onomatopeyas span:nth-child(odd) { color: var(--boom); }
     .onomatopeyas span:nth-child(even) { color: var(--pow); }
 
@@ -214,14 +231,16 @@
     .section-title { font-size: 2.75rem; margin-bottom: 2rem; }
 
     /* Servicios */
-    .services-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .services-grid {
+      display: grid;
+      gap: 2rem;
+    }
     .service-card {
       position: relative;
       background: var(--paper);
       padding: 1.5rem;
       border: var(--border);
       box-shadow: 8px 8px 0 var(--ink);
-      cursor: pointer;
     }
     .service-card .sonido {
       position: absolute;
@@ -234,98 +253,270 @@
     .service-card h3 { font-size: 1.75rem; margin-top: 0.5rem; }
     .service-card p { margin-top: 0.5rem; font-weight: 700; }
 
-    /* ============ SISTEMA DE MODALES (VENTANAS EMERGENTES GIGANTES) ============ */
-    .comic-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(26, 26, 26, 0.85);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+    /* Proceso */
+    .process {
+      background: var(--pow);
+      border-top: var(--border);
+      border-bottom: var(--border);
     }
-    .comic-overlay.active {
-      opacity: 1;
-      pointer-events: all;
+    .process-grid {
+      display: grid;
+      gap: 1.5rem;
     }
-    .comic-modal {
+    .process-card {
       background: var(--paper);
+      padding: 1.25rem;
       border: var(--border);
-      box-shadow: 12px 12px 0 var(--ink);
-      width: 100%;
-      max-width: 950px; /* Tamaño gigante ajustable */
-      max-height: 85vh;
-      overflow-y: auto;
-      position: relative;
-      padding: 4rem 2rem 2rem 2rem;
-      transform: scale(0.9) rotate(-1deg);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 8px 8px 0 var(--ink);
     }
-    .comic-overlay.active .comic-modal {
-      transform: scale(1) rotate(0deg);
+    .process-card .num { font-size: 2.5rem; color: var(--boom); }
+    .process-card h3 { font-size: 1.5rem; }
+    .process-card p { font-size: 0.95rem; font-weight: 700; }
+
+    /* Testimonios */
+    .testimonials-grid {
+      display: grid;
+      gap: 2rem;
     }
-    .modal-close-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: var(--boom);
-      color: var(--paper);
+    .testimonial {
+      background: var(--zap);
+      padding: 1.5rem;
+      border: var(--border);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+    .testimonial blockquote {
       font-family: var(--font-comic);
       font-size: 1.5rem;
-      padding: 0.4rem 1.2rem;
-      border: var(--border);
-      box-shadow: 4px 4px 0 var(--ink);
-      cursor: pointer;
+      line-height: 1.2;
+    }
+    .testimonial figcaption {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 900;
       text-transform: uppercase;
-      transition: transform 0.1s ease;
     }
-    .modal-close-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 2px 2px 0 var(--ink);
+
+    /* Cierre */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+      background: var(--boom);
+      border-top: var(--border);
+      text-align: center;
+      padding: 5rem 0;
     }
-    .modal-content-area {
-      font-weight: 700;
-      font-size: 1.15rem;
+    .cta-section h2 {
+      font-size: 3rem;
+      color: var(--pow);
     }
-    .modal-content-area h2 {
-      font-size: 3.5rem;
+    .cta-section p {
+      max-width: 40rem;
+      margin: 1rem auto 0;
+      font-size: 1.125rem;
+      font-weight: 900;
+      color: var(--paper);
+    }
+    .cta-section .btn {
+      margin-top: 2rem;
+      background: var(--pow);
       color: var(--ink);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      border-top: var(--border);
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+      .hero-grid { grid-template-columns: 1fr 1fr; }
+      .hero-title { font-size: 5rem; }
+      .hero-bubble { left: -2.5rem; }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .onomatopeyas span { font-size: 2.25rem; }
+      .section-title { font-size: 3.5rem; }
+      .cta-section h2 { font-size: 4rem; }
+    }
+    @media (min-width: 1024px) {
+      .process-grid { grid-template-columns: repeat(4, 1fr); }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVEGACIÓN -->
-  <nav class="nav">
-    <div class="nav-inner container">
-      <div class="font-comic ink-stroke" style="font-size: 2rem; color: var(--paper);">STUDIO KAPOW</div>
-      <ul class="nav-links">
-        <li><a onclick="openModal('capitulo')">Capítulo</a></li>
-        <li><a onclick="openModal('servicios')">Servicios</a></li>
-        <li><a onclick="openModal('equipo')">Equipo</a></li>
-        <li><a onclick="openModal('contacto')">Contacto</a></li>
-      </ul>
-      <div class="nav-cta" onclick="openModal('contacto')">¡HABLAMOS!</div>
-    </div>
-  </nav>
+  <!-- ============================================================
+       CONTENIDO 100% EDITABLE
+       Cambia los textos del objeto JS de abajo y se actualiza toda la página.
+       ============================================================ -->
+  <script>
+    const CONTENIDO = {
+      marca: "Studio Kapow",
+      menu: ["Historias", "Servicios", "Equipo", "Contacto"],
+      cta: "¡Pide tu viñeta!",
+      hero: {
+        kicker: "Número #01 · Edición limitada",
+        titulo1: "Ideas que",
+        titulo2: "explotan",
+        bocadillo: "¡Diseño con puños de tinta y color!",
+        texto: "Somos un estudio creativo que dibuja marcas con la fuerza de una portada de cómic: trazo grueso, color plano y cero aburrimiento.",
+        boton1: "Ver portafolio",
+        boton2: "Hablemos",
+      },
+      onomatopeyas: ["POW!", "ZAP!", "BOOM!", "WHAM!", "KAPOW!"],
+      servicios: {
+        titulo: "Nuestros superpoderes",
+        items: [
+          { sonido: "BAM!", nombre: "Identidad visual", texto: "Logos, paletas y tipografías que se leen a 100 metros." },
+          { sonido: "ZOOM!", nombre: "Webs animadas", texto: "Sitios rápidos con viñetas, transiciones y mucho carácter." },
+          { sonido: "SPLASH!", nombre: "Ilustración", texto: "Personajes, portadas y escenas dibujadas a mano y a medida." },
+        ],
+      },
+      historia: {
+        titulo: "Así trabajamos",
+        vinetas: [
+          { num: "01", titulo: "El llamado", texto: "Nos cuentas el problema. Escuchamos sin capas." },
+          { num: "02", titulo: "El boceto", texto: "Dibujamos rutas posibles en lápiz azul." },
+          { num: "03", titulo: "El entintado", texto: "Definimos trazo, color y sistema completo." },
+          { num: "04", titulo: "La portada", texto: "Publicamos y el público aplaude." },
+        ],
+      },
+      testimonios: {
+        titulo: "Dicen por ahí",
+        items: [
+          { texto: "Nuestra marca pasó de gris a portada de cómic. Vendemos el triple.", autor: "Lucía R. · Café Nébula" },
+          { texto: "Trabajar con ellos es como leer un número doble: no puedes parar.", autor: "Marco T. · Editorial Vórtice" },
+        ],
+      },
+      cierre: {
+        titulo: "¿Listo para tu próximo número?",
+        texto: "Cuéntanos tu idea y devolvemos un storyboard en 48 horas.",
+        boton: "Empezar la historia",
+      },
+      footer: "© 2026 Studio Kapow · Hecho con tinta, trama y café",
+    };
+  </script>
 
-  <!-- HERO BANNER -->
-  <header class="hero">
-    <div class="halftone"></div>
-    <div class="hero-grid container">
-      <div>
-        <span class="hero-kicker">Estudio Creativo</span>
-        <h1 class="hero-title font-comic ink-stroke" style="color: var(--paper);">
-          <span>CREAMOS MARCAS</span>
-          <span class="highlight">CON PODER</span>
-          <span>VISUAL.</span>
-        </h1>
+  <div id="app"></div>
+
+  <script>
+    const c = CONTENIDO;
+
+    document.getElementById("app").innerHTML = `
+      <nav class="nav">
+        <div class="container nav-inner">
+          <span class="font-comic" style="font-size:2rem">${c.marca}</span>
+          <ul class="nav-links">
+            ${c.menu.map(m => `<li><a href="#!">${m}</a></li>`).join("")}
+          </ul>
+          <a href="#contacto" class="nav-cta panel-sm">${c.cta}</a>
+        </div>
+      </nav>
+
+      <header class="hero">
+        <div class="rays" style="position:absolute;inset:-30%;width:160%;height:160%"></div>
+        <div class="halftone"></div>
+        <div class="container hero-grid" style="position:relative">
+          <div>
+            <span class="hero-kicker">${c.hero.kicker}</span>
+            <h1 class="hero-title font-comic">
+              <span>${c.hero.titulo1}</span>
+              <span class="highlight ink-stroke">${c.hero.titulo2}</span>
+            </h1>
+            <p class="hero-text">${c.hero.texto}</p>
+            <div class="hero-actions">
+              <a href="#servicios" class="btn btn-primary">${c.hero.boton1}</a>
+              <a href="#contacto" class="btn btn-secondary">${c.hero.boton2}</a>
+            </div>
+          </div>
+          <div class="hero-image-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1608889175123-8ee362201f81?w=800&auto=format&fit=crop"
+              alt="Portada de cómic con un héroe en pose de acción sobre la ciudad"
+              class="hero-image panel"
+              width="600"
+              height="600"
+            />
+            <div class="hero-bubble pop-in">${c.hero.bocadillo}</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="onomatopeyas">
+        <div class="container onomatopeyas-inner">
+          ${c.onomatopeyas.map((o, i) => `<span>${o}</span>`).join("")}
+        </div>
+      </div>
+
+      <section id="servicios" class="section">
+        <div class="container">
+          <h2 class="section-title font-comic">${c.servicios.titulo}</h2>
+          <div class="services-grid">
+            ${c.servicios.items.map(s => `
+              <article class="service-card">
+                <span class="sonido font-comic">${s.sonido}</span>
+                <h3 class="font-comic">${s.nombre}</h3>
+                <p>${s.texto}</p>
+              </article>
+            `).join("")}
+          </div>
+        </div>
+      </section>
+
+      <section class="section process">
+        <div class="container">
+          <h2 class="section-title font-comic">${c.historia.titulo}</h2>
+          <div class="process-grid">
+            ${c.historia.vinetas.map(v => `
+              <article class="process-card">
+                <span class="num font-comic">${v.num}</span>
+                <h3 class="font-comic">${v.titulo}</h3>
+                <p>${v.texto}</p>
+              </article>
+            `).join("")}
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title font-comic">${c.testimonios.titulo}</h2>
+          <div class="testimonials-grid">
+            ${c.testimonios.items.map(t => `
+              <figure class="testimonial">
+                <blockquote>“${t.texto}”</blockquote>
+                <figcaption>${t.autor}</figcaption>
+              </figure>
+            `).join("")}
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" class="cta-section">
+        <div class="halftone"></div>
+        <div class="container" style="position:relative">
+          <h2 class="font-comic ink-stroke">${c.cierre.titulo}</h2>
+          <p>${c.cierre.texto}</p>
+          <a href="mailto:hola@studiokapow.com" class="btn">${c.cierre.boton}</a>
+        </div>
+      </section>
+
+      <footer>
+        ${c.footer}
+      </footer>
+    `;
+  </script>
+</body>
+</html>
+
 
 
 
