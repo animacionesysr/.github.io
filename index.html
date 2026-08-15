@@ -815,13 +815,12 @@
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botones y Ventanas Emergentes con Giro 3D</title>
+    <title>Botones y Ventanas Emergentes Creativas</title>
     <style>
         /* --- VARIABLES PERSONALIZABLES (Cambia los colores aquí) --- */
         :root {
@@ -837,7 +836,7 @@
             
             /* Fuentes y transiciones */
             --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --transition-smooth: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Ajustado para el rebote del giro */
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         /* --- CONFIGURACIÓN BASE (No interfiere con tu fondo) --- */
@@ -846,12 +845,12 @@
             padding: 0;
             font-family: var(--font-main);
             min-height: 100vh;
+            /* Flexbox para centrar totalmente los botones en la pantalla */
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 24px;
+            gap: 24px; /* Separación entre botones */
             background-color: #f5f7fa; /* Reemplaza esto con tu fondo de pantalla */
-            perspective: 1000px; /* Habilita el entorno 3D para el giro */
         }
 
         /* Bloquea el scroll del body cuando el modal está activo */
@@ -865,23 +864,33 @@
             font-size: 16px;
             font-weight: 600;
             border: none;
-            border-radius: 50px;
+            border-radius: 50px; /* Bordes redondeados y modernos */
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
             letter-spacing: 0.5px;
         }
 
         .custom-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px); /* Efecto sutil de elevación */
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
+        .custom-btn:active {
+            transform: translateY(-1px);
+        }
+
         /* Asignación de colores individuales */
-        .btn-uno { background-color: var(--btn1-bg); color: var(--btn1-text); }
+        .btn-uno {
+            background-color: var(--btn1-bg);
+            color: var(--btn1-text);
+        }
         .btn-uno:hover { background-color: var(--btn1-hover); }
 
-        .btn-dos { background-color: var(--btn2-bg); color: var(--btn2-text); }
+        .btn-dos {
+            background-color: var(--btn2-bg);
+            color: var(--btn2-text);
+        }
         .btn-dos:hover { background-color: var(--btn2-hover); }
 
 
@@ -892,46 +901,41 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.5); /* Fondo oscuro suave detrás del modal */
+            backdrop-filter: blur(4px); /* Difumina tu fondo de pantalla sutilmente */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 9999; /* Asegura que esté por encima de todo */
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease;
-            perspective: 1200px; /* Perspectiva interna para el efecto de rotación */
         }
 
+        /* Clase que activa el modal con una transición limpia */
         .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
 
-        /* Contenedor del Modal con resolución fija de 1280x720 y EFECTO DE GIRO INICIAL */
+        /* Contenedor del Modal con resolución fija de 1280x720 */
         .modal-container {
             width: 1280px;
             height: 720px;
             background: rgba(52, 73, 94, 0.8);
             border: 1px solid rgba(52, 73, 94, 0.9);
             border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            
-            /* Estado inicial oculto: rotado -45 grados, inclinado y escalado hacia atrás */
-            transform: scale(0.7) rotateY(-45deg) rotateX(10deg) translateY(50px);
-            transform-style: preserve-3d;
-            backface-visibility: hidden;
+            overflow: hidden; /* Evita desbordamientos */
+            transform: scale(0.9);
             transition: var(--transition-smooth);
+            position: relative;
         }
 
-        /* Estado activo: Giro completo hacia su posición original limpia */
         .modal-overlay.active .modal-container {
-            transform: scale(1) rotateY(0deg) rotateX(0deg) translateY(0deg);
+            transform: scale(1);
         }
 
         /* Botón de cerrar (X) */
@@ -948,30 +952,24 @@
             z-index: 10;
         }
 
-        .modal-close:hover { color: #ffffff; }
+        .modal-close:hover {
+            color: #ffffff;
+        }
 
-        /* Área de contenido con márgenes generosos */
+        /* Área de contenido con márgenes generosos y limpios */
         .modal-content {
-            padding: 50px;
+            padding: 50px; /* Margen separado del texto e imágenes */
             color: #ffffff;
             height: 100%;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            gap: 24px;
-            overflow-y: auto;
-            /* Efecto cascada sutil para el texto al girar */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s ease 0.2s; 
+            gap: 24px; /* Separación interna entre elementos */
+            overflow-y: auto; /* Permite scroll interno SOLO si el contenido excede los 720px */
         }
 
-        .modal-overlay.active .modal-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        /* Estilos creativos para el contenido interior */
         .modal-content h2 {
             font-size: 32px;
             margin: 0;
@@ -988,6 +986,7 @@
             color: #e0e6ed;
         }
 
+        /* Contenedor de imágenes responsivo dentro del espacio */
         .modal-image-wrapper {
             width: 100%;
             max-height: 400px;
@@ -999,7 +998,7 @@
         .modal-image-wrapper img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Ajusta la imagen elegantemente */
             display: block;
         }
     </style>
@@ -1012,12 +1011,14 @@
 
     <!-- VENTANA EMERGENTE 1 -->
     <div id="modal1" class="modal-overlay" onclick="closeModal('modal1')">
+        <!-- El stopPropagation evita que se cierre el modal al hacer click dentro del contenido -->
         <div class="modal-container" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal('modal1')">&times;</button>
             <div class="modal-content">
-                <h2>Efecto Cinematográfico 3D</h2>
-                <p>Notarás que al abrirse, la ventana realiza un giro tridimensional apoyado en curvas Bézier. Esto le da un aspecto dinámico pero profesional, manteniendo la estructura limpia con márgenes intactos.</p>
+                <h2>Diseño Minimalista Avanzado</h2>
+                <p>Este espacio está diseñado manteniendo márgenes impecables (padding de 50px). El fondo mantiene la transparencia exacta solicitada (rgba de la gama Slate/Navy), asegurando legibilidad sin romper la estética limpia.</p>
                 <div class="modal-image-wrapper">
+                    <!-- Reemplaza el src con tu imagen -->
                     <img src="https://unsplash.com" alt="Ejemplo Creativo">
                 </div>
             </div>
@@ -1029,9 +1030,10 @@
         <div class="modal-container" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal('modal2')">&times;</button>
             <div class="modal-content">
-                <h2>Transición Fluida sin Bloqueos</h2>
-                <p>El texto interior tiene un ligero retardo de aparición de 0.2 segundos. Esto genera una sensación de profundidad, ya que el contenido termina de acomodarse justo cuando la ventana finaliza su rotación.</p>
+                <h2>Galeria de Arte Digital</h2>
+                <p>Puedes añadir múltiples párrafos o bloques de imágenes. Si el contenido llega a superar el límite estricto de la resolución de 1280x720, se activará un deslizamiento interno muy sutil, manteniendo la página web principal intacta y congelada al fondo.</p>
                 <div class="modal-image-wrapper">
+                    <!-- Reemplaza el src con tu imagen -->
                     <img src="https://unsplash.com" alt="Arte Creativo">
                 </div>
             </div>
@@ -1040,16 +1042,19 @@
 
     <!-- JAVASCRIPT CONTROLADOR -->
     <script>
+        // Función para abrir la ventana
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
-            document.body.classList.add('modal-open');
+            document.body.classList.add('modal-open'); // Congela la página de fondo
         }
 
+        // Función para cerrar la ventana
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
-            document.body.classList.remove('modal-open');
+            document.body.classList.remove('modal-open'); // Libera la página de fondo
         }
 
+        // Cerrar también presionando la tecla "Escape"
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 const activeModal = document.querySelector('.modal-overlay.active');
