@@ -821,227 +821,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botones Personalizables y Ventanas Emergentes</title>
+    <title>Botones y Ventanas Emergentes Personalizables</title>
     <style>
-        /* --- CONFIGURACIÓN DEL FONDO DE LA PÁGINA --- */
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Puedes cambiar este fondo por la imagen que quieras */
-            background: linear-gradient(135deg, #1e1e2f, #2a2a40); 
-            overflow-x: hidden;
+        /* --- VARIABLES PERSONALIZABLES (Cambia los colores aquí) --- */
+        :root {
+            --btn-1-bg: #3498db;
+            --btn-1-hover: #2980b9;
+            --btn-1-text: #ffffff;
+
+            --btn-2-bg: #2ecc71;
+            --btn-2-hover: #27ae60;
+            --btn-2-text: #ffffff;
+            
+            --text-color: #f5f6fa;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Bloquea el scroll de la página cuando el modal está abierto */
-        body.modal-abierto {
-            overflow: hidden;
-        }
-
-        /* --- CONTENEDOR DE BOTONES (CENTRADOS) --- */
-        .contenedor-botones {
+        /* --- CONTENEDOR DE BOTONES --- */
+        .button-wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
             gap: 20px;
-            z-index: 10; /* Por debajo de las ventanas emergentes */
+            z-index: 99999; /* Por encima de todo */
+            pointer-events: auto;
         }
 
-        /* --- BOTONES PRINCIPALES (TOTALMENTE PERSONALIZABLES) --- */
-        .btn-personalizable {
-            padding: 15px 30px;
+        /* Estilo base de los botones */
+        .custom-btn {
+            padding: 14px 28px;
+            font-family: var(--font-family);
             font-size: 16px;
             font-weight: 600;
-            color: #ffffff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        /* Cambia estos colores fácilmente para personalizar el Botón 1 */
-        .btn-1 {
-            background-color: #3498db;
-        }
-        .btn-1:hover {
-            background-color: #2980b9;
+        .custom-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
-        /* Cambia estos colores fácilmente para personalizar el Botón 2 */
-        .btn-2 {
-            background-color: #e74c3c;
-        }
-        .btn-2:hover {
-            background-color: #c0392b;
-            transform: translateY(-2px);
-        }
+        /* Colores independientes */
+        .btn-1 { background-color: var(--btn-1-bg); color: var(--btn-1-text); }
+        .btn-1:hover { background-color: var(--btn-1-hover); }
+
+        .btn-2 { background-color: var(--btn-2-bg); color: var(--btn-2-text); }
+        .btn-2:hover { background-color: var(--btn-2-hover); }
 
 
         /* --- VENTANAS EMERGENTES (MODALES) --- */
-        .overlay-modal {
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5); /* Fondo oscuro exterior tenue */
+            background: rgba(0, 0, 0, 0.5); /* Sombra sutil detrás del modal */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 999; /* Siempre por encima de todo */
+            z-index: 100000; /* Máxima prioridad */
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
-            padding: 40px; /* Margen para que no pegue a los bordes de la pantalla */
-            box-sizing: border-box;
         }
 
-        /* Clase activa para mostrar el modal */
-        .overlay-modal.activo {
+        /* Estado activo */
+        .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
 
-        /* Cuerpo del Modal con resolución fija 1280x720 adaptativa */
-        .contenido-modal {
+        /* Contenedor 1280x720 con tus transparencias */
+        .modal-container {
             width: 1280px;
             height: 720px;
-            max-width: 100%;  /* Evita que se corte en pantallas más chicas */
-            max-height: 100%; /* Evita que se corte en pantallas más chicas */
+            max-width: 90vw;  /* Evita que toque los bordes en pantallas chicas */
+            max-height: 85vh; /* Margen de seguridad arriba y abajo */
             background: rgba(52, 73, 94, 0.8);
             border: 1px solid rgba(52, 73, 94, 0.9);
-            backdrop-filter: blur(8px); /* Efecto esmerilado elegante */
+            backdrop-filter: blur(5px); /* Efecto esmerilado creativo */
             border-radius: 12px;
             position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Mantiene todo limpio dentro del marco */
-            animation: entradaModal 0.4s ease forwards;
+            overflow: hidden; /* Evita scrolls raros */
         }
 
-        @keyframes entradaModal {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- BOTÓN CERRAR --- */
-        .btn-cerrar {
+        /* Botón Cerrar (Separado del borde correctamente) */
+        .modal-close {
             position: absolute;
             top: 20px;
             right: 25px;
             background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 32px;
-            cursor: pointer;
-            transition: color 0.2s ease;
-            z-index: 101;
-            line-height: 1;
-        }
-        .btn-cerrar:hover {
-            color: #ffffff;
-        }
-
-        /* --- CONTENEDOR INTERIOR CREATIVO Y LIMPIO --- */
-        .modal-scrollable {
-            padding: 50px;
-            height: 100%;
-            overflow-y: auto; /* Permite scroll SOLO dentro del modal si añades mucho texto */
-            box-sizing: border-box;
-            color: #ecf0f1;
-        }
-
-        /* Estilos de Texto Limpios */
-        .modal-scrollable h2 {
-            margin-top: 0;
+            color: var(--text-color);
             font-size: 28px;
-            letter-spacing: 1px;
-            color: #ffffff;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            z-index: 100001;
         }
 
-        .modal-scrollable p {
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        /* Contenido interno limpio y creativo */
+        .modal-content {
+            padding: 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-color);
+            font-family: var(--font-family);
+            box-sizing: border-box;
+        }
+
+        .modal-content h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .modal-content p {
             font-size: 16px;
+            max-width: 600px;
             line-height: 1.6;
-            color: #e0e6ed;
+            opacity: 0.9;
             margin-bottom: 25px;
         }
 
-        /* Estilos para las Imágenes dentro del Modal */
-        .modal-imagen {
-            width: 100%;
-            max-height: 400px;
+        /* Imagen fluida dentro del espacio */
+        .modal-content img {
+            max-width: 100%;
+            max-height: 350px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <!-- BOTONES PRINCIPALES CENTRADOS -->
-    <div class="contenedor-botones">
-        <button class="btn-personalizable btn-1" onclick="abrirModal('modal1')">Abrir Ventana 1</button>
-        <button class="btn-personalizable btn-2" onclick="abrirModal('modal2')">Abrir Ventana 2</button>
+    <!-- CONTENEDOR DE BOTONES (Siempre flotando al centro) -->
+    <div class="button-wrapper">
+        <button class="custom-btn btn-1" onclick="openModal('modal1')">Ventana 1</button>
+        <button class="custom-btn btn-2" onclick="openModal('modal2')">Ventana 2</button>
     </div>
 
     <!-- VENTANA EMERGENTE 1 -->
-    <div id="modal1" class="overlay-modal" onclick="cerrarModalAlHacerClickFuera(event, 'modal1')">
-        <div class="contenido-modal">
-            <button class="btn-cerrar" onclick="cerrarModal('modal1')">&times;</button>
-            <div class="modal-scrollable">
-                <h2>Diseño Creativo - Ventana 1</h2>
-                <p>Este es un espacio limpio y minimalista. Al abrir esta ventana, notarás que el fondo de la pantalla se congela por completo evitando molestos desplazamientos verticales u horizontales.</p>
-                <!-- Puedes cambiar la URL de esta imagen por la que tú quieras -->
-                <img src="https://picsum.photos" alt="Imagen Creativa 1" class="modal-imagen">
+    <div class="modal-overlay" id="modal1">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal('modal1')">&times;</button>
+            <div class="modal-content">
+                <h2>Diseño Creativo Minimalista</h2>
+                <p>Este texto fluye de manera limpia sin romper la estética de la proporción 1280x720.</p>
+                <!-- Reemplaza la URL por tu imagen -->
+                <img src="https://picsum.photos" alt="Ejemplo de Imagen">
             </div>
         </div>
     </div>
 
     <!-- VENTANA EMERGENTE 2 -->
-    <div id="modal2" class="overlay-modal" onclick="cerrarModalAlHacerClickFuera(event, 'modal2')">
-        <div class="contenido-modal">
-            <button class="btn-cerrar" onclick="cerrarModal('modal2')">&times;</button>
-            <div class="modal-scrollable">
-                <h2>Contenido Estructurado - Ventana 2</h2>
-                <p>La combinación del fondo semitransparente con el desenfoque crea un contraste perfecto para leer textos largos sin perder de vista la estética general de tu sitio web.</p>
-                <!-- Puedes cambiar la URL de esta imagen por la que tú quieras -->
-                <img src="https://picsum.photos" alt="Imagen Creativa 2" class="modal-imagen">
+    <div class="modal-overlay" id="modal2">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal('modal2')">&times;</button>
+            <div class="modal-content">
+                <h2>Segunda Ventana Independiente</h2>
+                <p>Puedes cambiar los colores de los botones principales en la sección de CSS (:root).</p>
+                <!-- Reemplaza la URL por tu imagen -->
+                <img src="https://picsum.photos" alt="Ejemplo de Imagen 2">
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT PARA CONTROLAR LAS VENTANAS -->
     <script>
-        // Función para abrir una ventana emergente específica
-        function abrirModal(idModal) {
-            document.getElementById(idModal).classList.add('activo');
-            document.body.classList.add('modal-abierto'); // Bloquea el fondo
+        // Funciones para abrir y cerrar ventanas de manera independiente
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
         }
 
-        // Función para cerrar una ventana emergente específica
-        function cerrarModal(idModal) {
-            document.getElementById(idModal).classList.remove('activo');
-            document.body.classList.remove('modal-abierto'); // Libera el fondo
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
         }
 
-        // Cierra la ventana si el usuario hace click en el fondo oscuro exterior
-        function cerrarModalAlHacerClickFuera(event, idModal) {
-            if (event.target === document.getElementById(idModal)) {
-                cerrarModal(idModal);
+        // Cerrar al hacer click fuera del cuadro contenedor (en la sombra)
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
             }
         }
     </script>
 
 </body>
 </html>
+
 
 
 
