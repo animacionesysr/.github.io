@@ -155,6 +155,7 @@
       font-size: 3.5rem;
       line-height: 0.95;
       margin-top: 1.25rem;
+      cursor: pointer; /* Indica que es clicable */
     }
     .hero-title span { display: block; }
     .hero-title .highlight { color: var(--pow); }
@@ -250,7 +251,7 @@
       color: var(--pow);
       -webkit-text-stroke: 1.5px var(--ink);
     }
-    .service-card h3 { font-size: 1.75rem; margin-top: 0.5rem; }
+    .service-card h3 { font-size: 1.75rem; margin-top: 0.5rem; cursor: pointer; }
     .service-card p { margin-top: 0.5rem; font-weight: 700; }
 
     /* Proceso */
@@ -270,7 +271,7 @@
       box-shadow: 8px 8px 0 var(--ink);
     }
     .process-card .num { font-size: 2.5rem; color: var(--boom); }
-    .process-card h3 { font-size: 1.5rem; }
+    .process-card h3 { font-size: 1.5rem; cursor: pointer; }
     .process-card p { font-size: 0.95rem; font-weight: 700; }
 
     /* Testimonios */
@@ -287,232 +288,73 @@
     .testimonial blockquote {
       font-family: var(--font-comic);
       font-size: 1.5rem;
-      line-height: 1.2;
-    }
-    .testimonial figcaption {
-      margin-top: 0.75rem;
-      font-size: 0.875rem;
-      font-weight: 900;
-      text-transform: uppercase;
     }
 
-    /* Cierre */
-    .cta-section {
+    /* ============ ESTILOS DEL MODAL (CÓMIC STYLE) ============ */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 26, 26, 0.8); /* Fondo oscuro semitransparente */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 100;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-box {
+      background: var(--paper);
+      border: var(--border);
+      box-shadow: 12px 12px 0 var(--ink);
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 90%;
       position: relative;
-      overflow: hidden;
-      background: var(--boom);
-      border-top: var(--border);
-      text-align: center;
-      padding: 5rem 0;
+      transform: scale(0.8) rotate(-1deg);
+      transition: transform 0.2s ease;
     }
-    .cta-section h2 {
-      font-size: 3rem;
-      color: var(--pow);
+    .modal-overlay.active .modal-box {
+      transform: scale(1) rotate(0deg);
     }
-    .cta-section p {
-      max-width: 40rem;
-      margin: 1rem auto 0;
-      font-size: 1.125rem;
-      font-weight: 900;
-      color: var(--paper);
+    .modal-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--boom);
     }
-    .cta-section .btn {
-      margin-top: 2rem;
+    .modal-close {
+      position: absolute;
+      top: -15px;
+      right: -15px;
       background: var(--pow);
-      color: var(--ink);
+      border: var(--border);
+      font-family: var(--font-comic);
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--ink);
     }
-
-    /* Footer */
-    footer {
-      background: var(--ink);
-      color: var(--paper);
-      text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 0.875rem;
-      font-weight: 700;
-      border-top: var(--border);
+    .modal-close:hover {
+      transform: translateY(-2px);
     }
-
-    /* ============ RESPONSIVE ============ */
-    @media (min-width: 768px) {
-      .nav-links { display: flex; }
-      .hero-grid { grid-template-columns: 1fr 1fr; }
-      .hero-title { font-size: 5rem; }
-      .hero-bubble { left: -2.5rem; }
-      .services-grid { grid-template-columns: repeat(3, 1fr); }
-      .process-grid { grid-template-columns: repeat(2, 1fr); }
-      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
-      .onomatopeyas span { font-size: 2.25rem; }
-      .section-title { font-size: 3.5rem; }
-      .cta-section h2 { font-size: 4rem; }
-    }
-    @media (min-width: 1024px) {
-      .process-grid { grid-template-columns: repeat(4, 1fr); }
+    .clickable-title:hover {
+      color: var(--boom);
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       CONTENIDO 100% EDITABLE
-       Cambia los textos del objeto JS de abajo y se actualiza toda la página.
-       ============================================================ -->
-  <script>
-    const CONTENIDO = {
-      marca: "Studio Kapow",
-      menu: ["Historias", "Servicios", "Equipo", "Contacto"],
-      cta: "¡Pide tu viñeta!",
-      hero: {
-        kicker: "Número #01 · Edición limitada",
-        titulo1: "Ideas que",
-        titulo2: "explotan",
-        bocadillo: "¡Diseño con puños de tinta y color!",
-        texto: "Somos un estudio creativo que dibuja marcas con la fuerza de una portada de cómic: trazo grueso, color plano y cero aburrimiento.",
-        boton1: "Ver portafolio",
-        boton2: "Hablemos",
-      },
-      onomatopeyas: ["POW!", "ZAP!", "BOOM!", "WHAM!", "KAPOW!"],
-      servicios: {
-        titulo: "Nuestros superpoderes",
-        items: [
-          { sonido: "BAM!", nombre: "Identidad visual", texto: "Logos, paletas y tipografías que se leen a 100 metros." },
-          { sonido: "ZOOM!", nombre: "Webs animadas", texto: "Sitios rápidos con viñetas, transiciones y mucho carácter." },
-          { sonido: "SPLASH!", nombre: "Ilustración", texto: "Personajes, portadas y escenas dibujadas a mano y a medida." },
-        ],
-      },
-      historia: {
-        titulo: "Así trabajamos",
-        vinetas: [
-          { num: "01", titulo: "El llamado", texto: "Nos cuentas el problema. Escuchamos sin capas." },
-          { num: "02", titulo: "El boceto", texto: "Dibujamos rutas posibles en lápiz azul." },
-          { num: "03", titulo: "El entintado", texto: "Definimos trazo, color y sistema completo." },
-          { num: "04", titulo: "La portada", texto: "Publicamos y el público aplaude." },
-        ],
-      },
-      testimonios: {
-        titulo: "Dicen por ahí",
-        items: [
-          { texto: "Nuestra marca pasó de gris a portada de cómic. Vendemos el triple.", autor: "Lucía R. · Café Nébula" },
-          { texto: "Trabajar con ellos es como leer un número doble: no puedes parar.", autor: "Marco T. · Editorial Vórtice" },
-        ],
-      },
-      cierre: {
-        titulo: "¿Listo para tu próximo número?",
-        texto: "Cuéntanos tu idea y devolvemos un storyboard en 48 horas.",
-        boton: "Empezar la historia",
-      },
-      footer: "© 2026 Studio Kapow · Hecho con tinta, trama y café",
-    };
-  </script>
-
-  <div id="app"></div>
-
-  <script>
-    const c = CONTENIDO;
-
-    document.getElementById("app").innerHTML = `
-      <nav class="nav">
-        <div class="container nav-inner">
-          <span class="font-comic" style="font-size:2rem">${c.marca}</span>
-          <ul class="nav-links">
-            ${c.menu.map(m => `<li><a href="#!">${m}</a></li>`).join("")}
-          </ul>
-          <a href="#contacto" class="nav-cta panel-sm">${c.cta}</a>
-        </div>
-      </nav>
-
-      <header class="hero">
-        <div class="rays" style="position:absolute;inset:-30%;width:160%;height:160%"></div>
-        <div class="halftone"></div>
-        <div class="container hero-grid" style="position:relative">
-          <div>
-            <span class="hero-kicker">${c.hero.kicker}</span>
-            <h1 class="hero-title font-comic">
-              <span>${c.hero.titulo1}</span>
-              <span class="highlight ink-stroke">${c.hero.titulo2}</span>
-            </h1>
-            <p class="hero-text">${c.hero.texto}</p>
-            <div class="hero-actions">
-              <a href="#servicios" class="btn btn-primary">${c.hero.boton1}</a>
-              <a href="#contacto" class="btn btn-secondary">${c.hero.boton2}</a>
-            </div>
-          </div>
-          <div class="hero-image-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1608889175123-8ee362201f81?w=800&auto=format&fit=crop"
-              alt="Portada de cómic con un héroe en pose de acción sobre la ciudad"
-              class="hero-image panel"
-              width="600"
-              height="600"
-            />
-            <div class="hero-bubble pop-in">${c.hero.bocadillo}</div>
-          </div>
-        </div>
-      </header>
-
-      <div class="onomatopeyas">
-        <div class="container onomatopeyas-inner">
-          ${c.onomatopeyas.map((o, i) => `<span>${o}</span>`).join("")}
-        </div>
-      </div>
-
-      <section id="servicios" class="section">
-        <div class="container">
-          <h2 class="section-title font-comic">${c.servicios.titulo}</h2>
-          <div class="services-grid">
-            ${c.servicios.items.map(s => `
-              <article class="service-card">
-                <span class="sonido font-comic">${s.sonido}</span>
-                <h3 class="font-comic">${s.nombre}</h3>
-                <p>${s.texto}</p>
-              </article>
-            `).join("")}
-          </div>
-        </div>
-      </section>
-
-      <section class="section process">
-        <div class="container">
-          <h2 class="section-title font-comic">${c.historia.titulo}</h2>
-          <div class="process-grid">
-            ${c.historia.vinetas.map(v => `
-              <article class="process-card">
-                <span class="num font-comic">${v.num}</span>
-                <h3 class="font-comic">${v.titulo}</h3>
-                <p>${v.texto}</p>
-              </article>
-            `).join("")}
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <h2 class="section-title font-comic">${c.testimonios.titulo}</h2>
-          <div class="testimonials-grid">
-            ${c.testimonios.items.map(t => `
-              <figure class="testimonial">
-                <blockquote>“${t.texto}”</blockquote>
-                <figcaption>${t.autor}</figcaption>
-              </figure>
-            `).join("")}
-          </div>
-        </div>
-      </section>
-
-      <section id="contacto" class="cta-section">
-        <div class="halftone"></div>
-        <div class="container" style="position:relative">
-          <h2 class="font-comic ink-stroke">${c.cierre.titulo}</h2>
-          <p>${c.cierre.texto}</p>
-          <a href="mailto:hola@studiokapow.com" class="btn">${c.cierre.boton}</a>
-        </div>
-      </section>
-
-      <footer>
-        ${c.footer}
-      </footer>
-    `;
-  </script>
-</body>
-</html>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="font-comic ink-stroke" style="font-size: 2rem; color: var(--paper);">STUDIO KAPOW</a>
+      <ul class="nav-links">
