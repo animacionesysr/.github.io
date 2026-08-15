@@ -268,4 +268,327 @@
 </html>
 
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio YSRComics - Estilo Cómic</title>
+    
+    <!-- Fuente Bangers para los títulos estilo cómic -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CONFIGURACIÓN GENERAL --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bangers', 'Comic Sans MS', cursive, sans-serif;
+            letter-spacing: 1px;
+            overflow-x: hidden;
+        }
+
+        /* --- BARRA SUPERIOR (NAVBAR) --- */
+        .navbar {
+            background-color: #f7df72; /* Amarillo de tu imagen */
+            border-bottom: 4px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-title {
+            color: #000;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 25px;
+        }
+
+        .btn-nav {
+            background: none;
+            border: none;
+            color: #000;
+            font-family: inherit;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-nav:hover {
+            transform: scale(1.1);
+            color: #e63946;
+        }
+
+        /* Botón destacado rosa a la derecha */
+        .btn-action {
+            background-color: #ec4899; /* Rosa de tu imagen */
+            color: white;
+            border: 4px solid #000;
+            font-family: inherit;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 4px 4px 0px #000;
+            transition: all 0.1s ease;
+        }
+
+        .btn-action:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        .btn-action:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        /* --- SECCIÓN PRINCIPAL CON FONDO DE RAYOS (HERO SECTION) --- */
+        .hero-section {
+            margin-top: 75px; /* Ajuste por la barra fija */
+            min-height: calc(100vh - 75px);
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dividido en dos columnas */
+            align-items: center;
+            gap: 40px;
+            
+            /* EFECTO RAYOS CÓMIC (Sunburst) puro CSS */
+            background: radial-gradient(circle, #54c5be 10%, transparent 11%), 
+                        repeating-conic-gradient(from 0deg, #54c5be 0deg 15deg, #7be0da 15deg 30deg);
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Textura de puntos tipo cómic (opcional, para dar más textura) */
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.1;
+            background-image: radial-gradient(#000 20%, transparent 20%);
+            background-size: 10px 10px;
+            pointer-events: none;
+        }
+
+        /* --- COLUMNA IZQUIERDA: TEXTOS --- */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+            max-width: 550px;
+        }
+
+        /* Etiqueta pequeña superior */
+        .comic-tag {
+            background-color: #fff;
+            color: #000;
+            border: 3px solid #000;
+            display: inline-block;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px #000;
+            margin-bottom: 25px;
+        }
+
+        /* Título gigante con efecto de trazo */
+        .comic-main-title {
+            font-size: 5rem;
+            color: #fff;
+            line-height: 0.9;
+            text-transform: uppercase;
+            font-style: italic;
+            /* Efecto de borde negro grueso */
+            -webkit-text-stroke: 4px #000;
+            text-shadow: 5px 5px 0px #000;
+            margin-bottom: 10px;
+        }
+
+        /* Segunda línea del título (Amarillo) */
+        .comic-main-title span {
+            color: #f7df72;
+            display: block;
+        }
+
+        /* Párrafo descriptivo */
+        .comic-description {
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* Fuente legible de tu imagen */
+            font-weight: bold;
+            color: #000;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
+            max-width: 480px;
+        }
+
+        /* Contenedor de botones inferiores */
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Botones inferiores estilo comic */
+        .btn-hero {
+            font-family: inherit;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            padding: 12px 30px;
+            border: 4px solid #000;
+            cursor: pointer;
+            box-shadow: 5px 5px 0px #000;
+            transition: all 0.1s ease;
+        }
+
+        .btn-hero.primary {
+            background-color: #ec4899;
+            color: #fff;
+        }
+
+        .btn-hero.secondary {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .btn-hero:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px #000;
+        }
+
+        /* --- COLUMNA DERECHA: IMAGEN/PORTADA --- */
+        .hero-image-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Marco estilo revista/cómic */
+        .comic-frame {
+            background-color: #fff;
+            border: 6px solid #000;
+            padding: 15px;
+            box-shadow: 15px 15px 0px #000;
+            transform: rotate(2deg); /* Ligera inclinación para estilo dinámico */
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .comic-frame img {
+            width: 100%;
+            height: auto;
+            border: 4px solid #000;
+            display: block;
+        }
+
+        /* --- VENTANAS EMERGENTES (MODALES) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: white;
+            border: 5px solid #000;
+            border-radius: 0px; /* Cuadrado estilo cómic */
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+            box-shadow: 12px 12px 0px #f7df72;
+            animation: popIn 0.25s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 5px; right: 15px;
+            font-size: 2.5rem;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .close-modal:hover { color: #ec4899; }
+        .modal-content h2 { font-size: 2.5rem; margin-bottom: 15px; -webkit-text-stroke: 1px #000;}
+        .modal-content p { font-family: sans-serif; font-size: 1rem; color: #333; margin-bottom: 15px; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR (NAVBAR) -->
+    <header class="navbar">
+        <!-- Título Izquierda (EDITABLE) -->
+        <div class="nav-title">STUDIO YSRCOMICS</div>
+
+        <!-- 4 Botones del menú principal -->
+        <div class="nav-buttons">
+            <button class="btn-nav" onclick="openModal('modal1')">Capítulo</button>
+            <button class="btn-nav" onclick="openModal('modal2')">Servicios</button>
+            <button class="btn-nav" onclick="openModal('modal3')">Equipo</button>
+            <button class="btn-nav" onclick="openModal('modal4')">Contacto</button>
+        </div>
+
+        <!-- Botón Destacado Derecha -->
+        <button class="btn-action" onclick="alert('¡Formulario de pedido enviado!')">¡Pide tu Cómic!</button>
+    </header>
+
+    <!-- SECCIÓN DE FONDO CON CONTENIDO -->
+    <section class="hero-section">
+        
+        <!-- COLUMNA IZQUIERDA: TEXTOS EDITABLES -->
+        <div class="hero-content">
+            <!-- Etiqueta superior -->
+            <div class="comic-tag">Número #01 • Edición Limitada</div>
+            
+            <!-- Título Principal -->
+            <h1 class="comic-main-title">
+                Ideas que
+                <span>Explotan</span>
+            </h1>
+            
+            <!-- Párrafo descriptivo -->
+            <p class="comic-description">
+                Somos un estudio creativo que dibuja marcas con la fuerza de una portada de cómic: trazo grueso, color plano y cero aburrimiento.
+            </p>
+            
+            <!-- Botones de Acción -->
+            <div class="hero-buttons">
+                <button class="btn-hero primary">Ver Portafolio</button>
+                <button class="btn-hero secondary">Hablemos</button>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: IMAGEN (PORTADA) -->
+        <div class="hero-image-container">
+
+
+
 
