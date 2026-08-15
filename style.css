@@ -13,14 +13,4 @@ h1 {
 p {
     font-size: 18px;
 }
-        /* --- CONTENEDOR DE BOTONES MODIFICADO --- */
-        .button-wrapper {
-            position: fixed;
-            top: calc(50% + 5cm); /* Desplazado exactamente 5 cm hacia abajo del centro */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            gap: 20px;
-            z-index: 99999; /* Se mantiene por encima de todo */
-            pointer-events: auto;
-        }
+
