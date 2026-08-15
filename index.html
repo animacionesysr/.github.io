@@ -1,520 +1,132 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Studio Kapow — Estudio creativo estilo cómic</title>
-  <meta name="description" content="Estudio creativo con estética de cómic: identidad visual, webs animadas e ilustración con trazo grueso y color plano." />
-  <meta property="og:title" content="Studio Kapow — Estudio creativo estilo cómic" />
-  <meta property="og:description" content="Marcas dibujadas como portadas de cómic: identidad, web e ilustración." />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    /* ============ VARIABLES EDITABLES ============ */
-    :root {
-      --ink: #1a1a1a;
-      --paper: #f8f5e6;
-      --pow: #ffde4d;
-      --zap: #4ecdc4;
-      --boom: #ff4d6d;
-      --font-comic: 'Bangers', cursive;
-      --font-body: 'Comic Neue', cursive;
-      --border: 4px solid var(--ink);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Cómic</title>
+    <!-- Fuente alternativa estilo cómic desde Google Fonts -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        /* Estilos Generales y Contenedor Principal (Ventana Estrecha) */
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
 
-    /* ============ RESET ============ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font-body);
-      background: var(--paper);
-      color: var(--ink);
-      line-height: 1.4;
-    }
-    img { max-width: 100%; display: block; }
-    a { text-decoration: none; color: inherit; }
+        /* Ventana no tan ancha (Simulación de contenedor/header) */
+        .comic-navbar {
+            max-width: 950px; 
+            margin: 0 auto;
+            background-color: #fff;
+            border: 4px solid #000;
+            box-shadow: 6px 6px 0px #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
 
-    /* ============ UTILIDADES CÓMIC ============ */
-    .font-comic { font-family: var(--font-comic); letter-spacing: 0.02em; }
-    .panel {
-      border: var(--border);
-      box-shadow: 8px 8px 0 var(--ink);
-      transition: transform 0.15s ease;
-    }
-    .panel:hover { transform: translateY(-4px); }
-    .panel-sm {
-      border: var(--border);
-      box-shadow: 4px 4px 0 var(--ink);
-      border-radius: 8px;
-    }
-    .ink-stroke {
-      -webkit-text-stroke: 2px var(--ink);
-      text-shadow: 3px 3px 0 var(--ink);
-    }
-    .pop-in {
-      transform: rotate(-3deg);
-      border-radius: 50% 50% 50% 10%;
-    }
-    .pop-in::after {
-      content: "";
-      position: absolute;
-      bottom: -12px;
-      left: 20px;
-      width: 0;
-      height: 0;
-      border: 12px solid transparent;
-      border-top-color: var(--ink);
-      border-left: 0;
-      transform: rotate(-15deg);
-    }
-    .halftone {
-      background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
-      background-size: 8px 8px;
-      opacity: 0.08;
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .rays {
-      background: repeating-conic-gradient(
-        from 0deg,
-        var(--paper) 0deg 10deg,
-        transparent 10deg 20deg
-      );
-      opacity: 0.25;
-    }
+        /* Configuración de Fuentes Cómic */
+        .comic-font {
+            /* Usa Badaboom BB si está en el sistema; si no, usa Bangers */
+            font-family: 'Badaboom BB', 'Bangers', cursive;
+            letter-spacing: 2px;
+        }
 
-    /* ============ CONTENEDOR ============ */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
+        /* Parte Izquierda: Título centrado verticalmente */
+        .left-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
 
-    /* ============ NAV ============ */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      background: var(--pow);
-      border-bottom: var(--border);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-    }
-    .nav-links {
-      display: none;
-      gap: 1.5rem;
-      list-style: none;
-      font-size: 0.875rem;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-    .nav-links a:hover { color: var(--boom); }
-    .nav-cta {
-      background: var(--boom);
-      color: var(--paper);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-family: var(--font-comic);
-      font-size: 1.1rem;
-    }
-    .nav-cta:hover { transform: translateY(-2px); }
+        .main-title {
+            font-size: 2.5rem;
+            color: #000;
+            margin: 0;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px #ffcc00;
+        }
 
-    /* ============ HERO ============ */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background: var(--zap);
-      border-bottom: var(--border);
-      padding: 4rem 0;
-    }
-    .hero-grid {
-      display: grid;
-      gap: 2rem;
-      align-items: center;
-    }
-    .hero-kicker {
-      display: inline-block;
-      background: var(--paper);
-      padding: 0.25rem 0.75rem;
-      font-size: 0.75rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      border: var(--border);
-      box-shadow: 4px 4px 0 var(--ink);
-    }
-    .hero-title {
-      font-size: 3.5rem;
-      line-height: 0.95;
-      margin-top: 1.25rem;
-    }
-    .hero-title span { display: block; }
-    .hero-title .highlight { color: var(--pow); }
-    .hero-text { max-width: 28rem; margin-top: 1.25rem; font-size: 1.125rem; font-weight: 700; }
-    .hero-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 1rem; }
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      font-family: var(--font-comic);
-      font-size: 1.5rem;
-      border: var(--border);
-      box-shadow: 6px 6px 0 var(--ink);
-      transition: transform 0.15s ease;
-    }
-    .btn:hover { transform: translateY(-4px); }
-    .btn-primary { background: var(--boom); color: var(--paper); }
-    .btn-secondary { background: var(--paper); color: var(--ink); }
+        /* Parte Central: Subtítulos */
+        .center-section {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
 
-    .hero-image-wrap {
-      position: relative;
-    }
-    .hero-image {
-      transform: rotate(-2deg);
-      background: var(--paper);
-      padding: 0.75rem;
-    }
-    .hero-bubble {
-      position: absolute;
-      bottom: -1.5rem;
-      left: -1rem;
-      max-width: 15rem;
-      background: var(--paper);
-      padding: 0.75rem 1rem;
-      font-weight: 900;
-      border: var(--border);
-      box-shadow: 4px 4px 0 var(--ink);
-      z-index: 5;
-    }
-    .hero-bubble::after {
-      content: "";
-      position: absolute;
-      bottom: -12px;
-      left: 20px;
-      width: 0;
-      height: 0;
-      border: 12px solid transparent;
-      border-top-color: var(--ink);
-      border-left: 0;
-      transform: rotate(-15deg);
-    }
+        .subtitle {
+            font-size: 1.4rem;
+            color: #333;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: transform 0.2s, color 0.2s;
+        }
 
-    /* ============ ONOMATOPEYAS ============ */
-    .onomatopeyas {
-      background: var(--ink);
-      border-bottom: var(--border);
-      padding: 0.75rem 0;
-      overflow: hidden;
-    }
-    .onomatopeyas-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-    .onomatopeyas span {
-      font-family: var(--font-comic);
-      font-size: 1.75rem;
-    }
-    .onomatopeyas span:nth-child(odd) { color: var(--boom); }
-    .onomatopeyas span:nth-child(even) { color: var(--pow); }
+        .subtitle:hover {
+            color: #ffcc00;
+            transform: scale(1.1) rotate(-2deg);
+        }
 
-    /* ============ SECCIONES ============ */
-    .section { padding: 4rem 0; }
-    .section-title { font-size: 2.75rem; margin-bottom: 2rem; }
+        /* Parte Derecha: Botón Recuadro Rojo */
+        .right-section {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
 
-    /* Servicios */
-    .services-grid {
-      display: grid;
-      gap: 2rem;
-    }
-    .service-card {
-      position: relative;
-      background: var(--paper);
-      padding: 1.5rem;
-      border: var(--border);
-      box-shadow: 8px 8px 0 var(--ink);
-    }
-    .service-card .sonido {
-      position: absolute;
-      top: -1.5rem;
-      left: 1rem;
-      font-size: 2rem;
-      color: var(--pow);
-      -webkit-text-stroke: 1.5px var(--ink);
-    }
-    .service-card h3 { font-size: 1.75rem; margin-top: 0.5rem; }
-    .service-card p { margin-top: 0.5rem; font-weight: 700; }
+        .comic-button {
+            background-color: #ff0000;
+            color: #fff;
+            border: 4px solid #000;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px #000;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
 
-    /* Proceso */
-    .process {
-      background: var(--pow);
-      border-top: var(--border);
-      border-bottom: var(--border);
-    }
-    .process-grid {
-      display: grid;
-      gap: 1.5rem;
-    }
-    .process-card {
-      background: var(--paper);
-      padding: 1.25rem;
-      border: var(--border);
-      box-shadow: 8px 8px 0 var(--ink);
-    }
-    .process-card .num { font-size: 2.5rem; color: var(--boom); }
-    .process-card h3 { font-size: 1.5rem; }
-    .process-card p { font-size: 0.95rem; font-weight: 700; }
+        .comic-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000;
+        }
 
-    /* Testimonios */
-    .testimonials-grid {
-      display: grid;
-      gap: 2rem;
-    }
-    .testimonial {
-      background: var(--zap);
-      padding: 1.5rem;
-      border: var(--border);
-      box-shadow: 8px 8px 0 var(--ink);
-    }
-    .testimonial blockquote {
-      font-family: var(--font-comic);
-      font-size: 1.5rem;
-      line-height: 1.2;
-    }
-    .testimonial figcaption {
-      margin-top: 0.75rem;
-      font-size: 0.875rem;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-
-    /* Cierre */
-    .cta-section {
-      position: relative;
-      overflow: hidden;
-      background: var(--boom);
-      border-top: var(--border);
-      text-align: center;
-      padding: 5rem 0;
-    }
-    .cta-section h2 {
-      font-size: 3rem;
-      color: var(--pow);
-    }
-    .cta-section p {
-      max-width: 40rem;
-      margin: 1rem auto 0;
-      font-size: 1.125rem;
-      font-weight: 900;
-      color: var(--paper);
-    }
-    .cta-section .btn {
-      margin-top: 2rem;
-      background: var(--pow);
-      color: var(--ink);
-    }
-
-    /* Footer */
-    footer {
-      background: var(--ink);
-      color: var(--paper);
-      text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 0.875rem;
-      font-weight: 700;
-      border-top: var(--border);
-    }
-
-    /* ============ RESPONSIVE ============ */
-    @media (min-width: 768px) {
-      .nav-links { display: flex; }
-      .hero-grid { grid-template-columns: 1fr 1fr; }
-      .hero-title { font-size: 5rem; }
-      .hero-bubble { left: -2.5rem; }
-      .services-grid { grid-template-columns: repeat(3, 1fr); }
-      .process-grid { grid-template-columns: repeat(2, 1fr); }
-      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
-      .onomatopeyas span { font-size: 2.25rem; }
-      .section-title { font-size: 3.5rem; }
-      .cta-section h2 { font-size: 4rem; }
-    }
-    @media (min-width: 1024px) {
-      .process-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-  </style>
+        .comic-button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #000;
+        }
+    </style>
 </head>
 <body>
 
-  
- <!-- ============================================================
-       CONTENIDO 100% EDITABLE
-       Cambia los textos del objeto JS de abajo y se actualiza toda la página.
-       ============================================================ -->
-  <script>
-    const CONTENIDO = {
-      marca: "Studio Ysrcomics",
-      menu: ["Capitulo", "Servicios", "Equipo", "Contacto"],
-      cta: "¡Pide tu comics!",
-      hero: {
-        kicker: "Número #01 · Edición limitada",
-        titulo1: "Ideas que",
-        titulo2: "explotan",
-        bocadillo: "¡Bienvenidos!",
-        texto: "Somos un estudio creativo que dibuja marcas con la fuerza de una portada de cómic: trazo grueso, color plano y cero aburrimiento.",
-        boton1: "Ver portafolio",
-        boton2: "Hablemos",
-      },
-      onomatopeyas: ["POW!", "ZAP!", "BOOM!", "WHAM!", "KAPOW!"],
-      servicios: {
-        titulo: "Nuestros superpoderes",
-        items: [
-          { sonido: "BAM!", nombre: "Identidad visual", texto: "Logos, paletas y tipografías que se leen a 100 metros." },
-          { sonido: "ZOOM!", nombre: "Webs animadas", texto: "Sitios rápidos con viñetas, transiciones y mucho carácter." },
-          { sonido: "SPLASH!", nombre: "Ilustración", texto: "Personajes, portadas y escenas dibujadas a mano y a medida." },
-        ],
-      },
-      historia: {
-        titulo: "Así trabajamos",
-        vinetas: [
-          { num: "01", titulo: "El llamado", texto: "Nos cuentas el problema. Escuchamos sin capas." },
-          { num: "02", titulo: "El boceto", texto: "Dibujamos rutas posibles en lápiz azul." },
-          { num: "03", titulo: "El entintado", texto: "Definimos trazo, color y sistema completo." },
-          { num: "04", titulo: "La portada", texto: "Publicamos y el público aplaude." },
-        ],
-      },
-      testimonios: {
-        titulo: "Dicen por ahí",
-        items: [
-          { texto: "Nuestra marca pasó de gris a portada de cómic. Vendemos el triple.", autor: "Lucía R. · Café Nébula" },
-          { texto: "Trabajar con ellos es como leer un número doble: no puedes parar.", autor: "Marco T. · Editorial Vórtice" },
-        ],
-      },
-      cierre: {
-        titulo: "¿Listo para tu próximo número?",
-        texto: "Cuéntanos tu idea y devolvemos un storyboard en 48 horas.",
-        boton: "Empezar la historia",
-      },
-      footer: "© 2026 Studio Kapow · Hecho con tinta, trama y café",
-    };
-  </script>
-
-  <div id="app"></div>
-
-  <script>
-    const c = CONTENIDO;
-
-    document.getElementById("app").innerHTML = `
-      <nav class="nav">
-        <div class="container nav-inner">
-          <span class="font-comic" style="font-size:2rem">${c.marca}</span>
-          <ul class="nav-links">
-            ${c.menu.map(m => `<li><a href="#!">${m}</a></li>`).join("")}
-          </ul>
-          <a href="#contacto" class="nav-cta panel-sm">${c.cta}</a>
+    <!-- Contenedor con la ventana de ancho controlado -->
+    <nav class="comic-navbar">
+        
+        <!-- Izquierda: Título principal -->
+        <div class="left-section">
+            <h1 class="main-title comic-font">Mi Título</h1>
         </div>
-      </nav>
 
-      <header class="hero">
-        <div class="rays" style="position:absolute;inset:-30%;width:160%;height:160%"></div>
-        <div class="halftone"></div>
-        <div class="container hero-grid" style="position:relative">
-          <div>
-            <span class="hero-kicker">${c.hero.kicker}</span>
-            <h1 class="hero-title font-comic">
-              <span>${c.hero.titulo1}</span>
-              <span class="highlight ink-stroke">${c.hero.titulo2}</span>
-            </h1>
-            <p class="hero-text">${c.hero.texto}</p>
-            <div class="hero-actions">
-              <a href="#servicios" class="btn btn-primary">${c.hero.boton1}</a>
-              <a href="#contacto" class="btn btn-secondary">${c.hero.boton2}</a>
-            </div>
-          </div>
-          <div class="hero-image-wrap">
-            <img
-              src="portada 1.png"
-              alt="Portada de cómic con un héroe en pose de acción sobre la ciudad"
-              class="hero-image panel"
-              width="600"
-              height="600"
-            />
-            <div class="hero-bubble pop-in">${c.hero.bocadillo}</div>
-          </div>
+        <!-- Centro: Los 4 subtítulos solicitados -->
+        <div class="center-section">
+            <a href="#" class="subtitle comic-font">Capítulo</a>
+            <a href="#" class="subtitle comic-font">Servicios</a>
+            <a href="#" class="subtitle comic-font">Equipo</a>
+            <a href="#" class="subtitle comic-font">Contacto</a>
         </div>
-      </header>
 
-      <div class="onomatopeyas">
-        <div class="container onomatopeyas-inner">
-          ${c.onomatopeyas.map((o, i) => `<span>${o}</span>`).join("")}
+        <!-- Derecha: Botón de recuadro rojo estilo cómic -->
+        <div class="right-section">
+            <button class="comic-button comic-font">Pide tu cómic</button>
         </div>
-      </div>
 
-      <section id="servicios" class="section">
-        <div class="container">
-          <h2 class="section-title font-comic">${c.servicios.titulo}</h2>
-          <div class="services-grid">
-            ${c.servicios.items.map(s => `
-              <article class="service-card">
-                <span class="sonido font-comic">${s.sonido}</span>
-                <h3 class="font-comic">${s.nombre}</h3>
-                <p>${s.texto}</p>
-              </article>
-            `).join("")}
-          </div>
-        </div>
-      </section>
+    </nav>
 
-      <section class="section process">
-        <div class="container">
-          <h2 class="section-title font-comic">${c.historia.titulo}</h2>
-          <div class="process-grid">
-            ${c.historia.vinetas.map(v => `
-              <article class="process-card">
-                <span class="num font-comic">${v.num}</span>
-                <h3 class="font-comic">${v.titulo}</h3>
-                <p>${v.texto}</p>
-              </article>
-            `).join("")}
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <h2 class="section-title font-comic">${c.testimonios.titulo}</h2>
-          <div class="testimonials-grid">
-            ${c.testimonios.items.map(t => `
-              <figure class="testimonial">
-                <blockquote>“${t.texto}”</blockquote>
-                <figcaption>${t.autor}</figcaption>
-              </figure>
-            `).join("")}
-          </div>
-        </div>
-      </section>
-
-      <section id="contacto" class="cta-section">
-        <div class="halftone"></div>
-        <div class="container" style="position:relative">
-          <h2 class="font-comic ink-stroke">${c.cierre.titulo}</h2>
-          <p>${c.cierre.texto}</p>
-          <a href="mailto:hola@studiokapow.com" class="btn">${c.cierre.boton}</a>
-        </div>
-      </section>
-
-      <footer>
-        ${c.footer}
-      </footer>
-    `;
-  </script>
 </body>
 </html>
 
