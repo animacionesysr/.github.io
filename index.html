@@ -3,130 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header Cómic</title>
-    <!-- Fuente alternativa estilo cómic desde Google Fonts -->
+    <title>Comic Web Layout</title>
+    <!-- Fuentes estilo Comic desde Google Fonts (Reemplazo web a Badaboom BB) -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        /* Estilos Generales y Contenedor Principal (Ventana Estrecha) */
-        body {
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
+        /* CONFIGURACIÓN CENTRAL EDITABLE */
+        :root {
+            /* Si tienes el archivo Badaboom local, cambia 'Bangers' por 'badaboom_bb' */
+            --fuente-titulo: 'Bangers', 'Luckiest Guy', Impact, sans-serif; 
+            --fuente-texto: 'Comic Sans MS', cursive, sans-serif;
+            --color-rojo-comic: #ff2a2a;
+            --color-amarillo-comic: #f4d03f;
+            --color-borde: #000000;
         }
 
-        /* Ventana no tan ancha (Simulación de contenedor/header) */
-        .comic-navbar {
-            max-width: 950px; 
-            margin: 0 auto;
-            background-color: #fff;
-            border: 4px solid #000;
-            box-shadow: 6px 6px 0px #000;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            font-family: var(--fuente-texto);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Ventana principal compacta */
+        .ventana-comic {
+            width: 100%;
+            max-width: 900px; 
+            background: white;
+            border: 4px solid var(--color-borde);
+            box-shadow: 10px 10px 0px var(--color-borde);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Barra de navegación estilo cómic */
+        .navbar-comic {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 20px;
-            box-sizing: border-box;
+            padding: 15px 25px;
+            background-color: #ffffff;
+            border-bottom: 4px solid var(--color-borde);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        /* Configuración de Fuentes Cómic */
-        .comic-font {
-            /* Usa Badaboom BB si está en el sistema; si no, usa Bangers */
-            font-family: 'Badaboom BB', 'Bangers', cursive;
-            letter-spacing: 2px;
-        }
-
-        /* Parte Izquierda: Título centrado verticalmente */
-        .left-section {
+        /* Izquierda: Título */
+        .titulo-izquierda {
             flex: 1;
-            display: flex;
-            align-items: center;
+            min-width: 200px;
         }
 
-        .main-title {
+        .titulo-izquierda h1 {
+            font-family: var(--fuente-titulo);
             font-size: 2.5rem;
-            color: #000;
-            margin: 0;
+            color: var(--color-amarillo-comic);
+            text-shadow: 3px 3px 0px var(--color-borde), -1px -1px 0px var(--color-borde), 1px -1px 0px var(--color-borde), -1px 1px 0px var(--color-borde), 1px 1px 0px var(--color-borde);
+            letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 2px 2px 0px #ffcc00;
         }
 
-        /* Parte Central: Subtítulos */
-        .center-section {
-            flex: 2;
+        /* Centro-Izquierda: Subtítulos casi centrados */
+        .subtitulos-centro {
             display: flex;
+            gap: 20px;
             justify-content: center;
-            gap: 25px;
+            flex: 2;
         }
 
-        .subtitle {
+        .nav-link {
+            font-family: var(--fuente-titulo);
             font-size: 1.4rem;
-            color: #333;
+            color: var(--color-borde);
             text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s;
             text-transform: uppercase;
-            transition: transform 0.2s, color 0.2s;
         }
 
-        .subtitle:hover {
-            color: #ffcc00;
+        .nav-link:hover {
+            color: var(--color-rojo-comic);
             transform: scale(1.1) rotate(-2deg);
         }
 
-        /* Parte Derecha: Botón Recuadro Rojo */
-        .right-section {
+        /* Derecha: Botón Cómic */
+        .boton-derecha {
             flex: 1;
             display: flex;
             justify-content: flex-end;
+            min-width: 150px;
         }
 
-        .comic-button {
-            background-color: #ff0000;
-            color: #fff;
-            border: 4px solid #000;
-            padding: 10px 20px;
+        .btn-pide-comic {
+            font-family: var(--fuente-titulo);
             font-size: 1.5rem;
+            background-color: var(--color-rojo-comic);
+            color: white;
+            padding: 10px 20px;
+            border: 4px solid var(--color-borde);
+            border-radius: 8px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 4px 4px 0px #000;
+            box-shadow: 4px 4px 0px var(--color-borde);
             transition: transform 0.1s, box-shadow 0.1s;
         }
 
-        .comic-button:hover {
+        .btn-pide-comic:hover {
             transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px #000;
+            box-shadow: 6px 6px 0px var(--color-borde);
         }
 
-        .comic-button:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px #000;
+        /* Área de contenido base */
+        .contenido-pagina {
+            padding: 40px 20px;
+            text-align: center;
+            background-image: radial-gradient(var(--color-borde) 15%, transparent 16%);
+            background-size: 12px 12px;
+            background-color: #fafafa;
+            min-height: 350px;
+        }
+
+        /* Ventanas Emergentes (Modales) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-ventana {
+            background: white;
+            border: 4px solid var(--color-borde);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            box-shadow: 8px 8px 0px var(--color-borde);
+            position: relative;
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-family: var(--fuente-titulo);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .modal-titulo {
+            font-family: var(--fuente-titulo);
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-bottom: 3px dashed var(--color-borde);
+        }
+
+        /* Contenedor estricto para las imágenes verticales */
+        .imagen-comic-vertical {
+            width: 180px;
+            height: 720px;
+            object-fit: cover;
+            border: 4px solid var(--color-borde);
+            margin: 15px auto 0 auto;
+            display: block;
+            box-shadow: 4px 4px 0px var(--color-borde);
         }
     </style>
 </head>
 <body>
 
-    <!-- Contenedor con la ventana de ancho controlado -->
-    <nav class="comic-navbar">
-        
-        <!-- Izquierda: Título principal -->
-        <div class="left-section">
-            <h1 class="main-title comic-font">Mi Título</h1>
+    <div class="ventana-comic">
+        <nav class="navbar-comic">
+            <!-- Título Izquierda -->
+            <div class="titulo-izquierda">
+                <h1 contenteditable="true">Mi Título</h1>
+            </div>
+
+            <!-- Subtítulos Centrales (Disparan la ventana correspondiente) -->
+            <div class="subtitulos-centro">
+                <a class="nav-link" contenteditable="true" onclick="abrirModal('modal-capitulo')">Capítulo</a>
+                <a class="nav-link" contenteditable="true" onclick="abrirModal('modal-servicios')">Servicios</a>
+                <a class="nav-link" contenteditable="true" onclick="abrirModal('modal-equipo')">Equipo</a>
+                <a class="nav-link" contenteditable="true" onclick="abrirModal('modal-contacto')">Contacto</a>
+            </div>
+
+            <!-- Botón Derecho -->
+            <div class="boton-derecha">
+                <button class="btn-pide-comic" contenteditable="true" onclick="abrirModal('modal-pide-comic')">Pide tu Comic</button>
+            </div>
+        </nav>
+
+        <main class="contenido-pagina">
+            <h2 style="font-family: var(--fuente-titulo);">Área Principal del Sitio</h2>
+            <p style="margin-top:10px;">Los textos de la barra superior se pueden editar haciendo clic sobre ellos.</p>
+        </main>
+    </div>
+
+    <!-- VENTANAS EMERGENTES (MODALES) -->
+    <div id="modal-capitulo" class="modal-overlay" onclick="cerrarFuera(event, 'modal-capitulo')">
+        <div class="modal-ventana">
+            <span class="modal-cerrar" onclick="cerrarModal('modal-capitulo')">&times;</span>
+            <div class="modal-titulo" contenteditable="true">Capítulo</div>
+            <p contenteditable="true">Contenido editable del capítulo.</p>
+            <img src="https://placeholder.com" alt="Comic 180x720" class="imagen-comic-vertical">
         </div>
+    </div>
 
-        <!-- Centro: Los 4 subtítulos solicitados -->
-        <div class="center-section">
-            <a href="#" class="subtitle comic-font">Capítulo</a>
-            <a href="#" class="subtitle comic-font">Servicios</a>
-            <a href="#" class="subtitle comic-font">Equipo</a>
-            <a href="#" class="subtitle comic-font">Contacto</a>
+    <div id="modal-servicios" class="modal-overlay" onclick="cerrarFuera(event, 'modal-servicios')">
+        <div class="modal-ventana">
+            <span class="modal-cerrar" onclick="cerrarModal('modal-servicios')">&times;</span>
+            <div class="modal-titulo" contenteditable="true">Servicios</div>
+            <p contenteditable="true">Contenido de tus servicios profesionales.</p>
+            <img src="https://placeholder.com" alt="Comic 180x720" class="imagen-comic-vertical">
         </div>
+    </div>
 
-        <!-- Derecha: Botón de recuadro rojo estilo cómic -->
-        <div class="right-section">
-            <button class="comic-button comic-font">Pide tu cómic</button>
+    <div id="modal-equipo" class="modal-overlay" onclick="cerrarFuera(event, 'modal-equipo')">
+        <div class="modal-ventana">
+            <span class="modal-cerrar" onclick="cerrarModal('modal-equipo')">&times;</span>
+            <div class="modal-titulo" contenteditable="true">Equipo</div>
+            <p contenteditable="true">Información del equipo creativo.</p>
+            <img src="https://placeholder.com" alt="Comic 180x720" class="imagen-comic-vertical">
         </div>
+    </div>
 
-    </nav>
+    <div id="modal-contacto" class="modal-overlay" onclick="cerrarFuera(event, 'modal-contacto')">
+        <div class="modal-ventana">
+            <span class="modal-cerrar" onclick="cerrarModal('modal-contacto')">&times;</span>
+            <div class="modal-titulo" contenteditable="true">Contacto</div>
+            <p contenteditable="true">Formularios o enlaces de contacto.</p>
+            <img src="https://placeholder.com" alt="Comic 180x720" class="imagen-comic-vertical">
+        </div>
+    </div>
 
-</body>
-</html>
+    <div id="modal-pide-comic" class="modal-overlay" onclick="cerrarFuera(event, 'modal-pide-comic')">
+        <div class="modal-ventana">
+            <span class="modal-cerrar" onclick="cerrarModal('modal-pide-comic')">&times;</span>
+            <div class="modal-titulo" contenteditable="true">Pide tu Comic</div>
+            <p contenteditable="true">Formulario de pedidos personalizados.</p>
+            <img src="https://placeholder.com" alt="Comic 180x720" class="imagen-comic-vertical">
 
