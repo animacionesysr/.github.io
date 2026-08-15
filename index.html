@@ -6,8 +6,8 @@
     <title>Navbar con Modales Cómics</title>
     
     <!-- Importación de fuente estilo Comic (Bangers) desde Google Fonts -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
     <style>
@@ -48,6 +48,7 @@
         .nav-buttons {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         .btn-nav {
@@ -91,9 +92,45 @@
             box-shadow: 1px 1px 0px #000;
         }
 
+        /* --- BOTÓN HAMBURGUESA --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1100;
+        }
+
+        .menu-toggle .bar {
+            width: 30px;
+            height: 4px;
+            background-color: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            border: 1px solid #000;
+        }
+
+        /* Animación de la hamburguesa a una equis (X) */
+        .menu-toggle.open .bar:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+            background-color: #ffeb3b;
+        }
+
+        .menu-toggle.open .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.open .bar:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+            background-color: #ffeb3b;
+        }
+
         /* --- VENTANAS EMERGENTES (MODALES) --- */
         .modal {
-            display: none; /* Se oculta por defecto */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -104,10 +141,9 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+            overflow-y: auto;
         }
 
-        /* SOLUCIÓN: Clase activa que mantiene el centrado con Flexbox */
         .modal.active {
             display: flex;
         }
@@ -121,8 +157,8 @@
             padding: 25px;
             position: relative;
             box-shadow: 10px 10px 0px #ffeb3b;
-            max-height: 90vh; /* Evita que el modal se salga de la pantalla */
-            overflow-y: auto;  /* Permite scroll dentro del cuadro si el texto es largo */
+            max-height: 90vh;
+            overflow-y: auto;
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -174,6 +210,52 @@
             padding: 20px;
             text-align: center;
         }
+
+        /* --- ADAPTABILIDAD MÓVIL (MEDIA QUERIES) --- */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-buttons {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: #111;
+                border-left: 4px solid #000;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                flex-direction: column;
+                justify-content: center;
+                gap: 25px;
+                padding: 30px;
+                transition: right 0.3s ease-in-out;
+            }
+
+            .nav-buttons.open {
+                right: 0;
+            }
+
+            .btn-nav {
+                width: 100%;
+                font-size: 1.5rem;
+                padding: 12px;
+                text-align: center;
+                border-bottom: 2px dashed #333;
+                border-radius: 0;
+            }
+
+            .btn-nav:hover {
+                border-bottom-color: #ffeb3b;
+            }
+
+            .btn-action {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -182,20 +264,54 @@
     <header class="navbar">
         <div class="nav-title" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">MI COMIC YSR</div>
         
-        <div class="nav-buttons">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <div class="nav-buttons" id="navButtons">
             <button class="btn-nav" onclick="openModal('modal1')">Historias</button>
             <button class="btn-nav" onclick="openModal('modal2')">Apoya a nuestro héroe</button>
             <button class="btn-nav" onclick="openModal('modal3')">Equipo</button>
             <button class="btn-nav" onclick="openModal('modal4')">Contacto</button>
+            <button class="btn-action" onclick="alert('¡Acción Destacada!')">¡Pide tu comic!</button>
         </div>
-
-        <button class="btn-action" onclick="alert('¡Acción Destacada!')">¡Pide tu comic!</button>
     </header>
 
     <!-- CONTENIDO DE FONDO -->
     <main class="main-container">
         <h1>¡Bienvenido al tridente de las almas!</h1>
     </main>
+
+    <!-- LÓGICA DE JAVASCRIPT -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navButtons = document.getElementById('navButtons');
+
+        // Alternar menú hamburguesa
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('open');
+            navButtons.classList.toggle('open');
+        });
+
+        // Cerrar menú al hacer clic en un enlace o botón de acción
+        const navElements = document.querySelectorAll('.btn-nav, .btn-action');
+        navElements.forEach(element => {
+            element.addEventListener('click', () => {
+                menuToggle.classList.remove('open');
+                navButtons.classList.remove('open');
+            });
+        });
+
+        // Funciones para simular los modales del código original
+        function openModal(id) {
+            alert('Abriendo modal: ' + id);
+        }
+    </script>
+</body>
+</html>
+
     <!-- ================= VENTANAS EMERGENTES (MODALES) ================= -->
 
     <!-- MODAL 1 -->
