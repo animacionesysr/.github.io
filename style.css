@@ -1,1 +1,7 @@
+/* Estilos para móviles (pantallas de hasta 768px) */
+@media (max-width: 768px) {
+  body {
+    background-color: lightblue; /* Ejemplo */
+  }
+}
 
