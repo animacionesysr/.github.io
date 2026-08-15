@@ -816,5 +816,252 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botones y Ventanas Emergentes con Giro 3D</title>
+    <style>
+        /* --- VARIABLES PERSONALIZABLES (Cambia los colores aquí) --- */
+        :root {
+            /* Botón 1 */
+            --btn1-bg: #3498db;
+            --btn1-text: #ffffff;
+            --btn1-hover: #2980b9;
+
+            /* Botón 2 */
+            --btn2-bg: #2ecc71;
+            --btn2-text: #ffffff;
+            --btn2-hover: #27ae60;
+            
+            /* Fuentes y transiciones */
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --transition-smooth: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Ajustado para el rebote del giro */
+        }
+
+        /* --- CONFIGURACIÓN BASE (No interfiere con tu fondo) --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            background-color: #f5f7fa; /* Reemplaza esto con tu fondo de pantalla */
+            perspective: 1000px; /* Habilita el entorno 3D para el giro */
+        }
+
+        /* Bloquea el scroll del body cuando el modal está activo */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* --- BOTONES TOTALMENTE PERSONALIZABLES --- */
+        .custom-btn {
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Asignación de colores individuales */
+        .btn-uno { background-color: var(--btn1-bg); color: var(--btn1-text); }
+        .btn-uno:hover { background-color: var(--btn1-hover); }
+
+        .btn-dos { background-color: var(--btn2-bg); color: var(--btn2-text); }
+        .btn-dos:hover { background-color: var(--btn2-hover); }
+
+
+        /* --- VENTANAS EMERGENTES (MODALES) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            perspective: 1200px; /* Perspectiva interna para el efecto de rotación */
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Contenedor del Modal con resolución fija de 1280x720 y EFECTO DE GIRO INICIAL */
+        .modal-container {
+            width: 1280px;
+            height: 720px;
+            background: rgba(52, 73, 94, 0.8);
+            border: 1px solid rgba(52, 73, 94, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            
+            /* Estado inicial oculto: rotado -45 grados, inclinado y escalado hacia atrás */
+            transform: scale(0.7) rotateY(-45deg) rotateX(10deg) translateY(50px);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        /* Estado activo: Giro completo hacia su posición original limpia */
+        .modal-overlay.active .modal-container {
+            transform: scale(1) rotateY(0deg) rotateX(0deg) translateY(0deg);
+        }
+
+        /* Botón de cerrar (X) */
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover { color: #ffffff; }
+
+        /* Área de contenido con márgenes generosos */
+        .modal-content {
+            padding: 50px;
+            color: #ffffff;
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 24px;
+            overflow-y: auto;
+            /* Efecto cascada sutil para el texto al girar */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease 0.2s; 
+        }
+
+        .modal-overlay.active .modal-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-content h2 {
+            font-size: 32px;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            color: #e0e6ed;
+        }
+
+        .modal-image-wrapper {
+            width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .modal-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTONES CENTRALES -->
+    <button class="custom-btn btn-uno" onclick="openModal('modal1')">Ver Proyecto A</button>
+    <button class="custom-btn btn-dos" onclick="openModal('modal2')">Ver Proyecto B</button>
+
+    <!-- VENTANA EMERGENTE 1 -->
+    <div id="modal1" class="modal-overlay" onclick="closeModal('modal1')">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal1')">&times;</button>
+            <div class="modal-content">
+                <h2>Efecto Cinematográfico 3D</h2>
+                <p>Notarás que al abrirse, la ventana realiza un giro tridimensional apoyado en curvas Bézier. Esto le da un aspecto dinámico pero profesional, manteniendo la estructura limpia con márgenes intactos.</p>
+                <div class="modal-image-wrapper">
+                    <img src="https://unsplash.com" alt="Ejemplo Creativo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANA EMERGENTE 2 -->
+    <div id="modal2" class="modal-overlay" onclick="closeModal('modal2')">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal('modal2')">&times;</button>
+            <div class="modal-content">
+                <h2>Transición Fluida sin Bloqueos</h2>
+                <p>El texto interior tiene un ligero retardo de aparición de 0.2 segundos. Esto genera una sensación de profundidad, ya que el contenido termina de acomodarse justo cuando la ventana finaliza su rotación.</p>
+                <div class="modal-image-wrapper">
+                    <img src="https://unsplash.com" alt="Arte Creativo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT CONTROLADOR -->
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const activeModal = document.querySelector('.modal-overlay.active');
+                if (activeModal) {
+                    closeModal(activeModal.id);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
 
 
