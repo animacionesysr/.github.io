@@ -819,5 +819,250 @@
 </html>
 
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botones y Ventanas Emergentes</title>
+    <style>
+        /* ==========================================
+           VARIABLES PERSONALIZABLES (Cambia colores aquí)
+           ========================================== */
+        :root {
+            /* Botón 1 */
+            --btn1-bg: #3498db;
+            --btn1-text: #ffffff;
+            --btn1-hover: #2980b9;
+
+            /* Botón 2 */
+            --btn2-bg: #2ecc71;
+            --btn2-text: #ffffff;
+            --btn2-hover: #27ae60;
+            
+            /* Color de textos dentro de la ventana */
+            --modal-text-color: #ffffff;
+        }
+
+        /* ==========================================
+           CONTENEDOR DE BOTONES (Flota abajo, centrado)
+           ========================================== */
+        .seccion-botones-fijos {
+            position: fixed;
+            bottom: 80px; /* Ajusta este valor para ubicarlo justo arriba de tu título */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 9999991; /* Por encima de todo */
+            pointer-events: auto;
+        }
+
+        /* Clase base de los botones totalmente personalizables */
+        .btn-personalizable {
+            padding: 12px 28px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px; /* Bordes redondeados creativos */
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-personalizable:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Colores independientes para cada botón usando las variables */
+        .btn-1 {
+            background-color: var(--btn1-bg);
+            color: var(--btn1-text);
+        }
+        .btn-1:hover { background-color: var(--btn1-hover); }
+
+        .btn-2 {
+            background-color: var(--btn2-bg);
+            color: var(--btn2-text);
+        }
+        .btn-2:hover { background-color: var(--btn2-hover); }
+
+
+        /* ==========================================
+           VENTANAS EMERGENTES (MODALES)
+           ========================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4); /* Capa oscura sutil sin romper tu fondo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index:  1000011; /* Por encima de los botones */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Estado activo de la ventana */
+        .modal-overlay.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Contenedor estricto a 1280x720 */
+        .modal-ventana {
+            position: relative;
+            width: 1280px;
+            height: 720px;
+            max-width: 90vw;  /* Margen exacto preventivo para pantallas chicas */
+            max-height: 85vh; /* Evita tocar bordes de la pantalla */
+            background: rgba(52, 73, 94, 0.8);
+            border: 1px solid rgba(52, 73, 94, 0.9);
+            backdrop-filter: blur(8px); /* Efecto translúcido moderno */
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            
+            /* Contenido interno limpio y vertical */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px; /* Margen interno limpio */
+            box-sizing: border-box;
+            color: var(--modal-text-color);
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            
+            /* Animación de entrada */
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.mostrar .modal-ventana {
+            transform: scale(1);
+        }
+
+        /* Botón de cerrar de diseño limpio */
+        .btn-cerrar-modal {
+            position: absolute;
+            top: 25px; /* Separado sutilmente del borde */
+            right: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            font-size: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-cerrar-modal:hover {
+            background: rgba(231, 76, 60, 0.8); /* Rojo limpio al pasar el cursor */
+            transform: rotate(90deg);
+        }
+
+        /* ELEMENTOS INTERNOS DE LA VENTANA (Orientación Vertical) */
+        .modal-contenido-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-height: 100%;
+            overflow-y: auto; /* Por si el texto es muy largo en móviles, no rompa el diseño */
+        }
+
+        .modal-contenido-vertical img {
+            max-width: 60%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .modal-contenido-vertical h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .modal-contenido-vertical p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 800px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CONTENEDOR DE BOTONES 
+         Colócalo en cualquier parte de tu HTML, se auto-posicionará abajo de forma fija -->
+    <div class="seccion-botones-fijos">
+        <button class="btn-personalizable btn-1" onclick="abrirModal('modal1')">Ventana Uno</button>
+        <button class="btn-personalizable btn-2" onclick="abrirModal('modal2')">Ventana Dos</button>
+    </div>
+
+    <!-- VENTANA EMERGENTE 1 -->
+    <div id="modal1" class="modal-overlay" onclick="cerrarModalAlClickFondo(event, 'modal1')">
+        <div class="modal-ventana">
+            <button class="btn-cerrar-modal" onclick="cerrarModal('modal1')">&times;</button>
+            <div class="modal-contenido-vertical">
+                <h2>Título Creativo Uno</h2>
+                <!-- Añade aquí tu imagen -->
+                <img src="https://picsum.photos" alt="Imagen Ventana 1">
+                <p>Este es un espacio limpio y totalmente vertical. Puedes añadir los párrafos de texto que consideres necesarios sin temor a que el diseño se desconfigure o mueva tu fondo.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANA EMERGENTE 2 -->
+    <div id="modal2" class="modal-overlay" onclick="cerrarModalAlClickFondo(event, 'modal2')">
+        <div class="modal-ventana">
+            <button class="btn-cerrar-modal" onclick="cerrarModal('modal2')">&times;</button>
+            <div class="modal-contenido-vertical">
+                <h2>Título Creativo Dos</h2>
+                <!-- Añade aquí tu imagen -->
+                <img src="https://picsum.photos" alt="Imagen Ventana 2">
+                <p>Configuración vertical exacta. El botón de cerrar mantiene una distancia prudente y refinada de las esquinas del recuadro para garantizar una interfaz de usuario impecable.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funciones lógicas para abrir y cerrar ventanas sin alterar el scroll
+        function abrirModal(idModal) {
+            document.getElementById(idModal).classList.add('mostrar');
+        }
+
+        function cerrarModal(idModal) {
+            document.getElementById(idModal).classList.remove('mostrar');
+        }
+
+        // Permite cerrar la ventana si el usuario hace click afuera del cuadro de 1280x720
+        function cerrarModalAlClickFondo(event, idModal) {
+            if (event.target === document.getElementById(idModal)) {
+                cerrarModal(idModal);
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
+
 
 
