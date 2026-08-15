@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comic Web Layout</title>
-    <!-- Fuentes estilo Comic desde Google Fonts (Reemplazo web a Badaboom BB) -->
-    <link href="https://googleapis.com" rel="stylesheet">
     <style>
+        /* IMPORTACIÓN ENLAZADA DE TU FUENTE BADABOOM BB */
+        @font-face {
+            font-family: 'badaboom_bb';
+            /* Asegúrate de que el archivo 'badaboom_bb.ttf' esté exactamente en la misma carpeta que este HTML */
+            src: url('badaboom_bb.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         /* CONFIGURACIÓN ESTILOS BASE */
         :root {
-            /* Si tienes el archivo Badaboom local en tu carpeta, cambia 'Bangers' por 'badaboom_bb' */
-            --fuente-titulo: 'Bangers', 'Luckiest Guy', Impact, sans-serif; 
+            --fuente-titulo: 'badaboom_bb', Impact, sans-serif; 
             --fuente-texto: Arial, sans-serif;
             --color-rojo-comic: #ff2a2a;
             --color-amarillo-comic: #f4d03f;
@@ -64,7 +70,7 @@
 
         .titulo-izquierda h1 {
             font-family: var(--fuente-titulo);
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--color-amarillo-comic);
             text-shadow: 3px 3px 0px var(--color-borde), 
                          -1px -1px 0px var(--color-borde), 
@@ -85,7 +91,7 @@
 
         .nav-link {
             font-family: var(--fuente-titulo);
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--color-borde);
             text-decoration: none;
             cursor: pointer;
@@ -93,6 +99,7 @@
             text-transform: uppercase;
             background: none;
             border: none;
+            letter-spacing: 1px;
         }
 
         .nav-link:hover {
@@ -111,7 +118,7 @@
         /* Botón Modo Comic Rojo */
         .btn-pide-comic {
             font-family: var(--fuente-titulo);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             background-color: var(--color-rojo-comic);
             color: white;
             padding: 10px 20px;
@@ -121,6 +128,7 @@
             text-transform: uppercase;
             box-shadow: 4px 4px 0px var(--color-borde);
             transition: transform 0.1s, box-shadow 0.1s;
+            letter-spacing: 1px;
         }
 
         .btn-pide-comic:hover {
@@ -155,13 +163,11 @@
             z-index: 1000;
         }
 
-        /* Clase interna para activar el modal */
         .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
 
-        /* Caja de la ventana emergente */
         .modal-ventana {
             background: white;
             border: 4px solid var(--color-borde);
@@ -175,16 +181,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-y: auto; /* Permite scroll interno si la pantalla es pequeña debido al alto de la imagen */
+            overflow-y: auto;
         }
 
-        /* Botón Cerrar (X) */
         .modal-cerrar {
             position: absolute;
             top: 10px;
             right: 15px;
             font-family: var(--fuente-titulo);
-            font-size: 2rem;
+            font-size: 2.2rem;
             cursor: pointer;
             color: var(--color-borde);
         }
@@ -193,10 +198,9 @@
             color: var(--color-rojo-comic);
         }
 
-        /* Título del Modal */
         .modal-titulo {
             font-family: var(--fuente-titulo);
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             margin-bottom: 15px;
             text-transform: uppercase;
             text-align: center;
@@ -204,9 +208,9 @@
             width: 100%;
             border-bottom: 4px dashed var(--color-borde);
             padding-bottom: 5px;
+            letter-spacing: 1px;
         }
 
-        /* Texto descriptivo dentro del modal */
         .modal-texto {
             font-size: 1rem;
             line-height: 1.5;
@@ -216,7 +220,7 @@
             width: 100%;
         }
 
-        /* Imagen estrictamente formateada a 180x720 */
+        /* Imagen vertical estricta 180x720 */
         .imagen-comic-vertical {
             width: 180px;
             height: 720px;
@@ -230,16 +234,14 @@
 </head>
 <body>
 
-    <!-- Ventana Principal -->
     <div class="ventana-comic">
         <nav class="navbar-comic">
-            
             <!-- Título Izquierda -->
             <div class="titulo-izquierda">
-                <h1>Tu Título Aquí</h1>
+                <h1>Tu Título</h1>
             </div>
 
-            <!-- 4 Subtítulos casi centrados -->
+            <!-- Subtítulos Centrales -->
             <div class="subtitulos-centro">
                 <button class="nav-link" onclick="abrirModal('modal-capitulo')">Capítulo</button>
                 <button class="nav-link" onclick="abrirModal('modal-servicios')">Servicios</button>
@@ -247,40 +249,45 @@
                 <button class="nav-link" onclick="abrirModal('modal-contacto')">Contacto</button>
             </div>
 
-            <!-- Botón Modo Cómic Derecho -->
+            <!-- Botón Derecho -->
             <div class="boton-derecha">
                 <button class="btn-pide-comic" onclick="abrirModal('modal-pide-comic')">Pide tu Comic</button>
             </div>
         </nav>
 
-        <!-- Cuerpo del sitio -->
         <main class="contenido-pagina">
-            <h2 style="font-family: var(--fuente-titulo); font-size: 2rem;">Bienvenidos al Portal</h2>
-            <p style="margin-top: 15px; color: #555;">Haz clic en las opciones del menú para desplegar el contenido y las imágenes.</p>
+            <h2 style="font-family: var(--fuente-titulo); font-size: 2.2rem; letter-spacing: 1px;">Bienvenidos al Portal</h2>
+            <p style="margin-top: 15px; color: #555;">Haz clic en las opciones superiores para desplegar los diálogos gráficos.</p>
         </main>
     </div>
 
-    <!-- 1. VENTANA EMERGENTE: CAPÍTULO -->
+    <!-- VENTANAS EMERGENTES -->
     <div id="modal-capitulo" class="modal-overlay" onclick="cerrarFuera(event, 'modal-capitulo')">
         <div class="modal-ventana">
             <span class="modal-cerrar" onclick="cerrarModal('modal-capitulo')">&times;</span>
             <div class="modal-titulo">Capítulo</div>
-            <p class="modal-texto">Escribe aquí todo el texto relacionado con tus capítulos de cómics desde el HTML.</p>
-            <!-- Reemplaza el src con la ruta de tu propia imagen -->
+            <p class="modal-texto">Escribe el contenido de tus capítulos directamente en esta sección del HTML.</p>
             <img src="https://placeholder.com" alt="Cómic Capítulo" class="imagen-comic-vertical">
         </div>
     </div>
 
-    <!-- 2. VENTANA EMERGENTE: SERVICIOS -->
     <div id="modal-servicios" class="modal-overlay" onclick="cerrarFuera(event, 'modal-servicios')">
         <div class="modal-ventana">
             <span class="modal-cerrar" onclick="cerrarModal('modal-servicios')">&times;</span>
             <div class="modal-titulo">Servicios</div>
-            <p class="modal-texto">Aquí puedes detallar la lista de servicios de ilustración, guion u otros elementos que ofreces.</p>
+            <p class="modal-texto">Escribe la información de tus servicios en esta área.</p>
             <img src="https://placeholder.com" alt="Cómic Servicios" class="imagen-comic-vertical">
         </div>
     </div>
 
-    <!-- 3. VENTANA EMERGENTE: EQUIPO -->
     <div id="modal-equipo" class="modal-overlay" onclick="cerrarFuera(event, 'modal-equipo')">
         <div class="modal-ventana">
+            <span class="modal-cerrar" onclick="cerrarModal('modal-equipo')">&times;</span>
+            <div class="modal-titulo">Equipo</div>
+            <p class="modal-texto">Escribe los nombres o datos del equipo de producción aquí.</p>
+            <img src="https://placeholder.com" alt="Cómic Equipo" class="imagen-comic-vertical">
+        </div>
+    </div>
+
+    <div id="modal-contacto" class="modal-overlay" onclick="cerrarFuera(event, 'modal-contacto')">
+
