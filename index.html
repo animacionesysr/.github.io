@@ -8,7 +8,7 @@
     <!-- Importación de fuente estilo Comic (Bangers) desde Google Fonts -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
     <style>
         /* --- CONFIGURACIÓN GENERAL --- */
@@ -30,39 +30,24 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 30px;
+            padding: 10px 20px;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            border-bottom: 3px solid #000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .nav-title {
             color: #FF0000;
-            font-size: 2rem;
-            text-shadow: 3px 3px 0px #ffeb3b, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000;
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 0px #ffeb3b;
             cursor: pointer;
-            white-space: nowrap;
-            transition: transform 0.2s;
-        }
-
-        .nav-title:hover {
-            transform: rotate(-2px) scale(1.05);
-        }
-
-        /* Contenedor derecho para escritorio */
-        .nav-right-container {
-            display: flex;
-            align-items: center;
-            gap: 25px;
         }
 
         .nav-buttons {
             display: flex;
-            gap: 10px;
-            align-items: center;
+            gap: 15px;
         }
 
         .btn-nav {
@@ -79,79 +64,36 @@
 
         .btn-nav:hover {
             color: #ffeb3b;
-            text-shadow: 2px 2px 0px #000;
-            transform: translateY(-2px);
+            transform: scale(1.1);
         }
 
         .btn-action {
             background-color: #e91e63;
             color: white;
-            border: 3px solid #000;
+            border: 3px solid #fff;
             font-family: inherit;
             font-size: 1.3rem;
-            padding: 10px 22px;
+            padding: 10px 20px;
             cursor: pointer;
             border-radius: 8px;
-            box-shadow: 4px 4px 0px #ffeb3b;
+            box-shadow: 3px 3px 0px #000;
             transition: transform 0.1s, box-shadow 0.1s;
         }
 
         .btn-action:hover {
             background-color: #ff4081;
             transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px #ffeb3b;
+            box-shadow: 5px 5px 0px #000;
         }
 
         .btn-action:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #ffeb3b;
-        }
-
-        /* --- BOTÓN HAMBURGUESA ESTILIZADO (MÓVIL) --- */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            background-color: #ffeb3b;
-            border: 2px solid #000;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 45px;
-            height: 42px;
-            box-shadow: 3px 3px 0px #000;
-            transition: all 0.2s ease;
-        }
-
-        .menu-toggle:active {
-            transform: translate(2px, 2px);
+            transform: translate(0px, 0px);
             box-shadow: 1px 1px 0px #000;
-        }
-
-        .menu-toggle span {
-            display: block;
-            width: 22px;
-            height: 3px;
-            background-color: #000;
-            border-radius: 3px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        /* Animación de Hamburguesa a "X" */
-        .menu-toggle.open span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .menu-toggle.open span:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-toggle.open span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
         }
 
         /* --- VENTANAS EMERGENTES (MODALES) --- */
         .modal {
-            display: none; 
+            display: none; /* Se oculta por defecto */
             position: fixed;
             top: 0;
             left: 0;
@@ -162,9 +104,10 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-y: auto; 
+            overflow-y: auto; /* Permite scroll si el contenido es muy largo */
         }
 
+        /* SOLUCIÓN: Clase activa que mantiene el centrado con Flexbox */
         .modal.active {
             display: flex;
         }
@@ -178,8 +121,8 @@
             padding: 25px;
             position: relative;
             box-shadow: 10px 10px 0px #ffeb3b;
-            max-height: 90vh; 
-            overflow-y: auto;  
+            max-height: 90vh; /* Evita que el modal se salga de la pantalla */
+            overflow-y: auto;  /* Permite scroll dentro del cuadro si el texto es largo */
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -203,77 +146,33 @@
             color: #f44336;
         }
 
-        .main-container {
-            margin-top: 120px;
-            padding: 20px;
-            text-align: center;
+        .modal-content h2 {
+            font-size: 2rem;
+            color: #000000;
+            margin-bottom: 1.5px;
+            text-transform: uppercase;
         }
 
-        /* --- ADAPTACIÓN MÓVIL ESTALIZADA (MEDIA QUERY) --- */
-        @media (max-width: 992px) {
-            .navbar {
-                padding: 12px 20px;
-            }
+        .modal-content p {
+            font-family: sans-serif;
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
 
-            .menu-toggle {
-                display: flex; /* Muestra el botón hamburguesa amarillo */
-                order: 3; /* Lo manda a la derecha */
-            }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border: 2px solid #000;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
 
-            .nav-title {
-                order: 1;
-                font-size: 1.7rem;
-            }
-
-            /* Ocultamos el contenedor de botones de escritorio */
-            .nav-right-container {
-                display: none; 
-            }
-
-            /* Nuevo menú desplegable móvil */
-            .nav-buttons-mobile {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #111;
-                border-bottom: 4px solid #000;
-                padding: 25px;
-                gap: 15px;
-                box-shadow: 0 8px 15px rgba(0,0,0,0.4);
-                transform: translateY(-10px);
-                opacity: 0;
-                transition: transform 0.3s ease, opacity 0.3s ease;
-            }
-
-            .nav-buttons-mobile.show {
-                display: flex;
-                transform: translateY(0);
-                opacity: 1;
-            }
-
-            .nav-buttons-mobile .btn-nav {
-                width: 100%;
-                text-align: center;
-                font-size: 1.4rem;
-                padding: 12px;
-                border-bottom: 1px dashed #333;
-            }
-
-            .nav-buttons-mobile .btn-nav:hover {
-                background-color: #222;
-                color: #ffeb3b;
-            }
-
-            /* El botón de acción ahora se adapta estéticamente al menú móvil */
-            .nav-buttons-mobile .btn-action {
-                width: 100%;
-                margin-top: 10px;
-                text-align: center;
-                font-size: 1.4rem;
-            }
+        .main-container {
+            margin-top: 100px;
+            padding: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -283,41 +182,20 @@
     <header class="navbar">
         <div class="nav-title" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">MI COMIC YSR</div>
         
-        <!-- Botón Hamburguesa Estilizado estilo Cómic -->
-        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir menú">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-      
-
-        <!-- ESTRUCTURA EXCLUSIVA PARA MÓVIL (Se despliega) -->
-        <div class="nav-buttons-mobile" id="nav-mobile-content">
+        <div class="nav-buttons">
             <button class="btn-nav" onclick="openModal('modal1')">Historias</button>
             <button class="btn-nav" onclick="openModal('modal2')">Apoya a nuestro héroe</button>
             <button class="btn-nav" onclick="openModal('modal3')">Equipo</button>
             <button class="btn-nav" onclick="openModal('modal4')">Contacto</button>
-            <button class="btn-action" onclick="alert('¡Acción Destacada!')">¡Pide tu comic!</button>
         </div>
+
+        <button class="btn-action" onclick="alert('¡Acción Destacada!')">¡Pide tu comic!</button>
     </header>
 
     <!-- CONTENIDO DE FONDO -->
     <main class="main-container">
         <h1>¡Bienvenido al tridente de las almas!</h1>
     </main>
-
-    <!-- LÓGICA JAVASCRIPT -->
-    <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navMobileContent = document.getElementById('nav-mobile-content');
-
-        mobileMenu.addEventListener('click', () => {
-
-    </script>
-</body>
-</html>
-
     <!-- ================= VENTANAS EMERGENTES (MODALES) ================= -->
 
     <!-- MODAL 1 -->
