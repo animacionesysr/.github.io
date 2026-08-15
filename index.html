@@ -8,7 +8,7 @@
     <!-- Importación de fuente estilo Comic (Bangers) desde Google Fonts -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
     <style>
         /* --- CONFIGURACIÓN GENERAL --- */
@@ -19,7 +19,6 @@
         }
 
         body {
-            /* FUENTE ESTILO CÓMIC (Cambiar por 'Badaboom BB' si tienes el archivo local) */
             font-family: 'Bangers', 'Comic Sans MS', cursive, sans-serif;
             letter-spacing: 1px;
             background-color: #f0f0f0;
@@ -39,7 +38,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Título a la izquierda */
         .nav-title {
             color: #FF0000;
             font-size: 1.8rem;
@@ -47,13 +45,11 @@
             cursor: pointer;
         }
 
-        /* Contenedor de botones centrales */
         .nav-buttons {
             display: flex;
             gap: 15px;
         }
 
-        /* Botones estándar de la barra */
         .btn-nav {
             background: none;
             border: 2px solid transparent;
@@ -71,7 +67,6 @@
             transform: scale(1.1);
         }
 
-        /* Botón destacado a la derecha */
         .btn-action {
             background-color: #e91e63;
             color: white;
@@ -98,7 +93,7 @@
 
         /* --- VENTANAS EMERGENTES (MODALES) --- */
         .modal {
-            display: none; /* Oculto por defecto */
+            display: none; /* Se oculta por defecto */
             position: fixed;
             top: 0;
             left: 0;
@@ -109,9 +104,14 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-y: auto; /* Permite scroll si el contenido es muy largo */
         }
 
-        /* Contenido del modal */
+        /* SOLUCIÓN: Clase activa que mantiene el centrado con Flexbox */
+        .modal.active {
+            display: flex;
+        }
+
         .modal-content {
             background-color: white;
             border: 4px solid #000;
@@ -121,6 +121,8 @@
             padding: 25px;
             position: relative;
             box-shadow: 10px 10px 0px #ffeb3b;
+            max-height: 90vh; /* Evita que el modal se salga de la pantalla */
+            overflow-y: auto;  /* Permite scroll dentro del cuadro si el texto es largo */
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -129,7 +131,6 @@
             to { transform: scale(1); opacity: 1; }
         }
 
-        /* Botón para cerrar el modal */
         .close-modal {
             position: absolute;
             top: 10px;
@@ -138,13 +139,13 @@
             color: #000;
             cursor: pointer;
             transition: color 0.2s;
+            z-index: 10;
         }
 
         .close-modal:hover {
             color: #f44336;
         }
 
-        /* Estilos internos editables del modal */
         .modal-content h2 {
             font-size: 2rem;
             color: #2196f3;
@@ -153,7 +154,7 @@
         }
 
         .modal-content p {
-            font-family: sans-serif; /* Texto de lectura más cómodo */
+            font-family: sans-serif;
             font-size: 1rem;
             color: #333;
             line-height: 1.5;
@@ -165,9 +166,9 @@
             height: auto;
             border: 2px solid #000;
             border-radius: 6px;
+            margin-bottom: 15px;
         }
 
-        /* Espacio para que el contenido no quede oculto bajo la barra */
         .main-container {
             margin-top: 100px;
             padding: 20px;
@@ -179,10 +180,8 @@
 
     <!-- BARRA SUPERIOR -->
     <header class="navbar">
-        <!-- Título Izquierda (EDITABLE) -->
         <div class="nav-title" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">MI COMIC YSR</div>
         
-        <!-- Botones Centrales -->
         <div class="nav-buttons">
             <button class="btn-nav" onclick="openModal('modal1')">Historias</button>
             <button class="btn-nav" onclick="openModal('modal2')">Apoya a nuestro héroe</button>
@@ -190,14 +189,12 @@
             <button class="btn-nav" onclick="openModal('modal4')">Contacto</button>
         </div>
 
-        <!-- Botón Destacado Derecha -->
         <button class="btn-action" onclick="alert('¡Acción Destacada!')">¡Pide tu comic!</button>
     </header>
 
-    <!-- CONTENIDO DE FONDO DE LA PÁGINA -->
+    <!-- CONTENIDO DE FONDO -->
     <main class="main-container">
         <h1>¡Bienvenido al tridente de las almas!</h1>
-        <p style="font-family: sans-serif; margin-top: 10px;"> </p>
     </main>
 
     <!-- ================= VENTANAS EMERGENTES (MODALES) ================= -->
@@ -208,71 +205,50 @@
             <span class="close-modal" onclick="closeModal('modal1')">&times;</span>
             <h2>EL TRIDENTE DE LAS ALMAS</h2>
             <h2>Capitulo I</h2>
-            <p>Cuenta la leyenda que existió un guerrero santo desterrado, cuidador de un pergamino llamado La estrella del cielo, el cual poseía un poder inimaginable. Este pergamino estaba prohibido. Pero, movido por la curiosidad, el guerrero lo tomó y lo abrió, desobedeciendo las leyes. En ese momento, un espíritu tomó posesión de él y lo transformó, mientras recitaba algunas de las antiguas palabras del pergamino. Al terminar la oración, en un destello, fue transportado a la tierra. Algo dentro del guerrero había cambiado; se dio cuenta de que había invocado el poder del pergamino. Así fue desterrado de su divinidad y condenado en este mundo en busca de su alma</p>
-            <!-- Imagen editable (Reemplaza la URL por la tuya) -->
+            <p>Cuenta la leyenda que existió un guerrero santo desterrado, cuidador de un pergamino llamado La estrella del cielo, el cual poseía un poder inimaginable. Este pergamino estaba prohibido. Pero, movido por la curiosidad, el guerrero lo tomó y lo abrió, desobedeciendo las leyes. En ese momento, un espíritu tomó posesión de él y lo transformó, mientras recitaba algunas de las antiguas palabras del pergamino. Al terminar la oración, en un destello, fue transportado a la tierra. Algo dentro del guerrero había cambiado; se dio cuenta de que había invocado el poder del pergamino. Así fue desterrado de su divinidad y condenado en este mundo en busca de su alma.</p>
+            
             <img src="escudo [Convertido].png" alt="Imagen de ejemplo">
-            <p style="margin-bottom: 20px;">
-  <a href="https://www.youtube.com/watch?v=8Qh7JwTT9cE" style="color: #90D5FF;">Video Capitulo I</a>
+            
+            <p><a href="https://www.youtube.com/watch?v=8Qh7JwTT9cE" style="color: #90D5FF;" target="_blank">Video Capitulo I</a></p>
 
             <h2>La Transformación del Héroe Caído</h2>
-                 <p>A partir de este instante, la leyenda se convierte en una odisea única y emocionante que redefine el mito del héroe caído. El lector no se enfrenta a la clásica historia de redención, sino a un viaje psicológico y místico donde el guerrero debe aprender a dominar una fuerza prohibida que amenaza con consumirlo. La narrativa se enfoca en la desesperada búsqueda de su esencia perdida a través de un mundo terrenal lleno de peligros, donde cada palabra del pergamino que recuerda altera su alma. Es un relato de supervivencia espiritual y acción, donde la verdadera batalla apenas comienza junto a un espíritu antiguo que ahora comparte su propio cuerpo.</p>
-            
+            <p>A partir de este instante, la leyenda se convierte en una odisea única y emocionante que redefine el mito del héroe caído. El lector no se enfrenta a la clásica historia de redención, sino a un viaje psicológico y místico donde el guerrero debe aprender a dominar una fuerza prohibida que amenaza con consumirlo. La narrativa se enfoca en la desesperada búsqueda de su esencia perdida a través de un mundo terrenal lleno de peligros, donde cada palabra del pergamino que recuerda altera su alma. Es un relato de supervivencia espiritual y acción, donde la verdadera batalla apenas comienza junto a un misterioso aliado.</p>
         </div>
     </div>
 
-    <!-- MODAL 2 -->
-    <div id="modal2" class="modal" onclick="closeModalOnOutsideClick(event, 'modal2')">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('modal2')">&times;</span>
-            <h2>Ventana Dos</h2>
-            <p>Aquí puedes documentar otra sección. El diseño mantiene el borde grueso e impacto visual del estilo cómic americano.</p>
-            <img src="https://picsum.photos" alt="Imagen de ejemplo">
-        </div>
-    </div>
+    <!-- MODALES DE RESERVA (Para evitar errores de JS) -->
+    <div id="modal2" class="modal" onclick="closeModalOnOutsideClick(event, 'modal2')"><div class="modal-content"><span class="close-modal" onclick="closeModal('modal2')">&times;</span><h2>Apoya al héroe</h2><p>Contenido próximamente...</p></div></div>
+    <div id="modal3" class="modal" onclick="closeModalOnOutsideClick(event, 'modal3')"><div class="modal-content"><span class="close-modal" onclick="closeModal('modal3')">&times;</span><h2>Equipo</h2><p>Contenido próximamente...</p></div></div>
+    <div id="modal4" class="modal" onclick="closeModalOnOutsideClick(event, 'modal4')"><div class="modal-content"><span class="close-modal" onclick="closeModal('modal4')">&times;</span><h2>Contacto</h2><p>Contenido próximamente...</p></div></div>
 
-    <!-- MODAL 3 -->
-    <div id="modal3" class="modal" onclick="closeModalOnOutsideClick(event, 'modal3')">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('modal3')">&times;</span>
-            <h2>Ventana Tres</h2>
-            <p>Añade listas, enlaces o lo que gustes dentro de estas cajas. Todo el contenedor se adapta al tamaño del contenido de forma responsiva.</p>
-            <img src="https://picsum.photos" alt="Imagen de ejemplo">
-        </div>
-    </div>
-
-    <!-- MODAL 4 -->
-    <div id="modal4" class="modal" onclick="closeModalOnOutsideClick(event, 'modal4')">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('modal4')">&times;</span>
-            <h2>Ventana Cuatro</h2>
-            <p>¡Última ventana! Recuerda que puedes duplicar estos bloques de código fácilmente si necesitas más ventanas en el futuro.</p>
-            <img src="https://picsum.photos" alt="Imagen de ejemplo">
-        </div>
-    </div>
-
-
-    <!-- --- SCRIPT ANIMACIÓN Y CONTROL DE VENTANAS --- -->
+    <!-- --- JAVASCRIPT --- -->
     <script>
-        // Función para abrir una ventana emergente específica
-        function openModal(id) {
-            document.getElementById(id).style.display = 'flex';
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; /* Bloquea el scroll del fondo */
+            }
         }
 
-        // Función para cerrar una ventana emergente específica
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; /* Devuelve el scroll al fondo */
+            }
         }
 
-        // Cierra el modal si el usuario hace clic fuera de la caja blanca
-        function closeModalOnOutsideClick(event, id) {
-            if (event.target === document.getElementById(id)) {
-                closeModal(id);
+        function closeModalOnOutsideClick(event, modalId) {
+            // Cierra el modal solo si haces clic en el fondo negro, no en el cuadro blanco
+            if (event.target.id === modalId) {
+                closeModal(modalId);
             }
         }
     </script>
-
 </body>
 </html>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
