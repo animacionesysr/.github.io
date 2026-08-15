@@ -352,6 +352,144 @@
   </style>
 </head>
 <body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú con Ventanas Emergentes</title>
+    <style>
+        /* Estilos del Menú */
+        .menu-container {
+            display: flex;
+            gap: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .menu-item {
+            cursor: pointer;
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* Estilos de la Ventana Emergente (Modal) */
+        .modal {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            max-width: 90%;
+            text-align: center;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        /* Contenedor forzado a la resolución 1280x720 (escalable) */
+        .media-container {
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16 / 9; /* Mantiene proporción 1280x720 */
+            background: #eee;
+            margin-top: 15px;
+        }
+        .media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajusta la imagen sin deformarla */
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor donde se cargará el menú -->
+    <div id="menu" class="menu-container"></div>
+
+    <!-- Estructura de la Ventana Emergente -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalText"></p>
+            <div class="media-container">
+                <img id="modalImage" src="" alt="Imagen de sección">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Estructura de datos con tus palabras, textos e imágenes
+        const menuData = [
+            { 
+                label: "Capitulo", 
+                text: "Bienvenido al capítulo inicial de nuestro proyecto.", 
+                img: "https://picsum.photos" 
+            },
+            { 
+                label: "Servicios", 
+                text: "Ofrecemos desarrollo web, diseño gráfico y consultoría.", 
+                img: "https://picsum.photos" 
+            },
+            { 
+                label: "Equipo", 
+                text: "Conoce a los profesionales que hacen esto posible.", 
+                img: "https://picsum.photos" 
+            },
+            { 
+                label: "Contacto", 
+                text: "Escríbenos a nuestro correo para trabajar juntos.", 
+                img: "https://picsum.photos" 
+            }
+        ];
+
+        const menuContainer = document.getElementById('menu');
+        const modal = document.getElementById('customModal');
+        const closeModal = document.getElementById('closeModal');
+
+        // 2. Generar el menú dinámicamente
+        menuData.forEach(item => {
+            const btn = document.createElement('div');
+            btn.className = 'menu-item';
+            btn.innerText = item.label;
+            
+            // Evento para abrir la ventana con sus datos correspondientes
+            btn.addEventListener('click', () => {
+                document.getElementById('modalTitle').innerText = item.label;
+                document.getElementById('modalText').innerText = item.text;
+                document.getElementById('modalImage').src = item.img;
+                modal.style.display = 'flex';
+            });
+
+            menuContainer.appendChild(btn);
+        });
+
+        // 3. Cerrar la ventana emergente
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Cerrar si se hace clic fuera del contenido blanco
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
 
   <!-- ============================================================
        CONTENIDO 100% EDITABLE
@@ -360,8 +498,8 @@
   <script>
     const CONTENIDO = {
       marca: "Studio Ysrcomics",
-      menu: ["Historias", "Servicios", "Equipo", "Contacto"],
-      cta: "¡Pide tu viñeta!",
+      menu: ["Capitulo", "Servicios", "Equipo", "Contacto"],
+      cta: "¡Pide tu comics!",
       hero: {
         kicker: "Número #01 · Edición limitada",
         titulo1: "Ideas que",
