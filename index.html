@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta name="viewport" content="width=device-width, initial-initial-scale=1.0">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar con Modales Cómics</title>
@@ -45,11 +43,13 @@
             font-size: 1.8rem;
             text-shadow: 2px 2px 0px #ffeb3b;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .nav-buttons {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         .btn-nav {
@@ -93,9 +93,29 @@
             box-shadow: 1px 1px 0px #000;
         }
 
+        /* --- BOTÓN HAMBURGUESA (MÓVIL) --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
         /* --- VENTANAS EMERGENTES (MODALES) --- */
         .modal {
-            display: none; /* Se oculta por defecto */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -106,10 +126,9 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+            overflow-y: auto; 
         }
 
-        /* SOLUCIÓN: Clase activa que mantiene el centrado con Flexbox */
         .modal.active {
             display: flex;
         }
@@ -123,8 +142,8 @@
             padding: 25px;
             position: relative;
             box-shadow: 10px 10px 0px #ffeb3b;
-            max-height: 90vh; /* Evita que el modal se salga de la pantalla */
-            overflow-y: auto;  /* Permite scroll dentro del cuadro si el texto es largo */
+            max-height: 90vh; 
+            overflow-y: auto;  
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -176,6 +195,41 @@
             padding: 20px;
             text-align: center;
         }
+
+        /* --- ADAPTACIÓN MÓVIL (MEDIA QUERY) --- */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex; /* Muestra el botón hamburguesa */
+            }
+
+            .nav-buttons {
+                display: none; /* Oculta los botones por defecto */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #111;
+                padding: 20px;
+                gap: 20px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            }
+
+            .nav-buttons.show {
+                display: flex; /* Muestra el menú al hacer clic */
+            }
+
+            .btn-nav {
+                width: 100%;
+                text-align: center;
+                font-size: 1.4rem;
+            }
+
+            .btn-action {
+                font-size: 1.1rem;
+                padding: 8px 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -184,7 +238,14 @@
     <header class="navbar">
         <div class="nav-title" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">MI COMIC YSR</div>
         
-        <div class="nav-buttons">
+        <!-- Botón Hamburguesa para Móviles -->
+        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-buttons" id="nav-content">
             <button class="btn-nav" onclick="openModal('modal1')">Historias</button>
             <button class="btn-nav" onclick="openModal('modal2')">Apoya a nuestro héroe</button>
             <button class="btn-nav" onclick="openModal('modal3')">Equipo</button>
@@ -198,6 +259,27 @@
     <main class="main-container">
         <h1>¡Bienvenido al tridente de las almas!</h1>
     </main>
+
+    <!-- LÓGICA JAVASCRIPT -->
+    <script>
+        // Control del menú desplegable móvil
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navContent = document.getElementById('nav-content');
+
+        mobileMenu.addEventListener('click', () => {
+            navContent.classList.toggle('show');
+        });
+
+        // Funciones para los modales (puedes agregar tu lógica aquí)
+        function openModal(id) {
+            // Cierra el menú móvil automáticamente al abrir un modal
+            navContent.classList.remove('show');
+            alert('Abriendo ' + id); 
+        }
+    </script>
+</body>
+</html>
+
     <!-- ================= VENTANAS EMERGENTES (MODALES) ================= -->
 
     <!-- MODAL 1 -->
