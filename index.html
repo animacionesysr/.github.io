@@ -828,6 +828,139 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestaña Desplegable Elegante</title>
+    
+    <!-- Fuente moderna desde Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           CONFIGURACIÓN EDITABLE (Variables CSS)
+           ========================================== */
+        :root {
+            --fuente-familia: 'Montserrat', sans-serif;
+            --fuente-tamano-titulo: 24px;
+            --fuente-tamano-subtitulo: 14px;
+            --color-texto: #ffffff;
+            --color-fondo-transparente: rgba(255, 255, 255, 0.08); /* Efecto cristal */
+            --color-borde: rgba(255, 255, 255, 0.15);
+            --efecto-desenfoque: blur(12px); /* Glassmorphism */
+            --ancho-pestana: 450px;
+            --alto-pestana: 120px;
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b); /* Fondo oscuro para resaltar la elegancia */
+            min-height: 100vh;
+            font-family: var(--fuente-familia);
+        }
+
+        /* ==========================================
+           ESTILO DE LA PESTAÑA (CONTENEDOR)
+           ========================================== */
+        .contenedor-pestana {
+            position: fixed;
+            top: calc(-1 * var(--alto-pestana) - 20px); /* Escondido por defecto arriba */
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: var(--ancho-pestana);
+            height: var(--alto-pestana);
+            
+            /* Diseño Semitransparente / Glassmorphism */
+            background: var(--color-fondo-transparente);
+            backdrop-filter: var(--efecto-desenfoque);
+            -webkit-backdrop-filter: var(--efecto-desenfoque);
+            border: 1px solid var(--color-borde);
+            border-top: none; /* Estética limpia arriba */
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            
+            /* Centrado de contenido */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 9999;
+            
+            /* Transición suave para la animación */
+            transition: top 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Clase que activa la bajada */
+        .contenedor-pestana.mostrar {
+            top: 0;
+        }
+
+        /* Elementos de texto editables */
+        .titulo-pestana {
+            font-size: var(--fuente-tamano-titulo);
+            font-weight: 600;
+            color: var(--color-texto);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .subtitulo-pestana {
+            font-size: var(--fuente-tamano-subtitulo);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PESTAÑA SUPERIOR -->
+    <div id="pestana" class="contenedor-pestana">
+        <h1 class="titulo-pestana">NUEVA COLECCIÓN</h1>
+        <p class="subtitulo-pestana">Descubre la elegancia minimalista</p>
+    </div>
+
+    <!-- LÓGICA DE TIEMPOS (JAVASCRIPT) -->
+    <script>
+        const pestana = document.getElementById('pestana');
+
+        // Configuración de intervalos (en milisegundos)
+        const tiempoVisible = 3000;   // Cuánto tiempo se queda abajo (3 segundos)
+        const tiempoOculto = 3000;    // Cuánto tiempo se queda escondida antes de volver a bajar (3 segundos)
+
+        function cicloPestana() {
+            // 1. Baja la pestaña
+            pestana.classList.add('mostrar');
+
+            // 2. Espera el tiempo visible, luego la sube
+            setTimeout(() => {
+                pestana.classList.remove('mostrar');
+                
+                // 3. Espera el tiempo oculto y vuelve a iniciar el ciclo completo
+                setTimeout(cicloPestana, tiempoOculto);
+                
+            }, tiempoVisible);
+        }
+
+        // Inicia el bucle repetitivo automáticamente tras 1 segundo de cargar la página
+        setTimeout(cicloPestana, 1000);
+    </script>
+
+</body>
+</html>
 
 
 
