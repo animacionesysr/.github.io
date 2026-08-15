@@ -262,18 +262,22 @@
     <!-- BARRA SUPERIOR -->
     <header class="navbar">
         
-       <!-- Importación de la fuente Badaboom BB (colócala en el <head> de tu HTML) -->
+  <!-- 1. Asegúrate de tener este enlace en el <head> de tu página -->
 <link href="https://cdnfonts.com" rel="stylesheet">
 
-<!-- Tu etiqueta DIV modificada con los nuevos estilos -->
+<!-- 2. Tu etiqueta DIV optimizada para computadoras y celulares -->
 <div class="nav-title" style="
-  font-family: 'Badaboom BB', sans-serif; 
-  font-size: 3rem; 
+  font-family: 'Badaboom BB', 'Arial Black', sans-serif; 
+  font-size: calc(1.8rem + 2vw); /* Se encoge en pantallas chicas y crece en grandes */
   color: #fffb00; 
   text-shadow: 3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000;
   letter-spacing: 2px;
+  text-align: center;
+  word-break: keep-all; /* Evita que el título se parta feo en pantallas muy angostas */
 ">
   MI COMIC YSR
+</div>
+
 </div>
 
         
