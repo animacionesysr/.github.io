@@ -3,245 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio YSRComics - Editable</title>
+    <title>Studio YSRComics - Clon Editable</title>
     <style>
+        /* --- ESTILOS GENERALES (Estilo Cómic) --- */
+        :root {
+            --yellow: #FBE15A;
+            --cyan: #51C2C4;
+            --pink: #FF4E88;
+            --dark: #111111;
+            --white: #FFFFFF;
+        }
+
+        @import url('https://googleapis.com');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial Black', Impact, sans-serif;
         }
 
         body {
-            background-color: #5bc4be;
-            background-image: radial-gradient(circle, #70d6cf 10%, transparent 11%), 
-                              radial-gradient(circle, #70d6cf 10%, transparent 11%);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--cyan);
+            /* Fondo de rayos estilo cómic */
+            background-image: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.15) 0deg 15deg, transparent 15deg 30deg);
+            color: var(--dark);
             overflow-x: hidden;
         }
 
-        /* Barra de Navegación */
+        /* --- BARRA DE NAVEGACIÓN --- */
         header {
-            background-color: #f7e26b;
+            background-color: var(--yellow);
+            border-bottom: 5px solid var(--dark);
+            padding: 15px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 50px;
-            border-bottom: 4px solid #000;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
-            font-size: 28px;
-            text-transform: uppercase;
-            font-style: italic;
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
             cursor: pointer;
+            text-transform: uppercase;
         }
 
         nav {
             display: flex;
-            gap: 20px;
             align-items: center;
+            gap: 25px;
         }
 
-        .nav-item {
-            font-size: 14px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #000;
-            font-weight: bold;
-            padding: 5px 10px;
-            border: 2px dashed transparent;
-            transition: 0.2s;
-        }
-
-        .nav-item:hover {
-            border-color: #000;
-            background: rgba(255,255,255,0.5);
-        }
-
-        .btn-cta {
-            background-color: #ff3366;
-            color: white;
-            padding: 10px 20px;
-            border: 3px solid #000;
-            border-radius: 8px;
-            text-transform: uppercase;
-            font-style: italic;
+        .nav-btn {
+            background: none;
+            border: none;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: var(--dark);
             cursor: pointer;
-            box-shadow: 4px 4px 0px #000;
+            text-transform: uppercase;
+            transition: transform 0.2s;
         }
 
-        /* Contenedor Principal */
-        .container {
-            display: flex;
-            max-width: 1400px;
-            margin: 50px auto;
-            padding: 0 50px;
+        .nav-btn:hover {
+            transform: scale(1.1);
+            color: var(--pink);
+        }
+
+        .cta-nav {
+            background-color: var(--pink);
+            font-family: 'Bangers', cursive;
+            color: var(--white);
+            padding: 10px 20px;
+            border: 3px solid var(--dark);
+            border-radius: 8px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--dark);
+            transition: all 0.2s;
+        }
+
+        .cta-nav:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--dark);
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .hero-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 50px;
             align-items: center;
         }
 
-        .left-content {
-            flex: 1;
-        }
-
-        .badge {
-            background: white;
-            border: 2px solid #000;
-            padding: 5px 10px;
-            display: inline-block;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 64px;
-            color: #f7e26b;
-            text-transform: uppercase;
-            font-style: italic;
-            line-height: 0.9;
-            -webkit-text-stroke: 3px #000;
-            text-shadow: 4px 4px 0px #000;
-            margin-bottom: 30px;
-        }
-
-        .description {
-            font-family: 'Arial', sans-serif;
-            font-size: 18px;
-            color: #000;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            font-weight: bold;
-        }
-
-        .buttons-action {
+        /* Columna Izquierda */
+        .hero-text-side {
             display: flex;
+            flex-direction: column;
             gap: 20px;
         }
 
-        .btn-action {
-            padding: 15px 30px;
-            font-size: 18px;
-            text-transform: uppercase;
-            border: 3px solid #000;
+        .tag-limited {
+            align-self: flex-start;
+            background-color: var(--white);
+            border: 3px solid var(--dark);
+            padding: 5px 15px;
+            font-family: 'Bangers', cursive;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            box-shadow: 3px 3px 0px var(--dark);
             cursor: pointer;
-            box-shadow: 4px 4px 0px #000;
         }
 
-        .btn-pink { background-color: #ff3366; color: white; }
-        .btn-white { background-color: white; color: #000; }
+        .main-title {
+            font-family: 'Bangers', cursive;
+            font-size: 5.5rem;
+            line-height: 0.9;
+            color: var(--white);
+            -webkit-text-stroke: 3px var(--dark);
+            text-shadow: 5px 5px 0px var(--dark);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
 
-        /* Contenedor de Imagen de Cómic (1280x720) */
-        .right-content {
-            flex: 1;
+        .description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border: 3px solid var(--dark);
+            box-shadow: 4px 4px 0px var(--dark);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .btn-action {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            padding: 12px 30px;
+            border: 4px solid var(--dark);
+            cursor: pointer;
+            box-shadow: 5px 5px 0px var(--dark);
+            transition: all 0.2s;
+        }
+
+        .btn-pink { background-color: var(--pink); color: var(--white); }
+        .btn-white { background-color: var(--white); color: var(--dark); }
+
+        .btn-action:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px var(--dark);
+        }
+
+        /* Columna Derecha (Arte del Cómic) */
+        .hero-image-side {
             display: flex;
             justify-content: center;
         }
 
-        .comic-frame {
+        .comic-frame-outer {
+            background-color: var(--white);
+            border: 6px solid var(--dark);
+            padding: 20px;
+            box-shadow: 15px 15px 0px var(--dark);
+            transform: rotate(2deg);
             width: 100%;
-            max-width: 640px; /* Escalado proporcional para diseño */
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            border: 4px solid #000;
-            box-shadow: 15px 15px 0px rgba(0,0,0,0.15);
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
+            max-width: 580px;
+            transition: transform 0.3s;
         }
 
-        .comic-frame img {
+        .comic-frame-outer:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .comic-header-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-bottom: 4px dashed var(--dark);
+            padding-bottom: 10px;
+            cursor: pointer;
+        }
+
+        /* Contenedor de Imagen Proporción 1280x720 (16:9) */
+        .comic-image-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 5px solid var(--dark);
+            background-color: #222;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .comic-image-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .image-placeholder {
+        /* --- MODAL / VENTANA EMERGENTE DE EDICIÓN --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
+            background: rgba(0,0,0,0.7);
+            display: none;
             justify-content: center;
             align-items: center;
-            color: white;
-            background: #222;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
+            z-index: 1000;
         }
 
-        /* Indicador editable general */
-        [contenteditable="true"]:hover {
-            outline: 2px dashed #000;
-            background-color: rgba(255, 255, 255, 0.2);
+        .modal-box {
+            background-color: var(--yellow);
+            border: 5px solid var(--dark);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 10px 10px 0px var(--dark);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-box h3 {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .modal-box textarea, .modal-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 3px solid var(--dark);
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        .modal-box textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .modal-box .image-hint {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #444;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            padding: 8px 20px;
+            border: 3px solid var(--dark);
+            cursor: pointer;
+        }
+
+        .btn-save { background-color: var(--pink); color: var(--white); }
+        .btn-cancel { background-color: var(--white); color: var(--dark); }
+
+        /* Responsivo básico */
+        @media (max-width: 900px) {
+            .hero-container { grid-template-columns: 1fr; }
+            header { flex-direction: column; gap: 15px; }
+            .main-title { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Barra de Navegación -->
+    <!-- BARRA DE NAVEGACIÓN -->
     <header>
-        <div class="logo" contenteditable="true">STUDIO YSRCOMICS</div>
+        <div class="logo" id="element-logo" onclick="openModal('element-logo', 'text')">Studio YSRComics</div>
         <nav>
-            <div class="nav-item" contenteditable="true">CAPITULO</div>
-            <div class="nav-item" contenteditable="true">SERVICIOS</div>
-            <div class="nav-item" contenteditable="true">EQUIPO</div>
-            <div class="nav-item" contenteditable="true">CONTACTO</div>
-            <div class="btn-cta" contenteditable="true">¡PIDE TU COMICS!</div>
+            <button class="nav-btn" id="btn-1" onclick="openModal('btn-1', 'text')">Capitulo</button>
+            <button class="nav-btn" id="btn-2" onclick="openModal('btn-2', 'text')">Servicios</button>
+            <button class="nav-btn" id="btn-3" onclick="openModal('btn-3', 'text')">Equipo</button>
+            <button class="nav-btn" id="btn-4" onclick="openModal('btn-4', 'text')">Contacto</button>
+            <button class="cta-nav" id="btn-5" onclick="openModal('btn-5', 'text')">¡Pide tu Cómic!</button>
         </nav>
     </header>
 
-    <!-- Contenido Principal -->
-    <main class="container">
-        
-        <!-- Bloque Izquierdo -->
-        <div class="left-content">
-            <div class="badge" contenteditable="true">NÚMERO #01 · EDICIÓN LIMITADA</div>
-            <h1 contenteditable="true">IDEAS QUE<br>EXPLOTAN</h1>
-            <p class="description" contenteditable="true">
-                Somos un estudio creativo que dibuja marcas con la fuerza de una portada de cómic: trazo grueso, color plano y cero aburrimiento.
-            </p>
-            <div class="buttons-action">
-                <button class="btn-action btn-pink" contenteditable="true">VER PORTAFOLIO</button>
-                <button class="btn-action btn-white" contenteditable="true">HABLEMOS</button>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="hero-container">
+        <!-- LADO IZQUIERDO: TEXTOS -->
+        <div class="hero-text-side">
+            <div class="tag-limited" id="element-tag" onclick="openModal('element-tag', 'text')">
+                NÚMERO #01 · EDICIÓN LIMITADA
             </div>
-        </div>
+            <h1 class="main-title" id="element-title" onclick="openModal('element-title', 'text')">
+                Ideas que<br>explotan
+            </h1>
+            <p class="description" id="element-desc" onclick="openModal('element-desc', 'text')">
 
-        <!-- Bloque Derecho (Imagen Editable 1280x720) -->
-        <div class="right-content">
-            <div class="comic-frame" onclick="triggerImageUpload()">
-                <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="loadImage(event)">
-                <div id="comicContainer" class="image-placeholder">
-                    <p style="font-size: 24px; margin-bottom: 10px;">➔ Haz clic aquí</p>
-                    <p>Para subir tu imagen de cómic (Tamaño sugerido: 1280x720)</p>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Sistema interactivo para cambiar la imagen -->
-    <script>
-        function triggerImageUpload() {
-            document.getElementById('imageInput').click();
-        }
-
-        function loadImage(event) {
-            const container = document.getElementById('comicContainer');
-            const file = event.target.files[0];
-            
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    container.innerHTML = `<img src="${e.target.result}" alt="Cómic Personalizado">`;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
-
-</body>
-</html>
 
