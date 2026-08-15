@@ -266,190 +266,192 @@
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YSR Comics - Estudio Creativo</title>
-    <!-- Importación de fuentes estilo cómic y legibles -->
+    <title>YSR Comics - Landing Completa</title>
+    <!-- Fuentes estilo cómic / pop-art libres desde Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=CC+Wild+Words&family=Impact&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ESTILOS GENERALES Y RESET --- */
+        /* --- ESTILOS GENERALES --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f7f4e9;
-            color: #111;
+            font-family: 'Comic Neue', 'Arial Black', sans-serif;
+            background-color: #fcf8f2;
             overflow-x: hidden;
         }
 
-        /* --- SECCIÓN 1: HERO / PORTADA (Fondo Azul) --- */
-        .hero-section {
+        /* --- SECCIÓN 1: PORTADA CON RAYOS AZULES --- */
+        .seccion-portada {
             position: relative;
             min-height: 100vh;
-            width: 100%;
-            padding: 40px 6%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-            /* Fondo de rayos estilo cómic pop-art */
+            /* Fondo de rayos estilo cómic usando gradiente cónico repetitivo */
             background: repeating-conic-gradient(
                 from 0deg at 50% 50%,
-                #43c3cc 0deg 10deg,
-                #3db2ba 10deg 20deg
+                #40c2d4 0deg 10deg,
+                #2bb0c2 10deg 20deg
             );
-            border-bottom: 8px solid #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            border-bottom: 8px solid #000000;
         }
-
-        .hero-left {
+        .contenedor-portada {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .bloque-izquierdo {
             flex: 1;
-            min-width: 320px;
-            max-width: 550px;
+            min-width: 300px;
         }
-
-        .badge-edition {
-            background-color: #fff;
-            color: #111;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 1px;
-            padding: 6px 14px;
-            border: 3px solid #111;
+        .tag-edicion {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Impact', sans-serif;
+            font-size: 14px;
+            padding: 6px 12px;
+            border: 3px solid #000000;
             display: inline-block;
-            margin-bottom: 20px;
-            box-shadow: 4px 4px 0px #111;
+            margin-bottom: 15px;
             text-transform: uppercase;
+            box-shadow: 4px 4px 0px #000000;
         }
-
-        .hero-title {
+        .titulo-principal {
             font-family: 'Bangers', cursive;
-            font-size: clamp(3.5rem, 8vw, 5.5rem);
-            line-height: 0.95;
-            color: #fff;
+            font-size: 75px;
+            color: #fff200;
             text-shadow: 
-                -3px -3px 0 #111,  3px -3px 0 #111,
-                -3px  3px 0 #111,  3px  3px 0 #111,
-                5px   7px 0px #111;
+                -3px -3px 0 #000,  
+                 3px -3px 0 #000,
+                -3px  3px 0 #000,
+                 3px  3px 0 #000,
+                 6px  6px 0px #000000;
+            line-height: 0.95;
             letter-spacing: 2px;
+            transform: skewY(-4deg);
             margin-bottom: 25px;
-            text-transform: uppercase;
         }
-        .hero-title span {
-            color: #ffde24;
+        .titulo-principal span {
+            color: #ffffff;
             display: block;
         }
-
-        .hero-description {
-            font-size: 16px;
-            line-height: 1.6;
-            font-weight: 600;
-            color: #111;
-            max-width: 480px;
-            margin-bottom: 35px;
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 15px 20px;
-            border: 3px solid #111;
-            box-shadow: 5px 5px 0px #111;
-            border-radius: 4px;
+        .descripcion-portada {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000000;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 15px;
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px #000000;
+            margin-bottom: 30px;
+            line-height: 1.4;
         }
-
-        .hero-buttons {
+        .grupo-botones {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
         }
-
-        /* Botones estilo Cómic */
         .btn-comic {
             font-family: 'Bangers', cursive;
-            font-size: 24px;
-            letter-spacing: 1px;
-            padding: 12px 30px;
-            border: 4px solid #111;
+            font-size: 26px;
+            padding: 12px 28px;
+            border: 4px solid #000000;
             cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
             text-decoration: none;
-            display: inline-block;
             text-align: center;
-            border-radius: 4px;
+            display: inline-block;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
         }
-        .btn-portfolio {
+        .btn-portafolio {
             background-color: #ff3366;
-            color: #fff;
-            box-shadow: 5px 5px 0px #111;
+            color: #ffffff;
+            box-shadow: 5px 5px 0px #000000;
         }
-        .btn-portfolio:hover {
+        .btn-hablemos {
+            background-color: #ffffff;
+            color: #000000;
+            box-shadow: 5px 5px 0px #000000;
+        }
+        .btn-comic:hover {
             transform: translate(-2px, -2px);
-            box-shadow: 7px 7px 0px #111;
+            box-shadow: 7px 7px 0px #000000;
         }
-        .btn-portfolio:active {
+        .btn-comic:active {
             transform: translate(3px, 3px);
-            box-shadow: 2px 2px 0px #111;
-        }
-        .btn-talk {
-            background-color: #fff;
-            color: #111;
-            box-shadow: 5px 5px 0px #111;
-        }
-        .btn-talk:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 7px 7px 0px #111;
-        }
-        .btn-talk:active {
-            transform: translate(3px, 3px);
-            box-shadow: 2px 2px 0px #111;
+            box-shadow: 2px 2px 0px #000000;
         }
 
-        /* Contenedor de Imagen Estricto (Proporción 1280x720 / 16:9) */
-        .hero-right {
+        /* Bloque derecho de la portada (Marco de Imagen Comic) */
+        .bloque-derecho {
             flex: 1;
             min-width: 320px;
-            max-width: 640px; /* Escalado proporcional para mantener la forma */
-        }
-        .comic-frame {
-            background-color: #111;
-            border: 6px solid #fff;
-            box-shadow: 0px 0px 0px 6px #111, 12px 12px 0px rgba(0,0,0,0.3);
-            padding: 16px;
+            max-width: 600px;
+            background-color: #000000;
+            border: 4px solid #000000;
+            padding: 15px;
+            box-shadow: 12px 12px 0px rgba(0,0,0,0.15);
             transform: rotate(1deg);
-            width: 100%;
         }
-        .image-container-169 {
+        .marco-interior-comic {
+            border: 3px solid #ffffff;
+            padding: 20px;
+            background-color: #111111;
+            color: #ffffff;
+        }
+        .cabecera-comic {
+            text-align: center;
+            border-bottom: 3px solid #ffffff;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .logo-ysr {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 42px;
+            color: #ffffff;
+            letter-spacing: -1px;
+            transform: scale(1.1);
+        }
+        /* Contenedor de proporción exacta 1280x720 (16:9) */
+        .contenedor-imagen-1280x720 {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* Relación de aspecto perfecta 16:9 (720/1280 = 0.5625) */
-            background-color: #222;
-            border: 4px solid #fff;
+            padding-top: 56.25%; /* Relación de aspecto 16:9 */
+            background-color: #222222;
+            border: 3px solid #ffffff;
             overflow: hidden;
         }
-        .image-container-169 .placeholder-content {
+        .contenedor-imagen-1280x720 .imagen-placeholder {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-family: 'Permanent Marker', cursive;
-            padding: 20px;
+            color: #888888;
+            font-size: 14px;
+            font-weight: bold;
             text-align: center;
+            background: linear-gradient(45deg, #1f1f1f 25%, #252525 25%, #252525 50%, #1f1f1f 50%, #1f1f1f 75%, #252525 75%, #252525 100%);
+            background-size: 40px 40px;
         }
-        .image-container-169 img {
+        .contenedor-imagen-1280x720 img {
             position: absolute;
             top: 0;
             left: 0;
@@ -458,133 +460,237 @@
             object-fit: cover;
         }
 
-        /* --- SECCIÓN 2: SUPERPODERES (Fondo Crema/Negro) --- */
-        .onomatopoeia-bar {
-            background-color: #111;
-            color: #ff3366;
-            padding: 15px 0;
+        /* --- SECCIÓN 2: NUESTROS SUPERPODERES (ONOMATOPEYAS) --- */
+        .barra-onomatopeyas {
+            background-color: #111111;
+            color: #ffffff;
+            padding: 15px 10px;
             text-align: center;
+            border-bottom: 4px solid #000000;
+        }
+        .lista-onomatopeyas {
             font-family: 'Bangers', cursive;
-            font-size: 26px;
-            letter-spacing: 4px;
-            word-spacing: 10px;
-            border-bottom: 6px solid #ffde24;
+            font-size: 28px;
+            letter-spacing: 3px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        .onomatopoeia-bar span {
-            color: #ffde24;
-            font-style: italic;
+        .onomatopeya-rosa { color: #ff3366; transform: rotate(-3deg); }
+        .onomatopeya-amarilla { color: #fff200; transform: rotate(4deg); }
+
+        .seccion-superpoderes {
+            background-color: #fcf8f2;
+            padding: 60px 20px;
+            border-bottom: 6px solid #000000;
         }
-        .superpowers-section {
-            background-color: #f7f4e9;
-            padding: 60px 6%;
-            border-bottom: 8px solid #111;
-        }
-        .section-title-comic {
+        .titulo-seccion-negro {
             font-family: 'Bangers', cursive;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            color: #111;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 50px;
-            font-style: italic;
+            font-size: 50px;
+            color: #111111;
+            text-align: left;
+            max-width: 1200px;
+            margin: 0 auto 40px auto;
+            transform: skewX(-6deg);
         }
-        .cards-grid-3 {
+        .grid-superpoderes {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
         }
-        .card-comic {
-            background-color: #fff;
-            border: 5px solid #111;
-            box-shadow: 8px 8px 0px #111;
-            padding: 35px 25px 25px 25px;
+        .tarjeta-superpoder {
             position: relative;
-            border-radius: 4px;
+            background-color: #ffffff;
+            border: 4px solid #000000;
+            padding: 35px 25px 25px 25px;
+            box-shadow: 6px 6px 0px #000000;
         }
-        .card-tag {
+        .etiqueta-grito {
             position: absolute;
-            top: -20px;
-            left: 15px;
-            font-family: 'Permanent Marker', cursive;
-            font-size: 22px;
-            color: #ffde24;
-            text-shadow: -2px -2px 0 #111, 2px -2px 0 #111, -2px 2px 0 #111, 2px 2px 0 #111;
-            transform: rotate(-4deg);
-        }
-        .card-comic h3 {
+            top: -18px;
+            left: 20px;
             font-family: 'Bangers', cursive;
-            font-size: 26px;
-            color: #111;
+            font-size: 22px;
+            color: #fff200;
+            background-color: #111111;
+            border: 3px solid #000000;
+            padding: 2px 12px;
+            transform: rotate(-4deg);
+            text-shadow: 1px 1px 0px #000;
+        }
+        .tarjeta-superpoder h3 {
+            font-family: 'Impact', sans-serif;
+            font-size: 24px;
+            color: #111111;
             margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        .card-comic p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #444;
-            font-weight: 500;
+        .tarjeta-superpoder p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.4;
         }
 
-        /* --- SECCIÓN 3: ASÍ TRABAJAMOS (Fondo Amarillo) --- */
-        .how-we-work-section {
-            background-color: #ffde24; /* Color amarillo exacto de la referencia */
-            padding: 70px 6%;
-            border-bottom: 8px solid #111;
-            position: relative;
+        /* --- SECCIÓN 3: ASÍ TRABAJAMOS (AMARILLA) --- */
+        .seccion-trabajamos {
+            background-color: #ffdb33;
+            padding: 60px 20px;
+            border-bottom: 6px solid #000000;
         }
-        .how-we-work-section::before, .how-we-work-section::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background-color: #111;
+        .titulo-seccion-inclinado {
+            font-family: 'Bangers', cursive;
+            font-size: 52px;
+            color: #111111;
+            text-shadow: 2px 2px 0px #ffffff;
+            max-width: 1200px;
+            margin: 0 auto 45px auto;
+            transform: rotate(-2deg);
         }
-        .how-we-work-section::before { top: 0; }
-        .how-we-work-section::after { bottom: 0; }
-
-        .cards-grid-4 {
+        .grid-pasos {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 25px;
         }
-        .step-card-comic {
-            background-color: #f7f4e9; /* Tono crema claro interior */
-            border: 4px solid #111;
-            box-shadow: 6px 6px 0px #111;
+        .tarjeta-paso {
+            background-color: #fcf8f2;
+            border: 4px solid #000000;
             padding: 25px 20px;
-            border-radius: 2px;
-            transition: transform 0.2s;
+            box-shadow: 6px 6px 0px #000000;
+            position: relative;
         }
-        .step-card-comic:hover {
-            transform: translateY(-4px);
-        }
-        .step-number {
+        .numero-paso {
             font-family: 'Permanent Marker', cursive;
             font-size: 32px;
-            color: #ff3366; /* Magenta vibrante */
-            line-height: 1;
+            color: #ff3366;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .tarjeta-paso h4 {
+            font-family: 'Impact', sans-serif;
+            font-size: 20px;
+            color: #111111;
             margin-bottom: 10px;
-            font-style: italic;
-        }
-        .step-card-comic h4 {
-            font-family: 'Bangers', cursive;
-            font-size: 22px;
-            color: #111;
-            margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        .step-card-comic p {
-            font-size: 13px;
-            line-height: 1.5;
-            color: #222;
-            font-weight: 500;
+        .tarjeta-paso p {
+            font-size: 15px;
+            color: #444444;
+            line-height: 1.4;
         }
 
-        /* --- VENTANA EMERGENTE (MODAL) 100% EDITABLE --- */
-        .modal-overlay {
+        /* --- NUEVA SECCIÓN 4: PRÓXIMO NÚMERO Y TESTIMONIO (ROSA) --- */
+        .seccion-proximo-numero {
+            background-color: #ff416c;
+            padding: 80px 20px;
+            border-bottom: 8px solid #000000;
+            position: relative;
+        }
+        .contenedor-proximo {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .bloque-llamado-accion {
+            flex: 1.3;
+            min-width: 300px;
+            text-align: center;
+        }
+        .titulo-proximo {
+            font-family: 'Bangers', cursive;
+            font-size: 65px;
+            color: #fff200;
+            text-shadow: 
+                -3px -3px 0 #000,  
+                 3px -3px 0 #000,
+                -3px  3px 0 #000,
+                 3px  3px 0 #000,
+                 5px  5px 0px #000000;
+            line-height: 1.1;
+            letter-spacing: 1px;
+            transform: rotate(-1deg);
+            margin-bottom: 20px;
+        }
+        .subtexto-proximo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #000000;
+            margin-bottom: 35px;
+        }
+        .btn-historia {
+            background-color: #fff200;
+            color: #000000;
+            font-family: 'Bangers', cursive;
+            font-size: 32px;
+            padding: 15px 40px;
+            border: 4px solid #000000;
+            box-shadow: 6px 6px 0px #000000;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .btn-historia:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px #000000;
+        }
+        .btn-historia:active {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px #000000;
+        }
+
+        /* Bloque derecho del Testimonio ("Dicen por ahí") */
+        .bloque-testimonio {
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+            background-color: #fcf8f2;
+            border: 4px solid #000000;
+            padding: 25px;
+            box-shadow: 8px 8px 0px #000000;
+            transform: rotate(1.5deg);
+        }
+        .titulo-testimonio {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 24px;
+            color: #000000;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .bocadillo-testimonio {
+            background-color: #4ed3df;
+            border: 3px solid #000000;
+            padding: 20px;
+            box-shadow: 4px 4px 0px #000000;
+            position: relative;
+        }
+        .texto-testimonio {
+            font-family: 'Impact', sans-serif;
+            font-size: 18px;
+            color: #000000;
+            line-height: 1.3;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .autor-testimonio {
+            font-size: 13px;
+            font-weight: bold;
+            color: #333333;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        /* --- VENTANA EMERGENTE (MODAL) INTERACTIVA --- */
+        .fondo-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -600,259 +706,263 @@
             transition: opacity 0.3s ease;
             padding: 20px;
         }
-        .modal-overlay.active {
+        .fondo-modal.activo {
             opacity: 1;
             pointer-events: auto;
         }
-        .modal-container {
-            background-color: #fff;
-            border: 6px solid #111;
-            box-shadow: 12px 12px 0px #111;
-            max-width: 700px;
+        .cuerpo-modal {
+            background-color: #ffffff;
+            border: 5px solid #000000;
+            box-shadow: 10px 10px 0px #fff200;
+            max-width: 600px;
             width: 100%;
-            border-radius: 4px;
-            transform: scale(0.85);
+            padding: 30px;
+            position: relative;
+            transform: scale(0.8);
             transition: transform 0.3s ease;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            max-height: 90vh;
         }
-        .modal-overlay.active .modal-container {
+        .fondo-modal.activo .cuerpo-modal {
             transform: scale(1);
         }
-        .modal-header {
+        .cerrar-modal {
+            position: absolute;
+            top: -20px;
+            right: -20px;
             background-color: #ff3366;
-            color: #fff;
-            padding: 15px 20px;
-            border-bottom: 5px solid #111;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-header h2 {
-            font-family: 'Bangers', cursive;
-            font-size: 28px;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 0 #111;
-        }
-        .modal-close {
-            background: #fff;
-            border: 3px solid #111;
-            font-family: 'Bangers', cursive;
-            font-size: 20px;
-            padding: 2px 10px;
-            cursor: pointer;
-            box-shadow: 2px 2px 0px #111;
-        }
-        .modal-close:hover {
-            background-color: #ffde24;
-        }
-        
-        /* CUERPO EDITABLE DEL MODAL: Pon aquí el texto/imágenes que quieras */
-        .modal-body {
-            padding: 30px;
-            overflow-y: auto;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        .modal-body h3 {
+            color: #ffffff;
+            border: 4px solid #000000;
             font-family: 'Bangers', cursive;
             font-size: 24px;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 3px 3px 0px #000000;
+        }
+        
+        /* Contenido 100% editable dentro del modal */
+        .modal-editable-content h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 40px;
+            color: #111111;
             margin-bottom: 15px;
-            color: #111;
         }
-        .modal-body p {
-            margin-bottom: 15px;
-            font-weight: 500;
+        .modal-editable-content p {
+            font-size: 16px;
+            color: #444444;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
-        .modal-preview-box {
-            background-color: #f2f2f2;
-            border: 3px dashed #111;
-            padding: 20px;
-            text-align: center;
-            font-weight: 700;
-            margin-top: 15px;
-        }
-
-        /* Responsivo ajustes extra */
-        @media (max-width: 768px) {
-            .hero-section {
-                text-align: center;
-                justify-content: center;
-                padding-top: 60px;
-            }
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
-            .section-title-comic {
-                text-align: center;
-            }
+        .modal-editable-content img {
+            border: 4px solid #000000;
+            box-shadow: 4px 4px 0px #000000;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- =================================================== -->
-    <!-- SECCIÓN 1: HERO / PORTADA PRINCIPAL (FONDO AZUL)  -->
-    <!-- =================================================== -->
-    <section class="hero-section">
-        <div class="hero-left">
-            <div class="badge-edition">Número #01 • Edición Limitada</div>
-            <h1 class="hero-title">Ideas que<br><span>Explotan</span></h1>
-            <p class="hero-description">
-                Somos un estudio creativo que dibuja marcas con la fuerza de una portada de cómic: trazo grueso, color plano y cero aburrimiento.
-            </p>
-            <div class="hero-buttons">
-                <!-- Botón portafolio activa la ventana emergente -->
-                <button class="btn-comic btn-portfolio" id="openModalBtn">Ver Portafolio</button>
-                <!-- Botón Hablemos redirige al bloque inferior -->
-                <a href="#nuestros-superpoderes-seccion" class="btn-comic btn-talk">Hablemos</a>
+    <!-- ================= SECCIÓN 1: PORTADA GENERAL ================= -->
+    <section class="seccion-portada">
+        <div class="contenedor-portada">
+            
+            <!-- Bloque Izquierdo: Textos y Acciones -->
+            <div class="bloque-izquierdo">
+                <div class="tag-edicion">NÚMERO #01 • EDICIÓN LIMITADA</div>
+                <h1 class="titulo-principal">IDEAS QUE <span>EXPLOTAN</span></h1>
+                
+                <div class="descripcion-portada">
+                    Somos un estudio creativo que dibuja marcas con la fuerza de una portada de cómic: trazo grueso, color plano y cero aburrimiento.
+                </div>
+                
+                <div class="grupo-botones">
+                    <!-- Botón de Portafolio: Detona la ventana emergente modal -->
+                    <button class="btn-comic btn-portafolio" id="abrirPortafolio">VER PORTAFOLIO</button>
+                    <!-- Botón Hablemos: Anclaje de redirección fluida a la sección inferior Rosa -->
+                    <a href="#contacto-seccion" class="btn-comic btn-hablemos">HABLEMOS</a>
+                </div>
             </div>
-        </div>
 
-        <div class="hero-right">
-            <div class="comic-frame">
-                <!-- Marco con proporción exacta 1280x720 (16:9) -->
-                <div class="image-container-169">
-                    <!-- Puedes reemplazar este div por tu imagen real: -->
-                    <!-- <img src="tu-imagen-1280x720.jpg" alt="Portada Cómic"> -->
-                    <div class="placeholder-content">
-                        <div style="font-size: 28px; margin-bottom: 5px; color: #ffde24; text-shadow: 2px 2px 0 #111;">[ CONTENEDOR 1280x720 ]</div>
-                        <p style="font-family:'Montserrat',sans-serif; font-size:12px; font-weight:700;">Coloca tu imagen aquí</p>
+            <!-- Bloque Derecho: Marco de Historieta para Imagen Estructurada (1280x720) -->
+            <div class="bloque-derecho">
+                <div class="marco-interior-comic">
+                    <div class="cabecera-comic">
+                        <div class="logo-ysr">YSR COMICS</div>
+                    </div>
+                    
+                    <!-- Espacio reservado con relación exacta de aspecto 16:9 (1280x720) -->
+                    <div class="contenedor-imagen-1280x720">
+                        <!-- Reemplazar el bloque placeholder inferior por tu etiqueta <img> cuando lo desees -->
+                        <div class="imagen-placeholder">
+                            [ ESPACIO EDITABLE PARA TU IMAGEN DE PORTADA 1280x720 ]
+                            <!-- <img src="tu_imagen.png" alt="Portada de Comic"> -->
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Barrita divisoria de Onomatopeyas -->
-    <div class="onomatopoeia-bar">
-        POW! &nbsp; <span>ZAP!</span> &nbsp; BOOM! &nbsp; <span>WHAM!</span> &nbsp; KAPOW!
+
+    <!-- ================= SECCIÓN 2: NUESTROS SUPERPODERES ================= -->
+    <div class="barra-onomatopeyas">
+        <div class="lista-onomatopeyas">
+            <span class="onomatopeya-rosa">POW!</span>
+            <span class="onomatopeya-amarilla">ZAP!</span>
+            <span class="onomatopeya-rosa">BOOM!</span>
+            <span class="onomatopeya-amarilla">WHAM!</span>
+            <span class="onomatopeya-rosa">KAPOW!</span>
+        </div>
     </div>
 
-    <!-- =================================================== -->
-    <!-- SECCIÓN 2: NUESTROS SUPERPODERES (FONDO CREMA)    -->
-    <!-- =================================================== -->
-    <section class="superpowers-section" id="nuestros-superpoderes-seccion">
-        <h2 class="section-title-comic">Nuestros Superpoderes</h2>
+    <section class="seccion-superpoderes" id="superpoderes-seccion">
+        <h2 class="titulo-seccion-negro">NUESTROS SUPERPODERES</h2>
         
-        <div class="cards-grid-3">
-            <!-- Tarjeta 1 -->
-            <div class="card-comic">
-                <div class="card-tag">BAM!</div>
-                <h3>Identidad Visual</h3>
+        <div class="grid-superpoderes">
+            <!-- Tarjeta Superpoder 1 (Editable) -->
+            <div class="tarjeta-superpoder">
+                <div class="etiqueta-grito">BAM!</div>
+                <h3>IDENTIDAD VISUAL</h3>
                 <p>Logos, paletas y tipografías que se leen a 100 metros.</p>
             </div>
 
-            <!-- Tarjeta 2 -->
-            <div class="card-comic">
-                <div class="card-tag">ZOOM!</div>
-                <h3>Webs Animadas</h3>
+            <!-- Tarjeta Superpoder 2 (Editable) -->
+            <div class="tarjeta-superpoder">
+                <div class="etiqueta-grito">ZOOM!</div>
+                <h3>WEBS ANIMADAS</h3>
                 <p>Sitios rápidos con viñetas, transiciones y mucho carácter.</p>
             </div>
 
-            <!-- Tarjeta 3 -->
-            <div class="card-comic">
-                <div class="card-tag">SPLASH!</div>
-                <h3>Ilustración</h3>
+            <!-- Tarjeta Superpoder 3 (Editable) -->
+            <div class="tarjeta-superpoder">
+                <div class="etiqueta-grito">SPLASH!</div>
+                <h3>ILUSTRACIÓN</h3>
                 <p>Personajes, portadas y escenas dibujadas a mano y a medida.</p>
             </div>
         </div>
     </section>
 
-    <!-- =================================================== -->
-    <!-- SECCIÓN 3: ASÍ TRABAJAMOS (FONDO AMARILLO)        -->
-    <!-- =================================================== -->
-    <section class="how-we-work-section">
-        <h2 class="section-title-comic">Así Trabajamos</h2>
+
+    <!-- ================= SECCIÓN 3: ASÍ TRABAJAMOS ================= -->
+    <section class="seccion-trabajamos">
+        <h2 class="titulo-seccion-inclinado">ASÍ TRABAJAMOS</h2>
         
-        <div class="cards-grid-4">
-            <!-- Paso 1 -->
-            <div class="step-card-comic">
-                <div class="step-number">01</div>
-                <h4>El Llamado</h4>
+        <div class="grid-pasos">
+            <!-- Paso 01 (Editable) -->
+            <div class="tarjeta-paso">
+                <span class="numero-paso">01</span>
+                <h4>EL LLAMADO</h4>
                 <p>Nos cuentas el problema. Escuchamos sin capas.</p>
             </div>
 
-            <!-- Paso 2 -->
-            <div class="step-card-comic">
-                <div class="step-number">02</div>
-                <h4>El Boceto</h4>
+            <!-- Paso 02 (Editable) -->
+            <div class="tarjeta-paso">
+                <span class="numero-paso">02</span>
+                <h4>EL BOCETO</h4>
                 <p>Dibujamos rutas posibles en lápiz azul.</p>
             </div>
 
-            <!-- Paso 3 -->
-            <div class="step-card-comic">
-                <div class="step-number">03</div>
-                <h4>El Entintado</h4>
+            <!-- Paso 03 (Editable) -->
+            <div class="tarjeta-paso">
+                <span class="numero-paso">03</span>
+                <h4>EL ENTINTADO</h4>
                 <p>Definimos trazo, color y sistema completo.</p>
             </div>
 
-            <!-- Paso 4 -->
-            <div class="step-card-comic">
-                <div class="step-number">04</div>
-                <h4>La Portada</h4>
+            <!-- Paso 04 (Editable) -->
+            <div class="tarjeta-paso">
+                <span class="numero-paso">04</span>
+                <h4>LA PORTADA</h4>
                 <p>Publicamos y el público aplaude.</p>
             </div>
         </div>
     </section>
 
 
-    <!-- =================================================== -->
-    <!-- VENTANA EMERGENTE (MODAL) - 100% EDITABLE          -->
-    <!-- =================================================== -->
-    <div class="modal-overlay" id="portfolioModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2>Portafolio Creativo</h2>
-                <button class="modal-close" id="closeModalBtn">X</button>
-            </div>
+    <!-- ================= NUEVA SECCIÓN 4: PRÓXIMO NÚMERO Y TESTIMONIO ================= -->
+    <section class="seccion-proximo-numero" id="contacto-seccion">
+        <div class="contenedor-proximo">
             
-            <!-- CONTENIDO EDITABLE: Modifica libremente todo lo que está aquí dentro -->
-            <div class="modal-body">
-                <h3>¡Bienvenidos a nuestras viñetas de trabajo!</h3>
-                <p>Este espacio es completamente editable en HTML. Puedes añadir texto explicativo, listados de características, enlaces o incrustar tus propias imágenes utilizando etiquetas estándar.</p>
-                <p>Ideal para presentar proyectos anteriores, muestras artísticas o detalles específicos del estudio de diseño.</p>
+            <!-- Bloque de Llamado a la Acción Principal -->
+            <div class="bloque-llamado-accion">
+                <h2 class="titulo-proximo">¿LISTO PARA TU PRÓXIMO NÚMERO?</h2>
+                <p class="subtexto-proximo">Cuéntanos tu idea y devolvemos un storyboard en 48 horas.</p>
+                <!-- Botón de acción editable (puedes cambiarlo por un enlace o usarlo para detonar un formulario) -->
+                <a href="#" class="btn-historia">EMPEZAR LA HISTORIA</a>
+            </div>
+
+            <!-- Bloque de Testimonio Estilo Viñeta ("Dicen por ahí") -->
+            <div class="bloque-testimonio">
+                <h3 class="titulo-testimonio">DICEN POR AHÍ</h3>
+                <div class="bocadillo-testimonio">
+                    <p class="texto-testimonio">"NUESTRA MARCA PASÓ DE GRIS A PORTADA DE CÓMIC. ¡VENDEMOS EL TRIPLE!"</p>
+                    <span class="autor-testimonio">LUCÍA M. - CAFÉ NÉBULA</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ================= VENTANA EMERGENTE (MODAL) INTERACTIVA ================= -->
+    <div class="fondo-modal" id="modalPortafolio">
+        <div class="cuerpo-modal">
+            <!-- Botón Circular de Cierre -->
+            <button class="cerrar-modal" id="cerrarPortafolio">X</button>
+            
+            <!-- CONTENIDO 100% EDITABLE: Edita todo este bloque con tus textos e imágenes -->
+            <div class="modal-editable-content">
+                <h2>¡BIENVENIDO AL PORTAFOLIO!</h2>
+                <p>Este es el espacio emergente interactivo. Puedes cambiar este bloque de código con total libertad para añadir descripciones de proyectos, galerías, listas o enlaces personalizados en HTML.</p>
+                <p>Incluso puedes incrustar imágenes de tus trabajos directamente usando la estructura estándar de HTML.</p>
                 
-                <div class="modal-preview-box">
-                    [ Aquí puedes meter tus imágenes &lt;img&gt; o galerías de proyectos ]
+                <!-- Imagen de ejemplo dentro del modal -->
+                <div style="width: 100%; height: 180px; background-color: #4ed3df; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid #000;">
+                    [ IMAGEN O GALERÍA DE PROYECTOS EDITABLE ]
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- --- LÓGICA DE INTERACCIÓN CON JAVASCRIPT --- -->
+
+    <!-- ================= CONTROLADORES JAVASCRIPT ================= -->
     <script>
-        const modal = document.getElementById('portfolioModal');
-        const openBtn = document.getElementById('openModalBtn');
-        const closeBtn = document.getElementById('closeModalBtn');
+        // Capturar los elementos interactivos del DOM
+        const modal = document.getElementById('modalPortafolio');
+        const btnAbrir = document.getElementById('abrirPortafolio');
+        const btnCerrar = document.getElementById('cerrarPortafolio');
 
-        // Abrir Ventana Emergente
-        openBtn.addEventListener('click', () => {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+        // Función para desplegar la ventana emergente al hacer click en "Ver Portafolio"
+        btnAbrir.addEventListener('click', () => {
+            modal.classList.add('activo');
         });
 
-        // Cerrar Ventana Emergente al dar click en 'X'
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+        // Función para ocultar la ventana emergente al pulsar la 'X'
+        btnCerrar.addEventListener('click', () => {
+            modal.classList.remove('activo');
         });
 
-        // Cerrar Ventana Emergente al dar click fuera del contenedor blanco
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+        // Ocultar la ventana emergente de forma segura si el usuario hace click en el fondo oscuro exterior
+        modal.addEventListener('click', (evento) => {
+            if (evento.target === modal) {
+                modal.classList.remove('activo');
             }
         });
-    </script>
 
+        // Animación de desplazamiento suave (Smooth Scroll) integrada para el botón "Hablemos"
+        document.querySelectorAll('a[href^="#"]').forEach(anclaje => {
+            anclaje.addEventListener('click', function (evento) {
+                evento.preventDefault();
+                const destino = document.querySelector(this.getAttribute('href'));
+                if (destino) {
+                    destino.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 
