@@ -1025,24 +1025,62 @@
 
 
     <!-- ================= VENTANA EMERGENTE (MODAL) INTERACTIVA ================= -->
-    <div class="fondo-modal" id="modalPortafolio">
-        <div class="cuerpo-modal">
-            <!-- Botón Circular de Cierre -->
-            <button class="cerrar-modal" id="cerrarPortafolio">X</button>
+<div class="fondo-modal" id="modalPortafolio">
+    <div class="cuerpo-modal">
+        <!-- Botón Circular de Cierre -->
+        <button class="cerrar-modal" id="cerrarPortafolio">X</button>
+        
+        <!-- CONTENIDO 100% EDITABLE -->
+        <div class="modal-editable-content">
+            <h2>¡BIENVENIDO AL PORTAFOLIO!</h2>
+            <p>Este es el espacio emergente interactivo. Puedes cambiar este bloque de código con total libertad para añadir descripciones de proyectos.</p>
             
-            <!-- CONTENIDO 100% EDITABLE: Edita todo este bloque con tus textos e imágenes -->
-            <div class="modal-editable-content">
-                <h2>¡BIENVENIDO AL PORTAFOLIO!</h2>
-                <p>Este es el espacio emergente interactivo. Puedes cambiar este bloque de código con total libertad para añadir descripciones de proyectos, galerías, listas o enlaces personalizados en HTML.</p>
-                <p>Incluso puedes incrustar imágenes de tus trabajos directamente usando la estructura estándar de HTML.</p>
-                 <img src="imagen tridente trono.png" alt="Portada de Comic" class="imagen-portada">
-                <!-- Imagen de ejemplo dentro del modal -->
-                <div style="width: 100%; height: 180px; background-color: #4ed3df; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid #000;">
-                    [ IMAGEN O GALERÍA DE PROYECTOS EDITABLE ]
-                </div>
+            <!-- CONTENEDOR FORZADO A 16:9 (1280x720) -->
+            <div class="contenedor-imagen-169">
+                <img src="imagen tridente trono.png" alt="Portada de Comic" class="imagen-portada">
+            </div>
+
+            <p>Incluso puedes incrustar imágenes de tus trabajos directamente usando la estructura estándar de HTML.</p>
+            
+            <div style="width: 100%; height: 180px; background-color: #4ed3df; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid #000;">
+                [ IMAGEN O GALERÍA DE PROYECTOS EDITABLE ]
             </div>
         </div>
     </div>
+</div>
+
+<style>
+/* --- ESTILOS REQUERIDOS PARA CONTROLAR LAS PROPORCIONES --- */
+
+/* Asegura que el modal no se desborde si la pantalla es pequeña */
+.cuerpo-modal {
+    max-width: 800px; /* Tamaño máximo sugerido para el modal */
+    width: 90%;       /* Se adapta a pantallas móviles */
+    max-height: 90vh; /* No supera el alto de la pantalla */
+    overflow-y: auto; /* Activa scroll interno si el contenido es muy largo */
+    box-sizing: border-box;
+}
+
+/* Contenedor mágico que mantiene la proporción 1280x720 (16:9) */
+.contenedor-imagen-169 {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Fuerza la proporción exacta */
+    background-color: #f0f0f0; /* Fondo gris por si la imagen tarda en cargar */
+    overflow: hidden;
+    border-radius: 4px; /* Opcional: bordes ligeramente redondeados */
+    margin: 15px 0;
+}
+
+/* Ajuste estricto de la imagen */
+.imagen-portada {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Llena el espacio cortando los excesos sin deformar */
+    object-position: center; /* Centra la imagen si se recorta */
+    display: block;
+}
+</style>
+
 
 
     <!-- ================= CONTROLADORES JAVASCRIPT ================= -->
