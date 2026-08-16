@@ -8,3 +8,6 @@
 .tag-edicion {
     margin-top: 20px; /* Sube o baja este número según el espacio que quieras */
 }
+.bloque-izquierdo {
+    padding-top: 25px; /* Empuja todo el contenido interno hacia abajo */
+}
