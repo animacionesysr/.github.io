@@ -5,3 +5,9 @@
   }
 }
 
+.tag-edicion {
+    margin-top: 15px; /* Ajusta los píxeles (px) según necesites */
+}
+.tag-edicion {
+    padding-top: 15px; /* Genera espacio interno arriba */
+}
