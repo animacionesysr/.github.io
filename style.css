@@ -4,3 +4,40 @@
     background-color: lightblue; /* Ejemplo */
   }
 }
+/* --- CORRECCIÓN PARA EL BOTÓN DE CIERRE Y EL CONTENEDOR --- */
+
+.cuerpo-modal {
+    position: relative; /* Base obligatoria para que el botón se posicione respecto al modal */
+    max-width: 800px; 
+    width: 90%;       
+    max-height: 90vh; 
+    overflow-y: auto; 
+    box-sizing: border-box;
+    padding: 30px;      /* Espacio interno para que el texto no toque los bordes */
+}
+
+.cerrar-modal {
+    position: absolute; /* Lo separa del flujo del texto y lo fija arriba a la derecha */
+    top: 15px;          /* Distancia desde el borde superior */
+    right: 15px;        /* Distancia desde el borde derecho */
+    z-index: 1000;      /* Capa super alta para que flote sobre la imagen y el fondo */
+    
+    /* Estilos estéticos sugeridos para que se vea claro y profesional */
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+/* Efecto visual al pasar el mouse por encima */
+.cerrar-modal:hover {
+    background-color: #ff4a4a; 
+}
