@@ -1,7 +1,17 @@
+/* Estilos generales (Para PC y pantallas grandes) */
+.seccion-portada {
+  margin-top: 5cm; /* Empuja la sección 5cm hacia abajo */
+}
+
 /* Estilos para móviles (pantallas de hasta 768px) */
 @media (max-width: 768px) {
   body {
     background-color: lightblue; /* Ejemplo */
   }
+  
+  /* Si en celulares 5cm te parece demasiado espacio, */
+  /* puedes reducirlo solo para pantallas móviles aquí: */
+  .seccion-portada {
+    margin-top: 2cm; 
+  }
 }
-
