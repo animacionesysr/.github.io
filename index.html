@@ -1022,61 +1022,111 @@
 
         </div>
     </section>
-
-
     <!-- ================= VENTANA EMERGENTE (MODAL) INTERACTIVA ================= -->
 <div class="fondo-modal" id="modalPortafolio">
     <div class="cuerpo-modal">
-        <!-- Botón Circular de Cierre -->
+        
+        <!-- BOTÓN DE CIERRE: Ahora está aislado arriba a la derecha y nunca se esconderá -->
         <button class="cerrar-modal" id="cerrarPortafolio">X</button>
         
-        <!-- CONTENIDO 100% EDITABLE -->
-        <div class="modal-editable-content">
-            <h2>¡BIENVENIDO AL PORTAFOLIO!</h2>
-            <p>Este es el espacio emergente interactivo. Puedes cambiar este bloque de código con total libertad para añadir descripciones de proyectos.</p>
-            
-            <!-- CONTENEDOR FORZADO A 16:9 (1280x720) -->
-            <div class="contenedor-imagen-169">
-                <img src="19.png" alt="Portada de Comic" class="imagen-portada">
-            </div>
+        <!-- CONTENIDO CON SCROLL INDEPENDIENTE -->
+        <div class="modal-scroll-content">
+            <div class="modal-editable-content">
+                <h2>¡BIENVENIDO AL PORTAFOLIO!</h2>
+                <p>Este es el espacio emergente interactivo. Puedes cambiar este bloque de código con total libertad para añadir descripciones de proyectos.</p>
+                
+                <!-- CONTENEDOR PROPORCIÓN 16:9 (1280x720) -->
+                <div class="contenedor-imagen-169">
+                    <img src="19.png" alt="Portada de Comic" class="imagen-portada">
+                </div>
 
-            <p>Incluso puedes incrustar imágenes de tus trabajos directamente usando la estructura estándar de HTML.</p>
-            
-            <div style="width: 100%; height: 180px; background-color: #4ed3df; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid #000;">
-                [ IMAGEN O GALERÍA DE PROYECTOS EDITABLE ]
+                <p>Incluso puedes incrustar imágenes de tus trabajos directamente usando la estructura estándar de HTML.</p>
+                
+                <div style="width: 100%; height: 180px; background-color: #4ed3df; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid #000;">
+                    [ IMAGEN O GALERÍA DE PROYECTOS EDITABLE ]
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 
 <style>
-/* --- ESTILOS REQUERIDOS PARA CONTROLAR LAS PROPORCIONES --- */
-
-/* Asegura que el modal no se desborde si la pantalla es pequeña */
-.cuerpo-modal {
-    max-width: 800px; /* Tamaño máximo sugerido para el modal */
-    width: 90%;       /* Se adapta a pantallas móviles */
-    max-height: 90vh; /* No supera el alto de la pantalla */
-    overflow-y: auto; /* Activa scroll interno si el contenido es muy largo */
-    box-sizing: border-box;
+/* --- BASE DEL MODAL --- */
+.fondo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Por encima de toda la web */
 }
 
-/* Contenedor mágico que mantiene la proporción 1280x720 (16:9) */
+/* --- CUERPO DEL MODAL (EL RECUADRO) --- */
+.cuerpo-modal {
+    position: relative; 
+    max-width: 800px; 
+    width: 90%;       
+    background-color: #ffffff; /* Asegura el fondo blanco del recuadro */
+    border-radius: 8px;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+/* --- CONTENEDOR DE SCROLL (AQUÍ ESTÁ EL TRUCO) --- */
+.modal-scroll-content {
+    max-height: 75vh; /* Evita que el texto rompa el diseño */
+    overflow-y: auto; /* El scroll solo ocurre aquí dentro */
+    padding-right: 10px; /* Espacio para que la barra de scroll no pise el texto */
+}
+
+/* --- BOTÓN DE CIERRE PROTEGIDO --- */
+.cerrar-modal {
+    position: absolute; 
+    top: -15px;  /* Cambiado: sobresale un poco del modal para estilo moderno */
+    right: -15px; /* Si prefieres dentro, pon ambos en 15px */
+    z-index: 10000; /* Prioridad absoluta sobre la imagen y el fondo */
+    
+    /* Estilo circular llamativo */
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+.cerrar-modal:hover {
+    background-color: #ff4a4a;
+    transform: scale(1.1);
+}
+
+/* --- CONTROL DE IMAGEN 16:9 --- */
 .contenedor-imagen-169 {
     width: 100%;
-    aspect-ratio: 16 / 9; /* Fuerza la proporción exacta */
-    background-color: #f0f0f0; /* Fondo gris por si la imagen tarda en cargar */
+    aspect-ratio: 16 / 9; 
+    background-color: #f0f0f0; 
     overflow: hidden;
-    border-radius: 4px; /* Opcional: bordes ligeramente redondeados */
+    border-radius: 4px; 
     margin: 15px 0;
 }
 
-/* Ajuste estricto de la imagen */
 .imagen-portada {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Llena el espacio cortando los excesos sin deformar */
-    object-position: center; /* Centra la imagen si se recorta */
+    object-fit: cover; 
+    object-position: center; 
     display: block;
 }
 </style>
